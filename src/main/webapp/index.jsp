@@ -4,6 +4,9 @@
     <link rel="stylesheet" type="text/css" href="css/test.css">
 </head>
 <body>
+<%
+    response.sendRedirect(request.getContextPath()+"/product?method=index");
+%>
 <h2 class="title">Hello World!</h2>
 <h3>
     <a href="varietylist">Variety List</a><br><br>

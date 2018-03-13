@@ -36,6 +36,12 @@
     <mvc:resources mapping="/css/**" location="/css/" />
     <mvc:resources mapping="/images/**" location="/images/" />
     <mvc:resources mapping="/js/**" location="/js/" />
+    <mvc:resources mapping="/admin/**" location="/admin/" />
+    <mvc:resources mapping="/bank_img/**" location="/bank_img/" />
+    <mvc:resources mapping="/fonts/**" location="/fonts/" />
+    <mvc:resources mapping="/image/**" location="/image/" />
+    <mvc:resources mapping="/img/**" location="/img/" />
+    <mvc:resources mapping="/products/**" location="/products/" />
     <!--<mvc:resources mapping="/*.html" location="/" />-->
     <!-- 静态资源(js、image等)的访问 方法 2 -->
     <!--<mvc:default-servlet-handler />-->

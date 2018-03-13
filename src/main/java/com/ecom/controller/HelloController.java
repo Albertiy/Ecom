@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.jws.WebParam;
 import java.util.Map;
 
 @Controller
@@ -38,5 +39,27 @@ public class HelloController {
         mv.addObject("message",message);
         mv.addObject("name",name);
         return mv;
+    }
+
+    @RequestMapping("/login")
+    public String login(){
+        return "login";
+    }
+
+    @RequestMapping("/product")
+    public String product(@RequestParam(value="method",required = false,defaultValue = "index")String method){
+        if(method.equals("index"))
+            return "index";
+        return "index";
+    }
+
+    @RequestMapping("/header")
+    public String getHeader(){
+        return "header";
+    }
+
+    @RequestMapping("/footer")
+    public String getFooter(){
+        return "footer";
     }
 }
