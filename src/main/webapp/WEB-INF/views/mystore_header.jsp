@@ -49,10 +49,19 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">我的商品</a>
-                <a class="navbar-brand" href="#">订单管理</a>
-                <a class="navbar-brand" href="#">店铺信息</a>
-                <a class="navbar-brand" href="#">我的收益</a>
+                <ul class="nav-pills" role="tablist">
+                <li role="presentation" class="dropdown">
+                    <a class="navbar-brand" id="drop4" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        我的商品
+                        <span class="caret"></span>
+                    </a>
+                    <ul id="menu1" class="dropdown-menu" aria-labelledby="drop4">
+                        <li><a href="#">分类</a></li>
+                        <li><a href="#">分类</a></li>
+                        <li><a href="#">分类</a></li>
+                    </ul>
+                </li>
+                </ul>
             </div>
 
 
