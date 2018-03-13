@@ -1,0 +1,137 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: Damon
+  Date: 2018/3/13
+  Time: 14:05
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>My Product Info</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css"/>
+    <script src="js/jquery-1.11.3.min.js" type="text/javascript"></script>
+    <script src="js/bootstrap.min.js" type="text/javascript"></script>
+</head>
+<body>
+<div class="container-fluid">
+    <!-- 引入header.jsp -->
+    <jsp:include page="mystore_header.jsp" flush="true"></jsp:include>
+
+    <div class="container">
+        <div class="row">
+            <div style=" width: 930px; padding: 10px; margin-bottom: 10px;">
+                <a href="./index.htm">首页&nbsp;&nbsp;&gt;</a>
+                <a href="./蔬菜分类.htm">蔬菜&nbsp;&nbsp;&gt;</a>
+                <a>无公害蔬菜</a>
+            </div>
+
+            <div style="margin: 0 auto; width: 950px;">
+                <div class="col-md-6">
+                    <img style="opacity: 1; width: 400px; height: 350px;" title="" class="medium"
+                         src="products/c_0001.jpg">
+                </div>
+
+                <div class="col-md-6" style="height:350px">
+                    <div class="col-md-6">
+                        <div>
+                            <strong>
+                                <input type="text" id="productName" name="productName" value="你的名字" style="border:none" readonly="readonly">
+                            </strong>
+                        </div>
+                        <div style="width: 350px; margin: 10px 0 10px 0;">
+                            <div>编号：${product.pid}</div>
+                        </div>
+
+                        <div style="width: 350px; margin: 10px 0 10px 0;">
+                            单价:
+                            <input type="text" id="price" name="price" value="1" maxlength="4" size="10" readonly="readonly">
+                            元 / 件
+                        </div>
+                        <div  style="width: 350px; margin: 10px 0 10px 0;">
+                            库存:
+                            <input type="text" id="StoreAmount" name="StoreAmount" value="1" maxlength="4" size="10" readonly="readonly">
+                            件
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <a id="modify" style="background-color: #c2c2c2; float:right" class="btn btn-default" role="button"><strong>修改</strong></a>
+                    </div>
+                    <div class="col-md-12" style="margin-top: 150px">
+                        <a id="down" style="background-color: #c2422c; width: 100px; float:right" class="btn btn-default" role="button"><strong>下架</strong></a>
+                        <a id="up" style="background-color: #57c27d; width: 100px; float: right" class="btn btn-default" role="button"><strong>上架</strong></a>
+                    </div>
+
+                </div>
+            </div>
+            <div class="clear"></div>
+            <div style="width: 950px; margin: 0 auto;">
+                <div class="col-md-12" style="background-color: #d3d3d3; width: 930px; padding: 10px 10px; margin: 10px 0 10px 0;">
+                    <strong>商品介绍</strong>
+                </div>
+                <div class="col-md-12">
+                    <img src="products/c_0001.jpg">
+                </div>
+
+                <div class="col-md-12" style="background-color: #d3d3d3; width: 930px; padding: 10px 10px; margin: 10px 0 10px 0;">
+                    <strong>商品参数</strong>
+                </div>
+                <div style="margin-top: 10px; width: 930px;">
+                    <table class="table table-bordered">
+                        <tbody>
+                        <tr class="active">
+                            <th colspan="2">基本参数</th>
+                        </tr>
+                        <tr>
+                            <th width="10%">级别</th>
+                            <td width="30%">标准</td>
+                        </tr>
+                        <tr>
+                            <th width="10%">标重</th>
+                            <td>500</td>
+                        </tr>
+                        <tr>
+                            <th width="10%">浮动</th>
+                            <td>200</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div style="background-color: #d3d3d3; width: 930px;">
+                    <table class="table table-bordered">
+                        <tbody>
+                        <tr class="active">
+                            <th><strong>商品评论</strong></th>
+                        </tr>
+                        <tr class="warning">
+                            <th>暂无商品评论信息 <a>[发表商品评论]</a></th>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div style="background-color: #d3d3d3; width: 930px;">
+                    <table class="table table-bordered">
+                        <tbody>
+                        <tr class="active">
+                            <th><strong>商品咨询</strong></th>
+                        </tr>
+                        <tr class="warning">
+                            <th>暂无商品咨询信息 <a>[发表商品咨询]</a></th>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- 引入footer.jsp -->
+    <jsp:include page="footer.jsp" flush="true"></jsp:include>
+</div>
+</body>
+</html>

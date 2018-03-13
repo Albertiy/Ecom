@@ -56,7 +56,7 @@
                             <span class="caret"></span>
                         </a>
                         <ul id="menu1" class="dropdown-menu" aria-labelledby="myproduct">
-                            <li><a href="#">移动通讯</a></li>
+                            <li><a href="myproduct_info">移动通讯</a></li>
                             <li><a href="#">数码</a></li>
                             <li><a href="#">家电</a></li>
                         </ul>

@@ -16,4 +16,9 @@ public class MyStoreController {
         return "mystore_header";
     }
 
+    @RequestMapping("/myproduct_info")
+    public String myProductInfo(){
+        return "myproduct_info";
+    }
+
 }
