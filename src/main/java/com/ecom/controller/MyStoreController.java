@@ -11,4 +11,9 @@ public class MyStoreController {
         return "mystore";
     }
 
+    @RequestMapping("/mystore_header")
+    public String myStoreHeader(){
+        return "mystore_header";
+    }
+
 }

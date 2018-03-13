@@ -1,3 +1,10 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: Damon
+  Date: 2018/3/13
+  Time: 10:37
+  To change this template use File | Settings | File Templates.
+--%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 
@@ -42,9 +49,14 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">首页</a>
+                <a class="navbar-brand" href="#">我的商品</a>
+                <a class="navbar-brand" href="#">订单管理</a>
+                <a class="navbar-brand" href="#">店铺信息</a>
+                <a class="navbar-brand" href="#">我的收益</a>
             </div>
 
+
+            <!--需要变成调用店内搜索的方法 -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav" id="categoryUL">
 
@@ -54,34 +66,11 @@
                 </ul>
                 <form class="navbar-form navbar-right" role="search">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search">
+                        <input type="text" class="form-control" placeholder="店内搜索">
                     </div>
-                    <button type="submit" class="btn btn-default">Submit</button>
+                    <button type="submit" class="btn btn-default">搜索</button>
                 </form>
             </div>
         </div>
-
-        <script type="text/javascript">
-            // hearder.jsp加载完成后，去服务器端获得所有的category数据
-            $(function () {
-                var content = "";
-                $.post(
-                    "${pageContext.request.contextPath}/product?method=categoryList",
-                    function (data) {
-                        //    [{"cid":"xxx","cname":"xxx"},{},{}]
-                        //    动态的创建li
-                        for (var i = 0; i < data.length; i++) {
-                            content += "<li><a href='${pageContext.request.contextPath}/product?method=productList&cid="+data[i].cid+"'>" + data[i].cname + "</a></li>";
-                        }
-                    //    将拼接好的li放置到ul中
-                        $("#categoryUL").html(content);
-                    },
-                    "json"
-                );
-            });
-
-        </script>
-
-
     </nav>
 </div>

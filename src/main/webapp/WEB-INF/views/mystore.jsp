@@ -22,7 +22,7 @@
 
     <div class="container-fluid">
         <!-- 引入header.jsp -->
-        <jsp:include page="header.jsp" flush="true"></jsp:include>
+        <jsp:include page="mystore_header.jsp" flush="true"></jsp:include>
 
 
         <!-- 引入footer.jsp -->
