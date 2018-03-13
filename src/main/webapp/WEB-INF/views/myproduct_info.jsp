@@ -77,27 +77,6 @@
                 <div class="col-md-12" style="background-color: #d3d3d3; width: 930px; padding: 10px 10px; margin: 10px 0 10px 0;">
                     <strong>商品参数</strong>
                 </div>
-                <div style="margin-top: 10px; width: 930px;">
-                    <table class="table table-bordered">
-                        <tbody>
-                        <tr class="active">
-                            <th colspan="2">基本参数</th>
-                        </tr>
-                        <tr>
-                            <th width="10%">级别</th>
-                            <td width="30%">标准</td>
-                        </tr>
-                        <tr>
-                            <th width="10%">标重</th>
-                            <td>500</td>
-                        </tr>
-                        <tr>
-                            <th width="10%">浮动</th>
-                            <td>200</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
 
                 <div style="background-color: #d3d3d3; width: 930px;">
                     <table class="table table-bordered">
