@@ -11,6 +11,7 @@
   <!--springframework版本-->
   <properties>
     <spring.version>4.1.1.RELEASE</spring.version>
+      <jstl.version>1.2</jstl.version>
   </properties>
 
   <dependencies>
@@ -20,6 +21,12 @@
       <version>3.8.1</version>
       <scope>test</scope>
     </dependency>
+
+      <dependency>
+          <groupId>jstl</groupId>
+          <artifactId>jstl</artifactId>
+          <version>${jstl.version}</version>
+      </dependency>
 
       <!--SpringMVC的3个基础依赖包-->
       <dependency>

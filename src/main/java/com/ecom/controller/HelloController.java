@@ -1,14 +1,34 @@
 package com.ecom.controller;
 
+import com.ecom.dao.VarietyDao;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.Map;
 
 @Controller
 public class HelloController {
 
     private String message="O_J_B_K";
+
+
+    //@Autowired
+    private VarietyDao varietyDao=new VarietyDao();
+
+    @RequestMapping(value = "/variety",method = RequestMethod.GET)
+    public String varietyInput(){
+        return "varietyinput";
+    }
+
+    @RequestMapping("/varietylist")
+    public String varietyList(Map<String,Object> map){
+        map.put("varieties",varietyDao.getVarieties());
+        return "varietylist";
+    }
 
     @RequestMapping("/hello")
     public ModelAndView showMesssage(@RequestParam(value = "name",required = false,defaultValue = "Spring")String name){

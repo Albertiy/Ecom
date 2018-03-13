@@ -4,14 +4,22 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="
         http://www.springframework.org/schema/beans
-        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
         http://www.springframework.org/schema/context
-        http://www.springframework.org/schema/context/spring-context-3.0.xsd
+        http://www.springframework.org/schema/context/spring-context-4.0.xsd
         http://www.springframework.org/schema/mvc
-        http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+        http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
 ">
+
     <!-- 搜索spring控制器 -->
-    <context:component-scan base-package="com.ecom.controller"></context:component-scan>
+    <context:component-scan base-package="com.ecom.*"></context:component-scan>
+<!--    <context:component-scan base-package="com.ecom.dao"></context:component-scan>
+    <context:component-scan base-package="com.ecom.pojo"></context:component-scan>-->
+    <!--3.0老版本-->
+    <!--<context:annotation-config></context:annotation-config>-->
+    <!--4.0版本-->
+    <mvc:annotation-driven/>
+
     <!-- 视图页面配置 -->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <!--前缀指定的是视图目录-->
@@ -23,4 +31,12 @@
             <value>.jsp</value>
         </property>
     </bean>
+
+    <!-- 资源配置方法 1 -->
+    <mvc:resources mapping="/css/**" location="/css/" />
+    <mvc:resources mapping="/images/**" location="/images/" />
+    <mvc:resources mapping="/js/**" location="/js/" />
+    <!--<mvc:resources mapping="/*.html" location="/" />-->
+    <!-- 静态资源(js、image等)的访问 方法 2 -->
+    <!--<mvc:default-servlet-handler />-->
 </beans>
