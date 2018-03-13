@@ -10,5 +10,8 @@
         <module name="EcomProject" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="EcomProject" target="1.5" />
+    </bytecodeTargetLevel>
   </component>
 </project>
