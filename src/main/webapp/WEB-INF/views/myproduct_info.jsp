@@ -27,7 +27,7 @@
                 <a>无公害蔬菜</a>
             </div>
 
-            <div style="margin: 0 auto; width: 950px;">
+            <div style="margin: 0 auto; width: 950px; height: 350px">
                 <div class="col-md-6">
                     <img style="opacity: 1; width: 400px; height: 350px;" title="" class="medium"
                          src="products/c_0001.jpg">
@@ -65,17 +65,21 @@
 
                 </div>
             </div>
-            <div class="clear"></div>
-            <div style="width: 950px; margin: 0 auto;">
-                <div class="col-md-12" style="background-color: #d3d3d3; width: 930px; padding: 10px 10px; margin: 10px 0 10px 0;">
-                    <strong>商品介绍</strong>
-                </div>
-                <div class="col-md-12">
-                    <img src="products/c_0001.jpg">
-                </div>
 
-                <div class="col-md-12" style="background-color: #d3d3d3; width: 930px; padding: 10px 10px; margin: 10px 0 10px 0;">
-                    <strong>商品参数</strong>
+            <div class="clear"></div>
+
+            <div style="width: 950px; margin: 0 auto;">
+                <div style="margin-top: 10px; width: 930px;">
+                    <table class="table table-bordered">
+                        <tbody>
+                        <tr class="active">
+                            <th><strong>商品介绍</strong></th>
+                        </tr>
+                        <tr>
+                            <th>暂无商品介绍信息 </th>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
 
                 <div style="background-color: #d3d3d3; width: 930px;">
