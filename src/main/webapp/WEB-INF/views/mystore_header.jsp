@@ -50,17 +50,38 @@
                     <span class="icon-bar"></span>
                 </button>
                 <ul class="nav-pills" role="tablist">
-                <li role="presentation" class="dropdown">
-                    <a class="navbar-brand" id="drop4" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                        我的商品
-                        <span class="caret"></span>
-                    </a>
-                    <ul id="menu1" class="dropdown-menu" aria-labelledby="drop4">
-                        <li><a href="#">分类</a></li>
-                        <li><a href="#">分类</a></li>
-                        <li><a href="#">分类</a></li>
-                    </ul>
-                </li>
+                    <li role="presentation" class="dropdown">
+                        <a class="navbar-brand" id="myproduct" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            我的商品
+                            <span class="caret"></span>
+                        </a>
+                        <ul id="menu1" class="dropdown-menu" aria-labelledby="myproduct">
+                            <li><a href="myproduct_info">移动通讯</a></li>
+                            <li><a href="#">数码</a></li>
+                            <li><a href="#">家电</a></li>
+                        </ul>
+                    </li>
+                    <li role="presentation" class="dropdown">
+                        <a class="navbar-brand" id="ordermanagement" href="#"  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" >
+                            订单管理
+                            <span class="caret"></span>
+                        </a>
+                        <ul id="menu2" class="dropdown-menu" aria-labelledby="ordermanagement">
+                            <li><a href="#">未发货</a></li>
+                            <li><a href="#">已发货</a></li>
+                            <li><a href="#">已完成</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="navbar-brand" id="storeinfo" href="#">
+                            店铺信息
+                        </a>
+                    </li>
+                    <li>
+                        <a class="navbar-brand" id="storeinfo" href="#">
+                            我的收益
+                        </a>
+                    </li>
                 </ul>
             </div>
 
