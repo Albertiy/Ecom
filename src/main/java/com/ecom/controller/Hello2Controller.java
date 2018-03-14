@@ -18,8 +18,17 @@ public class Hello2Controller {
         return "test_order";
     }
 
+    @RequestMapping("/testbootstrap")
+    public String testBootstrap(){
+        System.out.println("test bootstrap");
+        return "test_bootstrap";
+    }
+
     @RequestMapping("/order_header")
     public String orderHeader(){
         return "order_header";
     }
+
+    @RequestMapping("/getjson")
+    public String getjson(){return "getjson";}
 }
