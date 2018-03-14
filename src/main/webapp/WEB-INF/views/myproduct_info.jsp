@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css"/>
     <script src="js/jquery-1.11.3.min.js" type="text/javascript"></script>
     <script src="js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="js/product_info.js" type="text/javascript"></script>
 </head>
 <body>
 <div class="container-fluid">
@@ -56,11 +57,12 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <a id="modify" style="background-color: #c2c2c2; float:right" class="btn btn-default" role="button"><strong>修改</strong></a>
+                        <a id="modify" style="background-color: #d3d3d3; float:right; display: block" class="btn btn-default" role="button" onclick="modifyinfo()"><strong>修改</strong></a>
+                        <a id="confirm" style="background-color: #d3d3d3; float:right; display: none" class="btn btn-default" role="button"><strong>确定</strong></a>
                     </div>
                     <div class="col-md-12" style="margin-top: 150px">
-                        <a id="down" style="background-color: #c2422c; width: 100px; float:right" class="btn btn-default" role="button"><strong>下架</strong></a>
-                        <a id="up" style="background-color: #57c27d; width: 100px; float: right" class="btn btn-default" role="button"><strong>上架</strong></a>
+                        <a id="down" style="background-color: #eb5339; width: 100px; float:right" class="btn btn-default" role="button"><strong>下架</strong></a>
+                        <a id="up" style="background-color: #59d089; width: 100px; float: right" class="btn btn-default" role="button"><strong>上架</strong></a>
                     </div>
 
                 </div>
