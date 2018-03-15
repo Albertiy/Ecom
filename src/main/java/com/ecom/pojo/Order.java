@@ -35,7 +35,7 @@ public class Order {
     public Order() {
         Date day=new Date();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        System.out.println("新的订单|创建时间："+df.format(day));
+        //System.out.println("新的订单|创建时间："+df.format(day));
 
         createTime = df.format(day);
         amount = 0;

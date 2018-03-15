@@ -3,6 +3,7 @@ package com.ecom.dao;
 
 import com.ecom.pojo.Product;
 import com.ecom.utils.JdbcUtils;
+import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -104,6 +105,38 @@ public class ProductDao {
                 product.setPflag(rs.getInt("pflag"));
             }
 
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return product;
+    }
+
+    //下架商品
+    public Product downProduct(String pid) throws SQLException {
+        Product product = new Product();
+        try {
+            conn = JdbcUtils.getConnection();
+            sql = "UPDATE product SET pflag = 0 WHERE pid = "+pid;
+            pstmt = conn.prepareStatement(sql);
+            pstmt.executeUpdate();
+            //重新获取此pid的内容
+            product = findProductByPid(pid);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return product;
+    }
+
+    //上架商品
+    public Product upProduct(String pid) throws SQLException {
+        Product product = new Product();
+        try {
+            conn = JdbcUtils.getConnection();
+            sql = "UPDATE product SET pflag = 1 WHERE pid = "+pid;
+            pstmt = conn.prepareStatement(sql);
+            pstmt.executeUpdate();
+            //重新获取此pid的内容
+            product = findProductByPid(pid);
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -78,7 +78,7 @@
         })
 
         $('#mytab').bootstrapTable({
-            url: "getjson",//数据源
+            url: "getOrderList",//数据源, getjson是不连接数据库的测试页面，getOrderList是直接返回内容的方法
             dataField: "rows",//服务端返回数据键值 就是说记录放的键值是rows，分页时使用总记录数的键值为total
             height: tableHeight(),//高度调整
             search: true,//是否搜索
