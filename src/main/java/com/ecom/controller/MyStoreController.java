@@ -21,4 +21,9 @@ public class MyStoreController {
         return "myproduct_info";
     }
 
+    @RequestMapping("/addProduct")
+    public String addProduct(){
+        return "addProduct";
+    }
+
 }
