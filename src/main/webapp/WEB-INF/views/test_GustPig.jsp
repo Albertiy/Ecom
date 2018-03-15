@@ -47,21 +47,16 @@
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                                 ×
                             </button>
-                            <h4 class="modal-title" id="myModalLabel">填写物流</h4>
+                            <h4 class="modal-title" id="myModalLabel">物流详情</h4>
                         </div>
                         <div class="modal-body">
-                            <form role="form" action="javascript:void(0)">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" id="company" placeholder="请输入物流公司">
+                                <div class="">
+                                    <h5>物流公司：<%= request.getParameter("company")%></h5>
+                                    <h6></h6>
                                 </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" id="did" placeholder="请输入快递单号">
-                                </div>
-                            </form>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                            <button type="button" class="btn btn-primary" id="addRecord">确认发货</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">返回</button>
                         </div>
                     </div>
                 </div>
