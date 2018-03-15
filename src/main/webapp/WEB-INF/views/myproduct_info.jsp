@@ -1,4 +1,4 @@
-<%--
+<%@ page import="com.ecom.pojo.Product" %><%--
   Created by IntelliJ IDEA.
   User: Damon
   Date: 2018/3/13
@@ -14,6 +14,20 @@
     <script src="js/jquery-1.11.3.min.js" type="text/javascript"></script>
     <script src="js/bootstrap.min.js" type="text/javascript"></script>
     <script src="js/product_info.js" type="text/javascript"></script>
+
+
+    <%
+        Product product = (Product) request.getAttribute("product");
+        int flag=product.getPflag();
+        String up = "disabled";
+        String down="disabled";
+        if(flag==1){
+            down="";
+        }
+        else if(flag==0){
+            up="";
+        }
+    %>
 </head>
 <body>
 <div class="container-fluid">
@@ -27,47 +41,46 @@
                 <a href="./蔬菜分类.htm">蔬菜&nbsp;&nbsp;&gt;</a>
                 <a>无公害蔬菜</a>
             </div>
-
-            <div style="margin: 0 auto; width: 950px; height: 350px">
-                <div class="col-md-6">
-                    <img style="opacity: 1; width: 400px; height: 350px;" title="" class="medium"
-                         src="products/c_0001.jpg">
-                </div>
-
-                <div class="col-md-6" style="height:350px">
+            <form id="fm" class="form-inline" role="form" action="" method="post">
+                <div style="margin: 0 auto; width: 950px; height: 350px">
                     <div class="col-md-6">
-                        <div>
-                            <strong>
-                                <input type="text" id="productName" name="productName" value="你的名字" style="border:none" readonly="readonly">
-                            </strong>
-                        </div>
-                        <div style="width: 350px; margin: 10px 0 10px 0;">
-                            <div>编号：${product.pid}</div>
-                        </div>
-
-                        <div style="width: 350px; margin: 10px 0 10px 0;">
-                            单价:
-                            <input type="text" id="price" name="price" value="1" maxlength="4" size="10" readonly="readonly">
-                            元 / 件
-                        </div>
-                        <div  style="width: 350px; margin: 10px 0 10px 0;">
-                            库存:
-                            <input type="text" id="StoreAmount" name="StoreAmount" value="1" maxlength="4" size="10" readonly="readonly">
-                            件
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <a id="modify" style="background-color: #d3d3d3; float:right; display: block" class="btn btn-default" role="button" onclick="modifyinfo()"><strong>修改</strong></a>
-                        <a id="confirm" style="background-color: #d3d3d3; float:right; display: none" class="btn btn-default" role="button"><strong>确定</strong></a>
-                    </div>
-                    <div class="col-md-12" style="margin-top: 150px">
-                        <a id="down" style="background-color: #eb5339; width: 100px; float:right" class="btn btn-default" role="button"><strong>下架</strong></a>
-                        <a id="up" style="background-color: #59d089; width: 100px; float: right" class="btn btn-default" role="button"><strong>上架</strong></a>
+                        <img style="opacity: 1; width: 400px; height: 350px;" title="" class="medium"
+                             src="${pageContext.request.contextPath}/${product.pimage}">
                     </div>
 
+                    <div class="col-md-6" style="height:350px">
+                        <div class="col-md-6">
+                            <div style="width: 350px; margin: 20px 0 10px 0;">
+                                    <label class="form-label">名称:</label>
+                                    <input class="form-control" type="text" id="productName" name="productName" value="${product.pname}" readonly="readonly">
+                            </div>
+                            <div style="width: 350px; margin: 20px 0 10px 0;">
+                                <label class="form-label">编号:</label>
+                                <input class="form-control" type="text" id="pid" name="pid" value="${product.pid}" readonly>
+                            </div>
+
+                            <div style="width: 350px; margin: 20px 0 10px 0;">
+                                <label class="form-label">单价:</label>
+                                <input class="form-control" type="text" id="price" name="price" value="${product.shop_price}" maxlength="4" readonly="readonly">
+                                元 / 件
+                            </div>
+                            <div  style="width: 350px; margin: 20px 0 10px 0;">
+                                <label class="form-label">库存:</label>
+                                <input class="form-control form-control-sm" type="text" id="storage" name="storage" value="${product.pstorage}" maxlength="4" readonly="readonly">
+                                件
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <a id="modify" style="background-color: #d3d3d3; float:right; display: block" class="btn btn-default" role="button" onclick="modifyinfo()"><strong>修改</strong></a>
+                            <a id="confirm" style="background-color: #d3d3d3; float:right; display: none" class="btn btn-default" role="button" onclick=document.getElementById("fm").submit();><strong>确定</strong></a>
+                        </div>
+                        <div class="col-md-12" style="margin-top: 85px">
+                            <a id="down" style="background-color: #eb5339; width: 100px; float:right" class="btn btn-default <%= down %>" role="button" href="${pageContext.request.contextPath}/downproduct?pid=${product.pid}"><strong>下架</strong></a>
+                            <a id="up" style="background-color: #59d089; width: 100px; float: right" class="btn btn-default <%= up %>" role="button" href="${pageContext.request.contextPath}/upproduct?pid=${product.pid}"><strong>上架</strong></a>
+                        </div>
+                    </div>
                 </div>
-            </div>
-
+            </form>
             <div class="clear"></div>
 
             <div style="width: 950px; margin: 0 auto;">

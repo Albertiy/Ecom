@@ -4,6 +4,9 @@ package com.ecom.service;
 import com.ecom.dao.ProductDao;
 import com.ecom.pojo.PageBean;
 import com.ecom.pojo.Product;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -13,12 +16,9 @@ public class ProductService {
     //通过sid查找product
     public PageBean findProductListBySid(String sid, int currentPage, int currentCount) {
 
-        ProductDao dao = new ProductDao();
-
-
 //        封装一个PageBean返回给web层
         PageBean<Product> pageBean = new PageBean<Product>();
-
+        ProductDao dao = new ProductDao();
 
 //        1.封装当前页
         pageBean.setCurrentPage(currentPage);
@@ -48,5 +48,45 @@ public class ProductService {
         return pageBean;
     }
 
+    //通过Pid查询商品信息
+    public Product findProductInfoByPid(String pid){
+        Product product = new Product();
+        ProductDao dao = new ProductDao();
+        //调用dao借口访问数据库查询商品
+        try {
+            product = dao.findProductByPid(pid);
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+        return product;
+    }
 
+    //下架商品
+    public Product downProduct(String pid){
+        Product product = new Product();
+        ProductDao dao = new ProductDao();
+        //调用dao下架
+        try {
+            product = dao.downProduct(pid);
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+        return product;
+    }
+
+    //上架商品
+    public Product upProduct(String pid){
+        Product product = new Product();
+        ProductDao dao = new ProductDao();
+        //调用dao下架
+        try {
+            product = dao.upProduct(pid);
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+        return product;
+    }
 }

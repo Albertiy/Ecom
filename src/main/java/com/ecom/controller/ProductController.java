@@ -14,7 +14,7 @@ import com.ecom.pojo.*;
 @Controller
 public class ProductController {
 
-    //    根据商品的类别获得商品的目录
+    //    根据店铺号获得商品的目录
     @RequestMapping("/product_list")
     public void productList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -49,5 +49,41 @@ public class ProductController {
         request.setAttribute("pageBean", pageBean);
 
         request.getRequestDispatcher("/mystore").forward(request, response);
+    }
+
+    @RequestMapping("/product_info")
+    public void productInfo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        Product product = new Product();
+        String pid = request.getParameter("pid");
+        ProductService service = new ProductService();
+        //调用service查询具体商品信息
+        product = service.findProductInfoByPid(pid);
+
+        request.setAttribute("product", product);
+        request.getRequestDispatcher("/myproduct_info").forward(request, response);
+    }
+
+    @RequestMapping("/downproduct")
+    public void downProduct(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Product product = new Product();
+        String pid = request.getParameter("pid");
+        ProductService service = new ProductService();
+        //调用service下架商品
+        product = service.downProduct(pid);
+
+        request.setAttribute("product", product);
+        request.getRequestDispatcher("/myproduct_info").forward(request, response);
+    }
+    @RequestMapping("/upproduct")
+    public void upProduct(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Product product = new Product();
+        String pid = request.getParameter("pid");
+        ProductService service = new ProductService();
+        //调用service下架商品
+        product = service.upProduct(pid);
+
+        request.setAttribute("product", product);
+        request.getRequestDispatcher("/myproduct_info").forward(request, response);
     }
 }
