@@ -29,7 +29,7 @@
             </c:if>
             <li><a href="cart.jsp">购物车</a></li>
             <li><a href="order_list.jsp">我的订单</a></li>
-            <li><a href="mystore">我的店铺</a></li>
+            <li><a href="${pageContext.request.contextPath}/product_list?sid=456">我的店铺</a></li>
         </ol>
     </div>
 </div>

@@ -48,5 +48,19 @@ public class ProductService {
         return pageBean;
     }
 
+    //通过Pid查询商品信息
+    public Product findProductInfoByPid(String pid){
+        Product product = new Product();
+        ProductDao dao = new ProductDao();
+        //调用dao借口访问数据库查询商品
+        try {
+            product = dao.findProductByPid(pid);
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+        return product;
+    }
+
 
 }

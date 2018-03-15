@@ -80,4 +80,33 @@ public class ProductDao {
         return count;
     }
 
+    //通过pid访问数据库查询商品
+    public Product findProductByPid(String pid) throws SQLException {
+        Product product = new Product();
+        try {
+            conn = JdbcUtils.getConnection();
+            sql = "select * from product where pid = ?";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1,pid);
+            rs = pstmt.executeQuery();
+            System.out.println("通过pid查询product成功");
+            if(rs.next()) {
+                product.setPid(rs.getString("pid"));
+                product.setSid(rs.getInt("sid"));
+                product.setPname(rs.getString("pname"));
+                product.setCid(rs.getString("cid"));
+                product.setShop_price(rs.getFloat("shop_price"));
+                product.setPdesc(rs.getString("pdesc"));
+                product.setPsold(rs.getInt("psold"));
+                product.setIncompleteness_pturnover(rs.getFloat("incompleteness_pturnover"));
+                product.setPturnover(rs.getFloat("pturnover"));
+                product.setPimage(rs.getString("pimage"));
+                product.setPflag(rs.getInt("pflag"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return product;
+    }
 }
