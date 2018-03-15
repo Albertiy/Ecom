@@ -29,7 +29,7 @@
             </c:if>
             <li><a href="cart.jsp">购物车</a></li>
             <li><a href="order_list.jsp">我的订单</a></li>
-            <li><a href="order_list.jsp">我的店铺</a></li>
+            <li><a href="mystore">我的店铺</a></li>
         </ol>
     </div>
 </div>
@@ -59,6 +59,8 @@
                             <li><a href="myproduct_info">移动通讯</a></li>
                             <li><a href="#">数码</a></li>
                             <li><a href="#">家电</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="addProduct">添加商品</a></li>
                         </ul>
                     </li>
                     <li role="presentation" class="dropdown">
