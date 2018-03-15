@@ -63,4 +63,27 @@ public class ProductController {
         request.setAttribute("product", product);
         request.getRequestDispatcher("/myproduct_info").forward(request, response);
     }
+
+    @RequestMapping("/downproduct")
+    public void downProduct(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Product product = new Product();
+        String pid = request.getParameter("pid");
+        ProductService service = new ProductService();
+        //调用service下架商品
+        product = service.downProduct(pid);
+
+        request.setAttribute("product", product);
+        request.getRequestDispatcher("/myproduct_info").forward(request, response);
+    }
+    @RequestMapping("/upproduct")
+    public void upProduct(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Product product = new Product();
+        String pid = request.getParameter("pid");
+        ProductService service = new ProductService();
+        //调用service下架商品
+        product = service.upProduct(pid);
+
+        request.setAttribute("product", product);
+        request.getRequestDispatcher("/myproduct_info").forward(request, response);
+    }
 }

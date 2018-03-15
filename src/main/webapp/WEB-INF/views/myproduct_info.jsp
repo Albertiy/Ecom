@@ -1,4 +1,4 @@
-<%--
+<%@ page import="com.ecom.pojo.Product" %><%--
   Created by IntelliJ IDEA.
   User: Damon
   Date: 2018/3/13
@@ -14,6 +14,20 @@
     <script src="js/jquery-1.11.3.min.js" type="text/javascript"></script>
     <script src="js/bootstrap.min.js" type="text/javascript"></script>
     <script src="js/product_info.js" type="text/javascript"></script>
+
+
+    <%
+        Product product = (Product) request.getAttribute("product");
+        int flag=product.getPflag();
+        String up = "disabled";
+        String down="disabled";
+        if(flag==1){
+            down="";
+        }
+        else if(flag==0){
+            up="";
+        }
+    %>
 </head>
 <body>
 <div class="container-fluid">
@@ -31,7 +45,7 @@
                 <div style="margin: 0 auto; width: 950px; height: 350px">
                     <div class="col-md-6">
                         <img style="opacity: 1; width: 400px; height: 350px;" title="" class="medium"
-                             src="products/c_0001.jpg">
+                             src="${pageContext.request.contextPath}/${product.pimage}">
                     </div>
 
                     <div class="col-md-6" style="height:350px">
@@ -61,8 +75,8 @@
                             <a id="confirm" style="background-color: #d3d3d3; float:right; display: none" class="btn btn-default" role="button" onclick=document.getElementById("fm").submit();><strong>确定</strong></a>
                         </div>
                         <div class="col-md-12" style="margin-top: 85px">
-                            <a id="down" style="background-color: #eb5339; width: 100px; float:right" class="btn btn-default" role="button"><strong>下架</strong></a>
-                            <a id="up" style="background-color: #59d089; width: 100px; float: right" class="btn btn-default" role="button"><strong>上架</strong></a>
+                            <a id="down" style="background-color: #eb5339; width: 100px; float:right" class="btn btn-default <%= down %>" role="button" href="${pageContext.request.contextPath}/downproduct?pid=${product.pid}"><strong>下架</strong></a>
+                            <a id="up" style="background-color: #59d089; width: 100px; float: right" class="btn btn-default <%= up %>" role="button" href="${pageContext.request.contextPath}/upproduct?pid=${product.pid}"><strong>上架</strong></a>
                         </div>
                     </div>
                 </div>
