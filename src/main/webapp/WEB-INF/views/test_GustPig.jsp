@@ -43,24 +43,15 @@
             <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                                ×
-                            </button>
-                            <h4 class="modal-title" id="myModalLabel">物流详情</h4>
-                        </div>
-                        <div class="modal-body">
-                                <div class="">
-                                    <h5>物流公司：<%= request.getParameter("company")%></h5>
-                                    <h6></h6>
-                                </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">返回</button>
-                        </div>
+                      <!--  //内容在expressmodal.jsp中 -->
                     </div>
                 </div>
             </div>
+            <script type="text/javascript">
+                $("#addModal").on("hidden.bs.modal", function() {    
+                    $(this).removeData("bs.modal");  
+                });
+            </script>
             <!-- end: 自定义表格 -->
             <jsp:include page="footer.jsp" flush="true"></jsp:include>
             <script type="text/javascript">
@@ -214,7 +205,7 @@
                 {
                     var buttons='<button class="btn btn-success">订单详情</button>'
                         + '&nbsp;&nbsp;'
-                        + '<button class="btn btn-warning" data-toggle="modal" data-target="#addModal">物流信息</button>';
+                        + '<a href="findExpress?sid='+row.sid+'&oid='+row.oid+'" class="btn btn-warning" data-toggle="modal" data-target="#addModal">物流信息</a>';
                     return buttons;
                 }
             </script>

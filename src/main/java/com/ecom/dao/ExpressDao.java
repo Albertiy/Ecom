@@ -7,8 +7,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ExpressDao {
     private	static Connection conn = null;
@@ -16,8 +14,8 @@ public class ExpressDao {
     String sql=null;
     public static ResultSet rs;
 
-    public List<Express> findExpress(String sid, String oid) throws SQLException {
-        ArrayList<Express> list = new ArrayList<Express>();
+    public Express findExpress(String sid, String oid) throws SQLException {
+        Express express = new Express();
         try {
             conn = JdbcUtils.getConnection();
             sql = "select * from Express where sid = ? and oid = ?";
@@ -27,7 +25,6 @@ public class ExpressDao {
             rs = pstmt.executeQuery();
             System.out.println("通过sid,oid查询Express成功");
             while(rs.next()){
-                Express express = new Express();
                 express.setEid(rs.getInt("eid"));
                 express.setSid(rs.getInt("sid"));
                 express.setOid(rs.getInt("oid"));
@@ -35,12 +32,11 @@ public class ExpressDao {
                 express.seteAddress(rs.getString("eAddress"));
                 express.setsAddress(rs.getString("sAddress"));
                 express.seteCompany(rs.getString("eCompany"));
-                list.add(express);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return list;
+        return express;
     }
 
 }
