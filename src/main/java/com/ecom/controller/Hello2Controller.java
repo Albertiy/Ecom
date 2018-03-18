@@ -1,19 +1,18 @@
 package com.ecom.controller;
 
-import com.ecom.dao.VarietyDao;
 import com.ecom.pojo.Order;
+import com.ecom.pojo.OrderData;
 import com.ecom.pojo.OrderPageBean;
 import com.ecom.service.OrderService;
 import com.google.gson.*;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import java.util.*;
 
 @Controller
 public class Hello2Controller {
@@ -70,5 +69,24 @@ public class Hello2Controller {
         jsonObject.add("rows",new JsonParser().parse(orderJson).getAsJsonArray());
         System.out.println(jsonObject.toString());
         return jsonObject.toString();
+    }
+
+    @RequestMapping("/getOrderDetails")
+    //@ResponseBody
+    public String getOrderDetails(@RequestParam(value = "odata",defaultValue = "") String odata, Map<String,Object> map){
+        System.out.println("【getOrderDetails】");
+        List<OrderData> orderDetails = new ArrayList<OrderData>();
+        try {
+            //先转JsonObject
+            JsonObject jsonObject = new JsonParser().parse(odata).getAsJsonObject();
+            //再转JsonArray 加上数据头
+            JsonArray jsonArray = jsonObject.getAsJsonArray("odata");
+            orderDetails = gson.fromJson(jsonArray.toString(), orderDetails.getClass());
+        }catch(Exception e){
+            System.out.println("orderData 格式转换失败！");
+            System.out.println(e);
+        }
+        map.put("orderDetails",orderDetails);
+        return "order_table_details";
     }
 }

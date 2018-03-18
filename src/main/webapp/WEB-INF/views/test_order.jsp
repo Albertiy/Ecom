@@ -186,10 +186,29 @@
             },//单击row事件
             locale: "zh-CN", //中文支持
             detailView: true, //是否显示详情折叠
-            detailFormatter: function(index, row, element) {
+            detailFormatter: function(index, row, element) {//自定义详情折叠页内容
                 var html = '';
-                $.each(row, function(key, val){
+                /*$.each(row, function(key, val){//$.each 是 JQuery 的 遍历函数
                     html += "<p>" + key + ":" + val +  "</p>"
+                });*/
+                /*$.post("getOrderDetails",row,function(data) {//这个版本的post函数不存在
+                    html += data;
+                });*/
+                //console.log(row);//row有内容
+                $.ajax({
+                    async: false,//重要且必须
+                    type: 'POST',
+                    url: "getOrderDetails",
+                    data: row,
+                    success: function(data){
+                        console.log("getOrderDetails ajax success!");
+                        console.log(data);
+                        html += data;
+                        //return 200;
+                    },error:function(){
+                        console.log('getOrderDetails ajax error!');
+                    },
+                    dataType:'html'
                 });
                 return html;
             }
