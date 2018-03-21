@@ -215,7 +215,9 @@ public class ProductController {
                     //pwout.print("文件名：" + filename + "<br>");
                     message=message.concat("文件名：" + filename + "<br>");
                     //如果需要限制上传的文件类型，那么可以通过文件的扩展名来判断上传的文件类型是否合法
-                    String fileExtName = filename.substring(filename.lastIndexOf(".") + 1);
+                    //String fileExtName = filename.substring(filename.lastIndexOf(".") + 1);
+                    //后缀名统一为jpg
+                    String fileExtName = "jpg";
                     System.out.println("上传的文件的扩展名是：" + fileExtName);
                     //pwout.print("扩展名：" + fileExtName + "<br>");
                     message=message.concat("扩展名：" + fileExtName + "<br>");

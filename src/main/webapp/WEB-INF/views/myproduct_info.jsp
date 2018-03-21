@@ -214,32 +214,31 @@
                             aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                    <h4 class="modal-title" id="myModalLabel">Change Image</h4>
+                    <h4 class="modal-title" id="myModalLabel">更换图片</h4>
                 </div>
                 <div class="modal-body">
                     <form accept-charset="UTF-8" action="uploadimage" method="post"
                           enctype="multipart/form-data" class="form-horizontal" id="formImg">
                         <div class="form-group">
-                            <label for="form_file" class="col-sm-2 control-label">更换封面</label>
                             <!-- accept="image/*"， accept="image/png, image/jpeg, image/gif, image/jpg"无效 -->
                             <div class="col-sm-10" id="up_img">
                                 <label for="form_file" class="btn btn-primary">选择图片</label>
-                                <input type="text" name="image_pid" id="image_pid"
+                                <input type="text" name="image_pid" id="image_pid" style="display: none"
                                        class="form-control form-control-lg input-block" value="${product.pid}">
                                 <!-- style="display:none"有效, hidden=hidden无效, style="position:absolute;clip:rect(0 0 0 0);"有效 -->
                                 <input type="file" name="file" id="form_file" accept="image/*"
                                        class="upfile" style="display: none">
-                                <div id="imglist">
-                                    <img id="singleImg" class="img-thumbnail img-responsive book_thumb center-block"
-                                         src="${pageContext.request.contextPath}/${product.pimage}" alt="尚未选择图片或图片无效"/>
-                                </div>
+                            </div>
+                            <div style="padding: 20px" id="imglist">
+                                <img id="singleImg" class="img-thumbnail img-responsive book_thumb center-block"
+                                     src="${pageContext.request.contextPath}/${product.pimage}" alt="尚未选择图片或图片无效"/>
                             </div>
 
                         </div>
                         <div class="modal-footer">
                             <input type="submit" class="btn btn-success" value="确认">
                             <button type="button" class="btn btn-default"
-                                    data-dismiss="modal">Close
+                                    data-dismiss="modal">取消
                             </button>
                         </div>
                     </form>
