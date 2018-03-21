@@ -90,8 +90,8 @@ public class ProductDao {
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1,pid);
             rs = pstmt.executeQuery();
-            System.out.println("通过pid查询product成功");
             if(rs.next()) {
+                System.out.println("通过pid查询product成功");
                 product.setPid(rs.getString("pid"));
                 product.setSid(rs.getInt("sid"));
                 product.setPname(rs.getString("pname"));
@@ -133,6 +133,28 @@ public class ProductDao {
         try {
             conn = JdbcUtils.getConnection();
             sql = "UPDATE product SET pflag = 1 WHERE pid = "+pid;
+            pstmt = conn.prepareStatement(sql);
+            pstmt.executeUpdate();
+            //重新获取此pid的内容
+            product = findProductByPid(pid);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return product;
+    }
+
+    //更改商品信息
+    public Product modifyProduct(String pid) throws SQLException {
+        Product product = new Product();
+        return product;
+    }
+
+    //修改商品图片
+    public Product modifyProductImage(String pid) throws SQLException {
+        Product product = new Product();
+        try {
+            conn = JdbcUtils.getConnection();
+            sql = "UPDATE product SET pimage = 'images/Files/" +pid+".jpg'WHERE pid = "+pid;
             pstmt = conn.prepareStatement(sql);
             pstmt.executeUpdate();
             //重新获取此pid的内容

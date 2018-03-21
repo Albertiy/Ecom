@@ -89,4 +89,32 @@ public class ProductService {
         }
         return product;
     }
+
+    //更改商品信息
+    public Product modifyProduct(String pid){
+        Product product = new Product();
+        ProductDao dao = new ProductDao();
+        //调用dao下架
+        try {
+            product = dao.modifyProduct(pid);
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+        return product;
+    }
+
+    //更改商品图片信息
+    public Product modifyProductImage(String pid){
+        Product product = new Product();
+        ProductDao dao = new ProductDao();
+        //调用dao修改数据库保存的图片路径
+        try {
+            product = dao.modifyProductImage(pid);
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+        return product;
+    }
 }
