@@ -89,5 +89,29 @@
   </dependencies>
   <build>
     <finalName>Ecom</finalName>
+      <!--即使不会配置IDEA，通过Maven的pom.xml配置也可以正常导入配置到target文件夹中-->
+      <resources>
+          <resource>
+              <directory>${basedir}/src/main/java</directory>
+              <includes>
+                  <include>**/*.properties</include>
+                  <include>**/*.xml</include>
+              </includes>
+          </resource>
+          <resource>
+              <directory>${basedir}/src/main/resources</directory>
+          </resource>
+      </resources>
+      <!--解决Intellij构建项目时，target/classes目录下不存在mapper.xml文件-->
+<!--      <resources>
+          <resource>
+              <directory>${basedir}/src/main/resources</directory>
+              <includes>
+                  <include>springContext.xml</include>
+                  <include>applicationContext1.xml</include>
+                  <include>log4j.properties</include>
+              </includes>
+          </resource>
+      </resources>-->
   </build>
 </project>

@@ -1,5 +1,6 @@
 package com.ecom.controller;
 
+import com.ecom.auth.AuthSeller;
 import com.ecom.pojo.Order;
 import com.ecom.pojo.OrderData;
 import com.ecom.pojo.OrderPageBean;
@@ -9,7 +10,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import java.util.*;
@@ -18,13 +18,14 @@ import java.util.*;
 public class Hello2Controller {
 
     //获取Gson的Bean
-    static ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext1.xml");
+    public static ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext1.xml");
     private Gson gson = (Gson)context.getBean("gson");
 
     @Resource(name="orderService")
     private OrderService orderService;
 
     @RequestMapping("/testorder")
+    @AuthSeller
     public String testOrder(){
         System.out.println("【/testorder】");
         return "test_order";
