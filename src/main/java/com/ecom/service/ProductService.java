@@ -91,12 +91,12 @@ public class ProductService {
     }
 
     //更改商品信息
-    public Product modifyProduct(String pid){
+    public Product modifyProduct(String pid, String pname, Float price, int pstrorage){
         Product product = new Product();
         ProductDao dao = new ProductDao();
         //调用dao下架
         try {
-            product = dao.modifyProduct(pid);
+            product = dao.modifyProduct(pid, pname, price, pstrorage);
         }
         catch (SQLException e){
             e.printStackTrace();

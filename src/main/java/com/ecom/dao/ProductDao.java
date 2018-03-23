@@ -33,16 +33,19 @@ public class ProductDao {
             while(rs.next()){
                 Product product = new Product();
                 product.setPid(rs.getString("pid"));
-                product.setSid(rs.getInt("sid"));
+                product.setSid(rs.getString("sid"));
                 product.setPname(rs.getString("pname"));
                 product.setCid(rs.getString("cid"));
-                product.setShop_price(rs.getFloat("shop_price"));
+                product.setPrice(rs.getFloat("price"));
                 product.setPdesc(rs.getString("pdesc"));
+                product.setPdate(rs.getString("pdate"));
+                product.setPstorage(rs.getInt("pstorage"));
                 product.setPsold(rs.getInt("psold"));
-                product.setIncompleteness_pturnover(rs.getFloat("incompleteness_pturnover"));
+                product.setUnpturnover(rs.getFloat("unpturnover"));
                 product.setPturnover(rs.getFloat("pturnover"));
                 product.setPimage(rs.getString("pimage"));
-                product.setPflag(rs.getInt("pflag"));
+                product.setState(rs.getString("state"));
+                product.setIs_hot(rs.getInt("is_hot"));
                 list.add(product);
             }
 
@@ -61,7 +64,7 @@ public class ProductDao {
         try {
             List<Product> list = null;
             conn = JdbcUtils.getConnection();
-            sql = "select count(*) from product where sid = ? and pflag = 1 ";
+            sql = "select count(*) from product where sid = ? and state = 1 ";
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1,sid);
             rs = pstmt.executeQuery();
@@ -93,16 +96,19 @@ public class ProductDao {
             if(rs.next()) {
                 System.out.println("通过pid查询product成功");
                 product.setPid(rs.getString("pid"));
-                product.setSid(rs.getInt("sid"));
+                product.setSid(rs.getString("sid"));
                 product.setPname(rs.getString("pname"));
                 product.setCid(rs.getString("cid"));
-                product.setShop_price(rs.getFloat("shop_price"));
+                product.setPrice(rs.getFloat("price"));
                 product.setPdesc(rs.getString("pdesc"));
+                product.setPdate(rs.getString("pdate"));
+                product.setPstorage(rs.getInt("pstorage"));
                 product.setPsold(rs.getInt("psold"));
-                product.setIncompleteness_pturnover(rs.getFloat("incompleteness_pturnover"));
+                product.setUnpturnover(rs.getFloat("unpturnover"));
                 product.setPturnover(rs.getFloat("pturnover"));
                 product.setPimage(rs.getString("pimage"));
-                product.setPflag(rs.getInt("pflag"));
+                product.setState(rs.getString("state"));
+                product.setIs_hot(rs.getInt("is_hot"));
             }
 
         } catch (SQLException e) {
@@ -116,7 +122,7 @@ public class ProductDao {
         Product product = new Product();
         try {
             conn = JdbcUtils.getConnection();
-            sql = "UPDATE product SET pflag = 0 WHERE pid = "+pid;
+            sql = "UPDATE product SET state = 0 WHERE pid = "+pid;
             pstmt = conn.prepareStatement(sql);
             pstmt.executeUpdate();
             //重新获取此pid的内容
@@ -132,7 +138,7 @@ public class ProductDao {
         Product product = new Product();
         try {
             conn = JdbcUtils.getConnection();
-            sql = "UPDATE product SET pflag = 1 WHERE pid = "+pid;
+            sql = "UPDATE product SET state = 1 WHERE pid = "+pid;
             pstmt = conn.prepareStatement(sql);
             pstmt.executeUpdate();
             //重新获取此pid的内容
@@ -144,8 +150,18 @@ public class ProductDao {
     }
 
     //更改商品信息
-    public Product modifyProduct(String pid) throws SQLException {
+    public Product modifyProduct(String pid, String pname, Float price, int pstrorage) throws SQLException {
         Product product = new Product();
+        try {
+            conn = JdbcUtils.getConnection();
+            sql = "UPDATE product SET pname ='"+pname+"', price ="+price+", pstorage = "+pstrorage+" WHERE pid = "+pid;
+            pstmt = conn.prepareStatement(sql);
+            pstmt.executeUpdate();
+            //重新获取此pid的内容
+            product = findProductByPid(pid);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return product;
     }
 

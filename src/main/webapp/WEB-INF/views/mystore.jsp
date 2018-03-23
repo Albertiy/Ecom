@@ -36,7 +36,7 @@
                    style='color: green'>${pro.pname}</a>
             </p>
             <p>
-                <font color="#FF0000">单价：${pro.shop_price}</font>
+                <font color="#FF0000">单价：${pro.price}</font>
             </p>
         </div>
 
