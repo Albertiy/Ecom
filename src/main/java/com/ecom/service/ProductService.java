@@ -2,6 +2,7 @@ package com.ecom.service;
 
 
 import com.ecom.dao.ProductDao;
+import com.ecom.pojo.Category;
 import com.ecom.pojo.PageBean;
 import com.ecom.pojo.Product;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,21 @@ import java.util.List;
 
 
 public class ProductService {
+
+    // 找到所有分类
+    public List<Category> findAllCategroy() {
+        ProductDao dao = new ProductDao();
+        List<Category> categoryList = null;
+        try {
+            categoryList = dao.findAllCategroy();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return categoryList;
+    }
+
+
+
 
     //通过sid查找product
     public PageBean findProductListBySid(String sid, int currentPage, int currentCount) {
