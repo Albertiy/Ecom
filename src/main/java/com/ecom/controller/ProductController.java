@@ -106,11 +106,15 @@ public class ProductController {
     public void modifyProduct(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Product product = new Product();
         String pid = request.getParameter("pid");
-        String pname = request.getParameter("productname");
+        String pname = request.getParameter("pname");
+        System.out.println(pname);
         String sprice = request.getParameter("price");
+        Float price = Float.parseFloat(sprice);
+        String spstorage = request.getParameter("pstorage");
+        int pstorage = Integer.parseInt(spstorage);
         ProductService service = new ProductService();
         //调用service更新产品信息
-
+        product = service.modifyProduct(pid, pname, price, pstorage);
 
         request.setAttribute("product", product);
         request.getRequestDispatcher("/myproduct_info").forward(request, response);

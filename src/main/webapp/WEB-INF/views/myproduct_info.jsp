@@ -18,13 +18,13 @@
     <%-- 判断商品是否上架 --%>
     <%
         Product product = (Product) request.getAttribute("product");
-        int flag=product.getPflag();
+        String state=product.getState();
         String up = "disabled";
         String down="disabled";
-        if(flag==1){
+        if(state=="1"){
             down="";
         }
-        else if(flag==0){
+        else if(state=="0"){
             up="";
         }
     %>
@@ -115,21 +115,19 @@
                 <a href="./蔬菜分类.htm">蔬菜&nbsp;&nbsp;&gt;</a>
                 <a>无公害蔬菜</a>
             </div>
-            <form id="fm" class="form-inline" role="form" action="/modifyproduct" method="post">
+            <div class="row">
+            <form id="fm" class="form-inline" role="form" action="modifyproduct" method="post">
                 <div style="margin: 0 auto; width: 950px; height: 350px">
                     <div class="col-md-6">
-
-                            <img style="cursor: pointer; opacity: 1; width: 400px; height: 350px;" title="" class="medium"
-                                src="${pageContext.request.contextPath}/${product.pimage}" onclick=$('#myModal').modal('show')>
-
-
+                        <img style="cursor: pointer; opacity: 1; width: 400px; height: 350px;" title="" class="medium"
+                             src="${pageContext.request.contextPath}/${product.pimage}" onclick=$('#myModal').modal('show')>
                     </div>
 
                     <div class="col-md-6" style="height:350px">
                         <div class="col-md-6">
                             <div style="width: 350px; margin: 20px 0 10px 0;">
                                     <label class="form-label">名称:</label>
-                                    <input class="form-control" type="text" id="productName" name="productName" value="${product.pname}" readonly="readonly">
+                                    <input class="form-control" type="text" id="pname" name="pname" value="${product.pname}" readonly="readonly">
                             </div>
                             <div style="width: 350px; margin: 20px 0 10px 0;">
                                 <label class="form-label">编号:</label>
@@ -138,12 +136,17 @@
 
                             <div style="width: 350px; margin: 20px 0 10px 0;">
                                 <label class="form-label">单价:</label>
-                                <input class="form-control" type="text" id="price" name="price" value="${product.shop_price}" maxlength="4" readonly="readonly">
+                                <input class="form-control" type="text" id="price" name="price"
+                                       oninvalid="setCustomValidaty('round to 2 decimal places')"
+                                       oninput="setCustomValidity('')"
+                                       pattern="^(([1-9]\d{0,9})|0)(\.\d{1,2})?$"
+                                       value="${product.price}" readonly="readonly">
                                 元 / 件
                             </div>
+
                             <div  style="width: 350px; margin: 20px 0 10px 0;">
                                 <label class="form-label">库存:</label>
-                                <input class="form-control form-control-sm" type="text" id="storage" name="storage" value="${product.pstorage}" maxlength="4" readonly="readonly">
+                                <input class="form-control form-control-sm" type="text" id="pstorage" name="pstorage" value="${product.pstorage}" maxlength="4" readonly="readonly">
                                 件
                             </div>
                         </div>
@@ -158,6 +161,7 @@
                     </div>
                 </div>
             </form>
+            </div>
             <div class="clear"></div>
 
             <div style="width: 950px; margin: 0 auto;">

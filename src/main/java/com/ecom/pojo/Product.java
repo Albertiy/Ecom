@@ -2,32 +2,38 @@ package com.ecom.pojo;
 
 public class Product {
     /*create table IF NOT EXISTS product(
-            pid varchar(50) primary key,
-    sid int not null,	-- 默认店铺id
+    pid varchar(50) not null primary key,
+    sid varchar(50) not null,	-- 默认店铺id
     pname varchar(20) not null,	-- 商品名称
     cid varchar(50) not null,	-- 种类
-    shop_price float not null,	-- 价格
+    price float not null,	-- 价格
     pdesc varchar(255) not null, 	-- 商品简介
+    pdate datetime default null, -- 添加日期
     pstorage int not null,	-- 库存 付款后库存减少， 退货后增加
     psold int not null default 0 , -- 已出售数量 付款后已卖出数量增加，退货后减少
-    incompleteness_pturnover float not null default 0.0, -- 未到账的营业额， 付款后增加，订单完成后减少
+    unpturnover float not null default 0.0, -- 未到账的营业额， 付款后增加，订单完成后减少
     pturnover float not null default 0.0, -- 营业额，考虑价格变动，所以通过订单完成时进行计算写入. 退款后减少
     pimage varchar(255), -- 服务器中的图片路径
-    pflag int not null default 0 -- 1-是否上架，0-默认未上架
-    -- constraint fksid foreign key(sid) references store(sid) -- 商品依附于店铺
-);*/
+    state varchar(10) not null default 0, -- 是否上架，默认未上架
+    is_hot int(11) default 1, -- 1-热门
+    constraint pfksid foreign key(sid) references store(sid), -- 商品依附于店铺
+    constraint pfkcid foreign key(cid) references category(cid)
+            );*/
+
     private String pid;
-    private int sid;
+    private String sid;
     private String pname;
     private String cid;
-    private float shop_price;
+    private float price;
     private String pdesc;
+    private String pdate;
     private int pstorage;
     private int psold;
-    private float incompleteness_pturnover;
+    private float unpturnover;
     private float pturnover;
     private String pimage;
-    private int pflag;
+    private String state;
+    private int is_hot;
 
     public String getPid() {
         return pid;
@@ -37,11 +43,11 @@ public class Product {
         this.pid = pid;
     }
 
-    public int getSid() {
+    public String getSid() {
         return sid;
     }
 
-    public void setSid(int sid) {
+    public void setSid(String sid) {
         this.sid = sid;
     }
 
@@ -61,12 +67,12 @@ public class Product {
         this.cid = cid;
     }
 
-    public float getShop_price() {
-        return shop_price;
+    public float getPrice() {
+        return price;
     }
 
-    public void setShop_price(float shop_price) {
-        this.shop_price = shop_price;
+    public void setPrice(float price) {
+        this.price = price;
     }
 
     public String getPdesc() {
@@ -75,6 +81,14 @@ public class Product {
 
     public void setPdesc(String pdesc) {
         this.pdesc = pdesc;
+    }
+
+    public String getPdate() {
+        return pdate;
+    }
+
+    public void setPdate(String pdate) {
+        this.pdate = pdate;
     }
 
     public int getPstorage() {
@@ -93,12 +107,12 @@ public class Product {
         this.psold = psold;
     }
 
-    public float getIncompleteness_pturnover() {
-        return incompleteness_pturnover;
+    public float getUnpturnover() {
+        return unpturnover;
     }
 
-    public void setIncompleteness_pturnover(float incompleteness_pturnover) {
-        this.incompleteness_pturnover = incompleteness_pturnover;
+    public void setUnpturnover(float unpturnover) {
+        this.unpturnover = unpturnover;
     }
 
     public float getPturnover() {
@@ -117,11 +131,19 @@ public class Product {
         this.pimage = pimage;
     }
 
-    public int getPflag() {
-        return pflag;
+    public String getState() {
+        return state;
     }
 
-    public void setPflag(int pflag) {
-        this.pflag = pflag;
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public int getIs_hot() {
+        return is_hot;
+    }
+
+    public void setIs_hot(int is_hot) {
+        this.is_hot = is_hot;
     }
 }
