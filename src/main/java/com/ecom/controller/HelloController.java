@@ -39,10 +39,6 @@ public class HelloController {
         return mv;
     }
 
-    @RequestMapping("/login")
-    public String login(){
-        return "login";
-    }
 
     @RequestMapping("/product")
     public String product(@RequestParam(value="method",required = false,defaultValue = "index")String method){
@@ -51,13 +47,5 @@ public class HelloController {
         return "index";
     }
 
-    @RequestMapping("/header")
-    public String getHeader(){
-        return "header";
-    }
 
-    @RequestMapping("/footer")
-    public String getFooter(){
-        return "footer";
-    }
 }

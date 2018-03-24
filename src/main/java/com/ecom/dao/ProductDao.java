@@ -1,8 +1,12 @@
 package com.ecom.dao;
 
 
+import com.ecom.pojo.Category;
 import com.ecom.pojo.Product;
+import com.ecom.utils.DataSourceUtils;
 import com.ecom.utils.JdbcUtils;
+import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
@@ -179,5 +183,12 @@ public class ProductDao {
             e.printStackTrace();
         }
         return product;
+    }
+
+    public List<Category> findAllCategroy() throws SQLException {
+        QueryRunner runner = new QueryRunner(DataSourceUtils.getDataSource());
+        String sql = "select * from category";
+        List<Category> query = runner.query(sql, new BeanListHandler<Category>(Category.class));
+        return query;
     }
 }
