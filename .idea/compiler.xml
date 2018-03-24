@@ -21,5 +21,8 @@
         <module name="Ecom" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="Ecom" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>

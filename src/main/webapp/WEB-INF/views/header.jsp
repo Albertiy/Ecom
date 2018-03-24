@@ -14,8 +14,8 @@
     <div class="col-md-3" style="padding-top:20px">
         <ol class="list-inline">
             <c:if test="${empty user }">
-                <li><a href="login.jsp">登录</a></li>
-                <li><a href="register.jsp">注册</a></li>
+                <li><a href="login">登录</a></li>
+                <li><a href="register">注册</a></li>
             </c:if>
             <c:if test="${!empty user }">
                 <li style="color:red">欢迎您，${user.username }</li>
@@ -66,7 +66,7 @@
             $(function () {
                 var content = "";
                 $.post(
-                    "${pageContext.request.contextPath}/product?method=categoryList",
+                    "${pageContext.request.contextPath}/categoryList",
                     function (data) {
                         //    [{"cid":"xxx","cname":"xxx"},{},{}]
                         //    动态的创建li
