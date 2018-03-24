@@ -20,6 +20,7 @@ public class OrderDao {
     private String sql2=null;
     public static ResultSet rs;
 
+
     /*
     * 未发货订单检索，包含搜索、排序以及分页后的返回值。
     * */
