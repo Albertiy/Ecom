@@ -8,9 +8,9 @@ import java.util.Date;
 
 @Component
 public class Express {
-    private int eid;            //运单id
-    private int oid;            //订单id
-    private int sid;            //店铺id
+    private String eid;            //运单id
+    private String oid;            //订单id
+    private String sid;            //店铺id
     @SerializedName("etime")
     private String eTime;       //发货时间
     @SerializedName("eaddress")
@@ -23,32 +23,31 @@ public class Express {
     public Express() {
         Date day=new Date();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        System.out.println("新的快递单|创建时间："+df.format(day));
         eTime = df.format(day);
-        eCompany = "自己联系";
+        eCompany = "EMS";
     }
 
-    public int getEid() {
+    public String getEid() {
         return eid;
     }
 
-    public void setEid(int eid) {
+    public void setEid(String eid) {
         this.eid = eid;
     }
 
-    public int getOid() {
+    public String getOid() {
         return oid;
     }
 
-    public void setOid(int oid) {
+    public void setOid(String oid) {
         this.oid = oid;
     }
 
-    public int getSid() {
+    public String getSid() {
         return sid;
     }
 
-    public void setSid(int sid) {
+    public void setSid(String sid) {
         this.sid = sid;
     }
 
