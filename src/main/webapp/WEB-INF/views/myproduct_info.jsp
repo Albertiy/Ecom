@@ -21,10 +21,10 @@
         String state=product.getState();
         String up = "disabled";
         String down="disabled";
-        if(state=="1"){
+        if(state.equals("1")){
             down="";
         }
-        else if(state=="0"){
+        else if(state.equals("0")){
             up="";
         }
     %>
