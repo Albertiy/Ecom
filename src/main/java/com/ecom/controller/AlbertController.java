@@ -15,7 +15,7 @@ import javax.annotation.Resource;
 import java.util.*;
 
 @Controller
-public class Hello2Controller {
+public class AlbertController {
 
     //获取Gson的Bean
     public static ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext1.xml");
@@ -24,11 +24,11 @@ public class Hello2Controller {
     @Resource(name="orderService")
     private OrderService orderService;
 
-    @RequestMapping("/testorder")
+    @RequestMapping("/unfilledOrder")
     @AuthSeller
     public String testOrder(){
-        System.out.println("【/testorder】");
-        return "test_order";
+        System.out.println("【/unfilledOrder】");
+        return "unfilled_order";
     }
 
     @RequestMapping("/testbootstrap")
@@ -63,7 +63,7 @@ public class Hello2Controller {
             @RequestParam(value = "other",defaultValue = "") String other   //other暂时用不到
     ){
         OrderPageBean<Order> orderPageBean = new OrderPageBean<Order>(search,sort,order,offset,limit);
-        orderPageBean = orderService.findUnFilledOrdersBySid(1,orderPageBean);
+        orderPageBean = orderService.findUnFilledOrdersBySid("1",orderPageBean);
         String orderJson = gson.toJson(orderPageBean.getList());
         JsonObject jsonObject = new JsonObject();
         jsonObject.add("total",new JsonPrimitive(orderPageBean.getTotal()));

@@ -1,8 +1,23 @@
 package com.ecom.pojo;
 
+import org.springframework.stereotype.Component;
+
+/**
+ * 对应 omdb.category 表
+ * */
+@Component
 public class Category {
+
     private String cid;
     private String cname;
+
+    public Category() {
+    }
+
+    public Category(String cid, String cname) {
+        this.cid = cid;
+        this.cname = cname;
+    }
 
     public String getCid() {
         return cid;
@@ -18,5 +33,13 @@ public class Category {
 
     public void setCname(String cname) {
         this.cname = cname;
+    }
+
+    @Override
+    public String toString() {
+        return "Category{" +
+                "cid='" + cid + '\'' +
+                ", cname='" + cname + '\'' +
+                '}';
     }
 }

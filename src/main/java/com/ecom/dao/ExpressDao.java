@@ -25,9 +25,9 @@ public class ExpressDao {
             rs = pstmt.executeQuery();
             System.out.println("通过sid,oid查询Express成功");
             while(rs.next()){
-                express.setEid(rs.getInt("eid"));
-                express.setSid(rs.getInt("sid"));
-                express.setOid(rs.getInt("oid"));
+                express.setEid(rs.getString("eid"));
+                express.setSid(rs.getString("sid"));
+                express.setOid(rs.getString("oid"));
                 express.seteTime(rs.getString("eTime"));
                 express.seteAddress(rs.getString("eAddress"));
                 express.setsAddress(rs.getString("sAddress"));

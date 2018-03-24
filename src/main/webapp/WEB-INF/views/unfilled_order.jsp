@@ -111,22 +111,22 @@
                     align: "center",//水平
                     valign: "middle"//垂直
                 },*/
-                {
+                /*{
                     title: "订单号",//标题
                     field: "oid",//键名
                     sortable: false,//是否可排序
                     order: "desc",//默认排序方式
                     titleTooltip: "订单号"
-                },
+                },*/
                 {
-                    title: "UID",
-                    field: "uid",
+                    title: "买家",
+                    field: "nickname",
                     sortable: false,
-                    titleTooltip: "买家ID"
+                    titleTooltip: "昵称"
                 },
                 {
-                    field: "amount",
-                    title: "商品金额",
+                    field: "total",
+                    title: "总金额",
                     sortable: true,
                     titleTooltip: "实付款"
                 },

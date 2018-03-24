@@ -2,7 +2,7 @@ package com.ecom.pojo;
 
 import java.util.List;
 
-/*
+/**
 * 自定义:根据bootstrap-table参数定制的Bean，拥有搜索、单列排序以及分页功能。
 * @search:  搜索的内容
 * @sort:    排序的列名(只取第一个，使用MYSql的简单排序，例：select * from table order by value1 desc)

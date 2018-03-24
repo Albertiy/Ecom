@@ -14,7 +14,7 @@ public class OrderService {
     @Resource(name = "orderDao")
     private OrderDao orderDao;
 
-    public OrderPageBean<Order> findUnFilledOrdersBySid(int sid,OrderPageBean<Order> orderPageBean){
+    public OrderPageBean<Order> findUnFilledOrdersBySid(String sid,OrderPageBean<Order> orderPageBean){
         System.out.println("【OrderService：开始】");
         try {
             orderPageBean = orderDao.findUnfilledOrders(sid, orderPageBean);

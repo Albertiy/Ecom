@@ -3,31 +3,51 @@ package com.ecom.pojo;
 import com.google.gson.annotations.SerializedName;
 import org.springframework.stereotype.Component;
 
+/**
+ * OrderData类 对应 omdb._order 的 odata 列
+ */
+
 @Component
 public class OrderData {
-    private int pid;
+    private String pid;
     private int pcount;
     @SerializedName("shop_price")
-    private int shopPrice;
+    private float shopPrice;
     @SerializedName("sub_total")
-    private int subTotal;
+    private float subTotal;
     private boolean returned;
     private boolean judged;
 
     public OrderData() {
         pcount = 1;
-        shopPrice = 1;
-        subTotal = 1;
+        shopPrice = 1.00f;
+        subTotal = 1.00f;
         returned = false;
         judged = false;
     }
 
-    public int getPid() {
+    public String getPid() {
         return pid;
     }
 
-    public void setPid(int pid) {
+    public void setPid(String pid) {
         this.pid = pid;
+    }
+
+    public float getShopPrice() {
+        return shopPrice;
+    }
+
+    public void setShopPrice(float shopPrice) {
+        this.shopPrice = shopPrice;
+    }
+
+    public float getSubTotal() {
+        return subTotal;
+    }
+
+    public void setSubTotal(float subTotal) {
+        this.subTotal = subTotal;
     }
 
     public int getPcount() {
@@ -36,22 +56,6 @@ public class OrderData {
 
     public void setPcount(int pcount) {
         this.pcount = pcount;
-    }
-
-    public int getShopPrice() {
-        return shopPrice;
-    }
-
-    public void setShopPrice(int shopPrice) {
-        this.shopPrice = shopPrice;
-    }
-
-    public int getSubTotal() {
-        return subTotal;
-    }
-
-    public void setSubTotal(int subTotal) {
-        this.subTotal = subTotal;
     }
 
     public boolean isReturned() {

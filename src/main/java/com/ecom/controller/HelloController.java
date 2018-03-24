@@ -1,14 +1,12 @@
 package com.ecom.controller;
 
-import com.ecom.dao.VarietyDao;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.ecom.dao.CategoryDao;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.jws.WebParam;
 import java.util.Map;
 
 @Controller
@@ -18,7 +16,7 @@ public class HelloController {
 
 
     //@Autowired
-    private VarietyDao varietyDao=new VarietyDao();
+    private CategoryDao categoryDao=new CategoryDao();
 
     @RequestMapping(value = "/variety",method = RequestMethod.GET)
     public String varietyInput(){
@@ -27,7 +25,7 @@ public class HelloController {
 
     @RequestMapping("/varietylist")
     public String varietyList(Map<String,Object> map){
-        map.put("varieties",varietyDao.getVarieties());
+        map.put("varieties",categoryDao.getCategoryies());
         return "varietylist";
     }
 
