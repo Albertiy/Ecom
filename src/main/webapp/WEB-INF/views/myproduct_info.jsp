@@ -137,6 +137,7 @@
                             <div style="width: 350px; margin: 20px 0 10px 0;">
                                 <label class="form-label">单价:</label>
                                 <input class="form-control" type="text" id="price" name="price"
+                                       required="required"
                                        oninvalid="setCustomValidaty('round to 2 decimal places')"
                                        oninput="setCustomValidity('')"
                                        pattern="^(([1-9]\d{0,9})|0)(\.\d{1,2})?$"
@@ -152,7 +153,7 @@
                         </div>
                         <div class="col-md-6">
                             <a id="modify" style="background-color: #d3d3d3; float:right; display: block" class="btn btn-default" role="button" onclick="modifyinfo()"><strong>修改</strong></a>
-                            <a id="confirm" style="background-color: #d3d3d3; float:right; display: none" class="btn btn-default" role="button" onclick=document.getElementById("fm").submit();><strong>确定</strong></a>
+                            <a id="confirm" style="background-color: #d3d3d3; float:right; display: none" class="btn btn-default" role="button" onclick=document.getElementById("fm").submit()><strong>确定</strong></a>
                         </div>
                         <div class="col-md-12" style="margin-top: 85px">
                             <a id="down" style="background-color: #eb5339; width: 100px; float:right" class="btn btn-default <%= down %>" role="button" href="${pageContext.request.contextPath}/downproduct?pid=${product.pid}"><strong>下架</strong></a>

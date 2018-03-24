@@ -3,7 +3,6 @@ package com.ecom.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.servlet.*;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -33,8 +32,6 @@ public class ProductController {
 
         //获得 SID
         String sid = request.getParameter("sid");
-        System.out.println(sid);
-
         String currentPageStr = request.getParameter("currentPage");
         if (currentPageStr == null) {
             currentPageStr = "1";
@@ -107,7 +104,6 @@ public class ProductController {
         Product product = new Product();
         String pid = request.getParameter("pid");
         String pname = request.getParameter("pname");
-        System.out.println(pname);
         String sprice = request.getParameter("price");
         Float price = Float.parseFloat(sprice);
         String spstorage = request.getParameter("pstorage");
