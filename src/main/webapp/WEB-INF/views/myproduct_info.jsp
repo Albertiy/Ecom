@@ -62,6 +62,7 @@
                     alert('上传的图片的大于2M,请重新选择');
                     $(this).val('')
                     return false;
+
                 }
                 //如果还想限制图片格式也可以通过input的accept属相限制，或者file.name属性值做判断
                 //建议使用accept属性，简单，方便。具体可以查看我的另一片文章
