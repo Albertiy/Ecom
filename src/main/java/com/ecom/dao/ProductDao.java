@@ -63,12 +63,13 @@ public class ProductDao {
         return query;*/
     }
 
+    //查询商品总数
     public int getCount(String sid) throws SQLException {
         int count = 0;
         try {
             List<Product> list = null;
             conn = JdbcUtils.getConnection();
-            sql = "select count(*) from product where sid = ? and state = 1 ";
+            sql = "select count(*) from product where sid = ? ";
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1,sid);
             rs = pstmt.executeQuery();
