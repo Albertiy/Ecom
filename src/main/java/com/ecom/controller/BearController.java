@@ -7,6 +7,7 @@ import com.ecom.service.UserService;
 import com.ecom.utils.CommonUtils;
 import com.ecom.utils.JedisPoolUtils;
 import com.ecom.utils.MailUtils;
+import com.ecom.utils.RememberMeUtils;
 import com.google.gson.Gson;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.ConvertUtils;
@@ -18,8 +19,10 @@ import redis.clients.jedis.exceptions.JedisConnectionException;
 
 import javax.mail.MessagingException;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
@@ -70,13 +73,12 @@ public class BearController {
     }
 
 
-
 //   ----------------------------------user用户------------------------------------------
 
     //    检查手机号是否重复的功能
     @RequestMapping("/checkPhone")
     public void checkPhone(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-      // 获得电话号码
+        // 获得电话号码
         String phone = request.getParameter("phone");
         UserService service = new UserService();
         boolean isExist = service.checkPhone(phone);
@@ -172,9 +174,69 @@ public class BearController {
         String activeCode = request.getParameter("activeCode");
         UserService service = new UserService();
         service.active(activeCode);
-        response.getWriter().write("alert('恭喜您，激活成功，请重新登陆！')");
+        response.setContentType("text/html;charset=utf-8");
+        response.getWriter().print("<script>alert('恭喜您，激活成功，请重新登陆！');window.location.href='login';</script>");
 //        跳转到登陆页面
-        response.sendRedirect(request.getContextPath() + "/login");
+//        response.sendRedirect(request.getContextPath() + "/login");
+    }
+
+    //    用户登录功能
+    @RequestMapping("/userLogin")
+    public void userLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+
+        //获得输入的用户名和密码
+        String username = request.getParameter("username"); //用户名可能是邮箱或者是手机号，需要进行区分判断
+        String password = request.getParameter("password");
+        String remember = request.getParameter("remember");
+
+        //记住我功能
+        RememberMeUtils.remember(request, response, username, password, remember);
+
+        //对密码进行加密
+        //password = MD5Utils.md5(password);
+
+        //将用户名和密码传递给service层
+        UserService service = new UserService();
+        User user = null;
+        try {
+            user = service.login(username, password);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        //判断用户是否登录成功 user是否是null
+        if (user != null) {
+            //登录成功
+            //***************判断用户是否勾选了自动登录*****************
+            System.out.println(request.getParameter("autoLogin"));
+            String autoLogin = request.getParameter("autoLogin");
+            if ("on".equals(autoLogin)) {
+                //要自动登录
+                System.out.println("自动登录功能已经加载");
+                //创建存储邮件的cookie
+                Cookie cookie_username = new Cookie("cookie_username", user.getEmail());
+                cookie_username.setMaxAge(10 * 60);
+                //创建存储密码的cookie
+                Cookie cookie_password = new Cookie("cookie_password", user.getL_pwd());
+                cookie_password.setMaxAge(10 * 60);
+
+                response.addCookie(cookie_username);
+                response.addCookie(cookie_password);
+                System.out.println("cookie_username: " + cookie_username + ";   cookie_password: " + cookie_password);
+
+            }
+
+            //***************************************************
+            //将user对象存到session中
+            session.setAttribute("user", user);
+
+            //重定向到首页
+            response.sendRedirect(request.getContextPath() + "/index");
+        } else {
+            request.setAttribute("loginError", "用户名或密码错误");
+            request.getRequestDispatcher("login").forward(request, response);
+        }
     }
 
 }

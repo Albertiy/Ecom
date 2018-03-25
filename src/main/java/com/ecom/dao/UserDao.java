@@ -3,6 +3,7 @@ package com.ecom.dao;
 import com.ecom.pojo.User;
 import com.ecom.utils.DataSourceUtils;
 import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 
 import java.sql.SQLException;
@@ -38,5 +39,11 @@ public class UserDao {
         QueryRunner runner = new QueryRunner(DataSourceUtils.getDataSource());
         String sql = "update users set state = ? where ucode = ?";
         runner.update(sql,1,activeCode);
+    }
+
+    public User login(String username, String password) throws SQLException {
+        QueryRunner runner = new QueryRunner(DataSourceUtils.getDataSource());
+        String sql = "select * from users where email=? or phone=? and l_pwd=?";
+        return runner.query(sql, new BeanHandler<User>(User.class), username,username,password);
     }
 }

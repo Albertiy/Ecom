@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,6 +36,27 @@
             padding-right: 17px;
         }
     </style>
+
+
+    <%
+        String path = request.getContextPath();
+        String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
+        String password = "";
+        String username = "";
+        String checked = "";
+        Cookie[] cookies = request.getCookies();        //取出cookie对象组
+        for (int i = 0; cookies != null && i < cookies.length; i++) {
+            Cookie cookie = cookies[i];       //  取出其中的一个对象，含有name ,value
+            if (cookie != null && "username".equals(cookie.getName())) {      //获取第一个cookie对象的name
+//            name = URLDecoder.decode(cookie.getValue(), "UTF-8");//进行解码
+                username = cookie.getValue();
+                checked = "checked";
+            }
+            if (cookie != null && "password".equals(cookie.getName())) {
+                password = cookie.getValue();
+            }
+        }
+    %>
 </head>
 <body>
 
@@ -54,24 +76,33 @@
                     style="width: 440px; border: 1px solid #E7E7E7; padding: 20px 0 20px 30px; border-radius: 5px; margin-top: 60px; background: #fff;">
                 <font>会员登录</font>USER LOGIN
                 <div>&nbsp;</div>
-                <form class="form-horizontal" method="post" action="${pageContext.request.contextPath }/user">
+                <form class="form-horizontal" method="post" action="${pageContext.request.contextPath }/userLogin">
 
-                    <input type="hidden" name="method" value="login">
 
                     <div class="form-group">
                         <label for="username" class="col-sm-2 control-label">用户名</label>
                         <div class="col-sm-6">
                             <input type="text" class="form-control" id="username" name="username"
-                                   placeholder="请输入用户名">
+                                   placeholder="请输入邮箱或是手机号" value="<%=username%>">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="inputPassword3" class="col-sm-2 control-label">密码</label>
                         <div class="col-sm-6">
                             <input type="password" class="form-control" id="inputPassword3" name="password"
-                                   placeholder="请输入密码">
+                                   placeholder="请输入登录密码" value="<%=password%>">
                         </div>
                     </div>
+                    <c:if test="${ not empty loginError }">
+                        <div class="form-group">
+                            <label for="inputPassword3" class="col-sm-2 control-label"></label>
+                            <div class="col-sm-6">
+                                <label class="error" style="color: red">${loginError}</label>
+
+                            </div>
+                        </div>
+                    </c:if>
+
                     <div class="form-group">
                         <label for="inputPassword3" class="col-sm-2 control-label">验证码</label>
                         <div class="col-sm-3">
@@ -85,9 +116,9 @@
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
                             <div class="checkbox">
-                                <label> <input type="checkbox"> 自动登录
+                                <label> <input type="checkbox" name="autoLogin"> 自动登录
                                 </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <label> <input
-                                    type="checkbox"> 记住用户名
+                                    type="checkbox" value="yes" <%=checked%> name="remember"> 记住用户名
                             </label>
                             </div>
                         </div>

@@ -8,6 +8,9 @@ public class BearViewController {
     @RequestMapping("/login")
     public String getLogin() { return "login"; }
 
+    @RequestMapping("/index")
+    public String getIndex() { return "index"; }
+
     @RequestMapping("/header")
     public String getHeader(){
         return "header";
