@@ -28,7 +28,7 @@
     <script src="js/jquery.validate.min.js" type="text/javascript"></script>
 </head>
 <body>
-<%--<jsp:include page="mystore_header.jsp" flush="true"></jsp:include>--%>
+<jsp:include page="mystore_header.jsp" flush="true"></jsp:include>
 
 <!-- start: 自定义表格 -->
 <div class="container-fluid">

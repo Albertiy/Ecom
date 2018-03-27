@@ -24,10 +24,10 @@
             <c:set var="total" value="0.0"/>
             <c:forEach items="${requestScope.orderDetails}" var="p">
                 <tr class="default-color5">
-                    <td width="10" width="20%"><input type="hidden" name="id" value="22">
-                        <img src="./image/dadonggua.jpg" width="70" height="60">
+                    <td width="10" width="15%"><input type="hidden" name="id" value="22">
+                        <img src="./images/Files/${p.pid}.jpg" onerror="this.src='./images/Files/default.jpg'" alt="${p.pid}.jpg" width="70" height="60">
                     </td>
-                    <td width="30%"><a target="_blank"> 有机蔬菜 大冬瓜...${p.pid}</a></td>
+                    <td width="30%"><a target="_blank" href="${pageContext.request.contextPath}/store_productinfo?pid=${p.pid}" > ${p.pname} </a></td>
                     <td width="20%">${p.shop_price}</td>
                     <td width="10%">${p.pcount}</td>
                      <td width="15%"><span class="subtotal">${p.sub_total}</span></td>

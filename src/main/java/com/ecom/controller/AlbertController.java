@@ -111,6 +111,9 @@ public class AlbertController {
             System.out.println("orderData 格式转换失败！");
             System.out.println(e);
         }
+        for (OrderData od:orderDetails) {
+            //TODO orderService.findPnameByPid(od.getPid());
+        }
         map.put("orderDetails", orderDetails);
         return "order_table_details";
     }

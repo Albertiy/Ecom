@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class OrderData {
     private String pid;
+    private String pname;//为了使读取时更方便的显示商品名称，并不在表中
     private int pcount;
     @SerializedName("shop_price")
     private float shopPrice;
@@ -24,6 +25,14 @@ public class OrderData {
         subTotal = 1.00f;
         returned = false;
         judged = false;
+    }
+
+    public String getPname() {
+        return pname;
+    }
+
+    public void setPname(String pname) {
+        this.pname = pname;
     }
 
     public String getPid() {
