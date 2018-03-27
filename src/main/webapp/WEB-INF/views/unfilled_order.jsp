@@ -222,6 +222,7 @@
                             {
                                 field: "state",
                                 title: "订单状态",
+                                formatter: 'showState',
                                 titleTooltip: "状态"
                             },
                             {
@@ -285,10 +286,32 @@
                  * @return {[type]}       [description]
                  */
                 function addButton(value, row, index) {
-                    var buttons = '<button class="btn btn-success">详情</button>'
-                        + '&nbsp;&nbsp;'
-                        + '<button class="btn btn-warning" onclick="showModel(\'' + row.oid + '\',\'' + row.consignee + '\',\'' + row.phone + '\',\'' + row.address + '\')">发货</button>';
+                    /*var buttons = '<button class="btn btn-success">详情</button>'
+                        + '&nbsp;&nbsp;'*/
+                     var buttons = '<button class="btn btn-warning" onclick="showModel(\'' + row.oid + '\',\'' + row.consignee + '\',\'' + row.phone + '\',\'' + row.address + '\')">发货</button>';
                     return buttons;
+                }
+
+                function showState(value,row,index) {
+                    var info='';
+                    switch (row.state){
+                        case '0':
+                            info+='未付款';
+                            break;
+                        case '1':
+                            info+='未发货';
+                            break;
+                        case '2':
+                            info+='已发货';
+                            break;
+                        case '3':
+                            info+='已完成';
+                            break;
+                        default:
+                            info+='未付款';
+                            break;
+                    }
+                    return info;
                 }
 
                 // data-toggle="modal" data-target="#expressModal"
