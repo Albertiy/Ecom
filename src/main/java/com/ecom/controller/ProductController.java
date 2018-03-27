@@ -27,7 +27,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 @Controller
 public class ProductController {
 
-    //    根据店铺号获得商品的目录
+    //根据店铺号获得商品的目录
     @RequestMapping("/store_productlist")
     public void productList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -45,13 +45,11 @@ public class ProductController {
         String cid = request.getParameter("cid");
         if(cid!=null) {
             PageBean pageBean = service.findStoreProductListByCid(sid, cid, currentPage, currentCount);
-
             request.setAttribute("pageBean", pageBean);
             request.setAttribute("cid", cid);
         }
         else{
             PageBean pageBean = service.findProductListBySid(sid, currentPage, currentCount);
-
             request.setAttribute("pageBean", pageBean);
         }
 
@@ -100,6 +98,7 @@ public class ProductController {
     public void modifyProduct(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Product product = new Product();
         String pid = request.getParameter("pid");
+        System.out.println(pid);
         String pname = request.getParameter("pname");
         String sprice = request.getParameter("price");
         Float price = Float.parseFloat(sprice);
@@ -211,19 +210,19 @@ public class ProductController {
                     //处理获取到的上传文件的文件名的路径部分，只保留文件名部分
                     filename = filename.substring(filename.lastIndexOf("\\") + 1);
                     //pwout.print("文件名：" + filename + "<br>");
-                    message=message.concat("文件名：" + filename + "<br>");
+                    message=message.concat("文件名：" + filename + "\n");
                     //如果需要限制上传的文件类型，那么可以通过文件的扩展名来判断上传的文件类型是否合法
                     //String fileExtName = filename.substring(filename.lastIndexOf(".") + 1);
                     //后缀名统一为jpg
                     String fileExtName = "jpg";
                     System.out.println("上传的文件的扩展名是：" + fileExtName);
                     //pwout.print("扩展名：" + fileExtName + "<br>");
-                    message=message.concat("扩展名：" + fileExtName + "<br>");
+                    message=message.concat("扩展名：" + fileExtName + "\n");
                     if(imagePid != null){
                         System.out.println("保存到服务器的文件名是：" + imagePid+"."+fileExtName);
                         filename = imagePid+"."+fileExtName;
                     }
-                    message=message.concat("保存到服务器的文件名是：" + filename + "<br>");
+                    message=message.concat("保存到服务器的文件名是：" + filename + "\n");
                     //用来传递的url
                     url = filename;
                     FileOutputStream out;
@@ -250,7 +249,7 @@ public class ProductController {
                     }
                     out.close();
                     item.delete();
-                    message=message.concat("文件上传成功！");
+                    message=message.concat("文件上传成功！！！");
                     inputSuccess = true;
                     //pwout.print("上传结果：文件上传成功！<br>");
                     //filename是之前的文件名，完整路径中的文件名是修改过的防重复名
@@ -306,6 +305,7 @@ public class ProductController {
         Float price = Float.parseFloat("0");
         int pstorage = 0;
         String cid = null;
+        String pdesc=null;
         ProductService service = new ProductService();
 
         //传统方法无法获取到request的参数！
@@ -392,7 +392,11 @@ public class ProductController {
                             cid="3";
                         }
                         System.out.println("category: " + cid);
+                    }else if(fieldname.equals("pdesc")) {
+                        pdesc = value;
+                        System.out.println("pdesc: " + pdesc);
                     }
+
                 } else {        //上传的是文件
                     //获取文件名
                     String filename = item.getName();
@@ -473,12 +477,12 @@ public class ProductController {
         //request.getRequestDispatcher("/testInput.jsp"+redirect).forward(request, response);
         //用这个！
         if(inputSuccess) {
-            service.addProduct(sid, pid, pname, price, pstorage, cid, pimage);
-            request.getRequestDispatcher("/myproduct_info").forward(request, response);
+            System.out.println("数据库写入数据！");
+            service.addProduct(sid, pid, pname, price, pstorage, cid, pimage, pdesc);
+            request.getRequestDispatcher("/store_productlist?sid="+sid+"&cid="+cid).forward(request, response);
         }
         else{
-            service.addProduct(sid, pid, pname, price, pstorage, cid, pimage);
-            request.getRequestDispatcher("/myproduct_info").forward(request, response);
+            request.getRequestDispatcher("/mystore").forward(request, response);
         }
     }
 }

@@ -15,6 +15,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -231,7 +232,7 @@ public class ProductDao {
         Product product = new Product();
         try {
             conn = JdbcUtils.getConnection();
-            sql = "UPDATE product SET pname ='"+pname+"', price ="+price+", pstorage = "+pstrorage+", pdesc = '"+pdesc+"' WHERE pid = "+pid;
+            sql = "UPDATE product SET pname ='"+pname+"', price ="+price+", pstorage = "+pstrorage+", pdesc = '"+pdesc+"' WHERE pid = '"+pid+"'";
             pstmt = conn.prepareStatement(sql);
             pstmt.executeUpdate();
             //重新获取此pid的内容
@@ -247,7 +248,7 @@ public class ProductDao {
         Product product = new Product();
         try {
             conn = JdbcUtils.getConnection();
-            sql = "UPDATE product SET pimage = 'images/Files/" +pid+".jpg'WHERE pid = "+pid;
+            sql = "UPDATE product SET pimage = 'images/Files/" +pid+".jpg'WHERE pid = '"+pid+"'";
             pstmt = conn.prepareStatement(sql);
             pstmt.executeUpdate();
             //重新获取此pid的内容
@@ -280,10 +281,31 @@ public class ProductDao {
     }
 
     //添加商品
-    public int  addProduct(String sid, String pid, String pname, Float price, int pstorage, String cid, String pimage)throws SQLException{
-        QueryRunner runner = new QueryRunner(DataSourceUtils.getDataSource());
-        String sql = "insert into product values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-        int update = runner.update(sql,pid,sid, pname,cid, price, pstorage, pimage);
-        return update;
+    public void addProduct(String sid, String pid, String pname, Float price, int pstorage, String cid, String pimage, String pdesc)throws SQLException{
+
+        SimpleDateFormat fmt=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //规范时间
+        try {
+            conn = JdbcUtils.getConnection();
+            String sql = null;
+            sql = "insert into product values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1,pid);
+            pstmt.setString(2,sid);
+            pstmt.setString(3,pname);
+            pstmt.setString(4,cid);
+            pstmt.setFloat(5,price);
+            pstmt.setString(6,pdesc);
+            pstmt.setString(7,fmt.format(System.currentTimeMillis()));
+            pstmt.setInt(8,pstorage);
+            pstmt.setInt(9,0);
+            pstmt.setFloat(10,0);
+            pstmt.setFloat(11,0);
+            pstmt.setString(12,pimage);
+            pstmt.setString(13,"0");
+            pstmt.setInt(14,1);
+            int s = pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -97,15 +97,15 @@
 
 <div class="container" style="margin: 0 auto;">
     <div class="row">
-    <form id="fm" role="form" action="addproduct" method="post">
+    <form id="fm" role="form" enctype="multipart/form-data"  accept-charset="UTF-8" action="addproduct" method="post">
         <input type="text" style="display: none" name="sid" id="sid" value="${user.sid}">
-    <div class="col-md-6">
-        <label for="form_file" class="btn btn-primary">选择图片</label>
-        <input type="file" name="file" id="form_file" accept="image/*"
-               class="upfile" style="display: none">
-        <img style="width:300px; height: 300px;" id="singleImg" class="img-thumbnail img-responsive book_thumb center-block"
-             src="${pageContext.request.contextPath}/images/Files/default.jpg" alt="尚未选择图片或图片无效"/>
-    </div>
+        <div class="col-md-6">
+            <label for="form_file" class="btn btn-primary">选择图片</label>
+            <input type="file" name="file" id="form_file" accept="image/*"
+                   class="upfile" style="display: none">
+            <img style="width:300px; height: 300px;" id="singleImg" class="img-thumbnail img-responsive book_thumb center-block"
+                 src="${pageContext.request.contextPath}/images/Files/default.jpg" alt="尚未选择图片或图片无效"/>
+        </div>
 
     <div class="col-md-6">
         <dl class="form-group" style="width: 350px; margin: 20px 0 10px 0;">

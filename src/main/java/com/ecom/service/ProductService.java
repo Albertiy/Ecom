@@ -241,9 +241,12 @@ public class ProductService {
     }
 
     //添加商品
-    public int addProduct(String sid, String pid, String pname, Float price, int pstorage, String cid, String pimage){
+    public void addProduct(String sid, String pid, String pname, Float price, int pstorage, String cid, String pimage,String pdesc){
         ProductDao dao = new ProductDao();
-        //dao.addProduct(sid, pid, pname, price, pstorage, cid, pimage);
-        return 0;
+        try {
+            dao.addProduct(sid, pid, pname, price, pstorage, cid, pimage, pdesc);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
