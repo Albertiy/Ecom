@@ -20,6 +20,7 @@ public class OrderData {
     private boolean judged;
 
     public OrderData() {
+        pname = "";
         pcount = 1;
         shopPrice = 1.00f;
         subTotal = 1.00f;
@@ -81,5 +82,18 @@ public class OrderData {
 
     public void setJudged(boolean judged) {
         this.judged = judged;
+    }
+
+    @Override
+    public String toString() {
+        return "OrderData{" +
+                "pid='" + pid + '\'' +
+                ", pname='" + pname + '\'' +
+                ", pcount=" + pcount +
+                ", shopPrice=" + shopPrice +
+                ", subTotal=" + subTotal +
+                ", returned=" + returned +
+                ", judged=" + judged +
+                '}';
     }
 }

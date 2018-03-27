@@ -269,4 +269,17 @@ public class OrderDao {
         }
         return orderPageBean;
     }
+
+    public String findPname(String pid) throws SQLException{
+        String pname = "";
+        conn = JdbcUtils.getConnection();
+        sql = "select pname from omdb.product where pid = ?";
+        pstmt = conn.prepareStatement(sql);
+        pstmt.setString(1,pid);
+        rs = pstmt.executeQuery();
+        if(rs.next()){
+            pname = rs.getString("pname");
+        }
+        return pname;
+    }
 }

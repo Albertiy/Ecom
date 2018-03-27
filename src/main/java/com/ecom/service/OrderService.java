@@ -58,4 +58,14 @@ public class OrderService {
         System.out.println("【OrderService：成功】");
         return orderPageBean;
     }
+
+    public String findPnameByPid(String pid) {
+        String pname = "读取商品名称异常";
+        try{
+            pname = orderDao.findPname(pid);
+        }catch(SQLException se){
+            System.out.println("由【pid】："+pid+" 读取【pname】失败");
+        }
+        return pname;
+    }
 }

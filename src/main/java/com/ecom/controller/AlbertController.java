@@ -106,13 +106,21 @@ public class AlbertController {
             JsonObject jsonObject = new JsonParser().parse(odata).getAsJsonObject();
             //再转JsonArray 加上数据头
             JsonArray jsonArray = jsonObject.getAsJsonArray("odata");
-            orderDetails = gson.fromJson(jsonArray.toString(), orderDetails.getClass());
+            //System.out.println("jsonArray: " + jsonArray.size());
+            //新的方法：然而到JSP页面后无法读取了
+            for(int i = 0;i<jsonArray.size();i++){
+                //记住Json里的0和1不能自动转换为boolean类型啊！！！直接存false不带双引号啊！
+                OrderData temp=  gson.fromJson(jsonArray.get(i).toString(),OrderData.class);
+                String pname = orderService.findPnameByPid(temp.getPid());
+                System.out.println(pname);
+                temp.setPname(pname);
+                orderDetails.add(temp);
+            }
+            //之前的方法：
+            //orderDetails = gson.fromJson(jsonArray.toString(), orderDetails.getClass());
         } catch (Exception e) {
             System.out.println("orderData 格式转换失败！");
             System.out.println(e);
-        }
-        for (OrderData od:orderDetails) {
-            //TODO orderService.findPnameByPid(od.getPid());
         }
         map.put("orderDetails", orderDetails);
         return "order_table_details";
