@@ -204,12 +204,12 @@ public class ProductService {
     }
 
     //更改商品信息
-    public Product modifyProduct(String pid, String pname, Float price, int pstrorage) {
+    public Product modifyProduct(String pid, String pname, Float price, int pstrorage, String pdesc) {
         Product product = new Product();
         ProductDao dao = new ProductDao();
         //调用dao下架
         try {
-            product = dao.modifyProduct(pid, pname, price, pstrorage);
+            product = dao.modifyProduct(pid, pname, price, pstrorage, pdesc);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -241,9 +241,9 @@ public class ProductService {
     }
 
     //添加商品
-    public int addProduct(String pid, String pname, Float price, int pstorage, String cid){
+    public int addProduct(String sid, String pid, String pname, Float price, int pstorage, String cid, String pimage){
         ProductDao dao = new ProductDao();
-        Product product = new Product();
+        //dao.addProduct(sid, pid, pname, price, pstorage, cid, pimage);
         return 0;
     }
 }

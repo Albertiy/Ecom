@@ -98,6 +98,7 @@
 <div class="container" style="margin: 0 auto;">
     <div class="row">
     <form id="fm" role="form" action="addproduct" method="post">
+        <input type="text" style="display: none" name="sid" id="sid" value="${user.sid}">
     <div class="col-md-6">
         <label for="form_file" class="btn btn-primary">选择图片</label>
         <input type="file" name="file" id="form_file" accept="image/*"
@@ -106,7 +107,7 @@
              src="${pageContext.request.contextPath}/images/Files/default.jpg" alt="尚未选择图片或图片无效"/>
     </div>
 
-    <div class="col-md-6" style="height:350px">
+    <div class="col-md-6">
         <dl class="form-group" style="width: 350px; margin: 20px 0 10px 0;">
             <dt class="input-label">
                 <label class="form-label f5">名称</label>
@@ -159,8 +160,18 @@
                     <%-- 动态加载 --%>
                 </ul>
             </dd>
-
             <input type="text" name="category" id="category" value="移动通讯" hidden>
+        </dl>
+
+        <dl class="form-group" style="width: 350px; margin: 20px 0 10px 0;">
+            <dt class="input-label">
+                <label class="form-label f5">商品简介</label>
+            </dt>
+            <dd>
+                <input class="form-control" type="text" id="pdesc" name="pdesc"
+                       required="required"
+                       placeholder="请输入商品简介">
+            </dd>
         </dl>
 
         <button type="submit" id="confirm" class="btn btn-success" style="float:right;"><strong>确定</strong></button>

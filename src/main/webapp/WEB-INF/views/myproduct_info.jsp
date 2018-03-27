@@ -14,7 +14,6 @@
     <script src="js/jquery-1.11.3.min.js" type="text/javascript"></script>
     <script src="js/bootstrap.min.js" type="text/javascript"></script>
     <script src="js/product_info.js" type="text/javascript"></script>
-
     <%-- 判断商品是否上架 --%>
     <%
         Product product = (Product) request.getAttribute("product");
@@ -154,12 +153,20 @@
                                        value="${product.pstorage}" readonly="readonly">
                                 件
                             </div>
+
+                            <div  style="width: 350px; margin: 20px 0 10px 0;">
+                                <label class="form-label">简介:</label>
+                                <input class="form-control" style="width:200.4px" type="text" id="pdesc" name="pdesc"
+                                       required="required"
+                                       placeholder="请输入商品简介"
+                                       value="${product.pdesc}" readonly="readonly">
+                            </div>
                         </div>
                         <div class="col-md-6">
                             <a id="modify" style="background-color: #d3d3d3; float:right; display: block" class="btn btn-default" role="button" onclick="modifyinfo()"><strong>修改</strong></a>
                             <button type="submit" id="confirm"class="btn btn-success" style=" float:right; display:none"><strong>确定</strong></button>
                         </div>
-                        <div class="col-md-12" style="margin-top: 85px">
+                        <div class="col-md-12" style="margin-top: 20px">
                             <a id="down" style="background-color: #eb5339; width: 100px; float:right" class="btn btn-default <%= down %>" role="button" href="${pageContext.request.contextPath}/downproduct?pid=${product.pid}"><strong>下架</strong></a>
                             <a id="up" style="background-color: #59d089; width: 100px; float: right" class="btn btn-default <%= up %>" role="button" href="${pageContext.request.contextPath}/upproduct?pid=${product.pid}"><strong>上架</strong></a>
                         </div>
@@ -170,18 +177,18 @@
             <div class="clear"></div>
 
             <div style="width: 950px; margin: 0 auto;">
-                <div style="margin-top: 10px; width: 930px;">
+                <%--<div style="margin-top: 10px; width: 930px;">
                     <table class="table table-bordered">
                         <tbody>
                         <tr class="active">
                             <th><strong>商品介绍</strong></th>
                         </tr>
                         <tr>
-                            <th>暂无商品介绍信息 </th>
+                            <th>${product.pdesc}</th>
                         </tr>
                         </tbody>
                     </table>
-                </div>
+                </div>--%>
 
                 <div style="background-color: #d3d3d3; width: 930px;">
                     <table class="table table-bordered">

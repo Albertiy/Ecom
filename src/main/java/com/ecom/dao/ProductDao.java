@@ -42,7 +42,6 @@ public class ProductDao {
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1,sid);
             rs = pstmt.executeQuery();
-            System.out.println("通过sid查询product成功");
             if(rs.next())
             {
                 count = rs.getInt(1);
@@ -228,11 +227,11 @@ public class ProductDao {
     }
 
     //更改商品信息
-    public Product modifyProduct(String pid, String pname, Float price, int pstrorage) throws SQLException {
+    public Product modifyProduct(String pid, String pname, Float price, int pstrorage, String pdesc) throws SQLException {
         Product product = new Product();
         try {
             conn = JdbcUtils.getConnection();
-            sql = "UPDATE product SET pname ='"+pname+"', price ="+price+", pstorage = "+pstrorage+" WHERE pid = "+pid;
+            sql = "UPDATE product SET pname ='"+pname+"', price ="+price+", pstorage = "+pstrorage+", pdesc = '"+pdesc+"' WHERE pid = "+pid;
             pstmt = conn.prepareStatement(sql);
             pstmt.executeUpdate();
             //重新获取此pid的内容
@@ -280,10 +279,11 @@ public class ProductDao {
         return query;
     }
 
-    public int  addProduct(String pid, String pname, Float price, int pstorage,String cid)throws SQLException{
+    //添加商品
+    public int  addProduct(String sid, String pid, String pname, Float price, int pstorage, String cid, String pimage)throws SQLException{
         QueryRunner runner = new QueryRunner(DataSourceUtils.getDataSource());
         String sql = "insert into product values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-        int update = runner.update(sql,pid,pname, price, pstorage, cid);
+        int update = runner.update(sql,pid,sid, pname,cid, price, pstorage, pimage);
         return update;
     }
 }

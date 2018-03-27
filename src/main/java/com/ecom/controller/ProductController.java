@@ -95,7 +95,7 @@ public class ProductController {
         request.getRequestDispatcher("/myproduct_info").forward(request, response);
     }
 
-    //modify info about product
+    //修改商品信息
     @RequestMapping("/modifyproduct")
     public void modifyProduct(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Product product = new Product();
@@ -105,9 +105,10 @@ public class ProductController {
         Float price = Float.parseFloat(sprice);
         String spstorage = request.getParameter("pstorage");
         int pstorage = Integer.parseInt(spstorage);
+        String pdesc = request.getParameter("pdesc");
         ProductService service = new ProductService();
         //调用service更新产品信息
-        product = service.modifyProduct(pid, pname, price, pstorage);
+        product = service.modifyProduct(pid, pname, price, pstorage,pdesc);
 
         request.setAttribute("product", product);
         request.getRequestDispatcher("/myproduct_info").forward(request, response);
@@ -298,6 +299,7 @@ public class ProductController {
         String redirect="";
         boolean inputSuccess = false;
         String url = "";
+        String sid = null;
         String pid = CommonUtils.getUUID();
         String pimage = "images/Files/"+pid+".jpg";
         String pname = null;
@@ -369,7 +371,10 @@ public class ProductController {
                     String fieldname = item.getFieldName();
                     String value = item.getString("UTF-8");
                     System.out.println("[参数]：\t" + fieldname + " = " + value);
-                    if(fieldname.equals("pname")){
+                    if(fieldname.equals("sid")){
+                        sid = value;
+                        System.out.println("sid: " + sid);
+                    }else if(fieldname.equals("pname")){
                         pname = value;
                         System.out.println("pname: " + pname);
                     }else if(fieldname.equals("price")){
@@ -468,11 +473,11 @@ public class ProductController {
         //request.getRequestDispatcher("/testInput.jsp"+redirect).forward(request, response);
         //用这个！
         if(inputSuccess) {
-            service.addProduct(pid, pname, price, pstorage, cid);
+            service.addProduct(sid, pid, pname, price, pstorage, cid, pimage);
             request.getRequestDispatcher("/myproduct_info").forward(request, response);
         }
         else{
-            service.addProduct(pid, pname, price, pstorage, cid);
+            service.addProduct(sid, pid, pname, price, pstorage, cid, pimage);
             request.getRequestDispatcher("/myproduct_info").forward(request, response);
         }
     }

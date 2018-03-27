@@ -113,14 +113,14 @@
             "${pageContext.request.contextPath}/categoryList",
             function (data) {
                 //    [{"cid":"xxx","cname":"xxx"},{},{}]
+                content+="<li><a href='${pageContext.request.contextPath}/store_productlist?sid=${user.sid}'>所有商品</a></li><li role=\"separator\" class=\"divider\"></li>";
                 //    动态的创建li
                 for (var i = 0; i < data.length; i++) {
                     content += "<li><a href='${pageContext.request.contextPath}/store_productlist?sid=${user.sid}&cid="+data[i].cid+"'>" + data[i].cname + "</a></li>";
                 }
 
                 //拼接添加商品li
-                content+="<li role=\"separator\" class=\"divider\"></li><li><a href='${pageContext.request.contextPath}/store_productlist?sid=${user.sid}'>所有商品</a></li>";
-                content+="<li role=\"separator\" class=\"divider\"></li><li><a href=\"addProduct\">添加商品</a></li>";
+                content+="<li role=\"separator\" class=\"divider\"></li><li><a href='${pageContext.request.contextPath}/addProduct'>添加商品</a></li>";
 
                 //    将拼接好的li放置到ul中
                 $("#menu1").html(content);
