@@ -34,7 +34,7 @@ public class OrderDao {
         try {
             conn = JdbcUtils.getConnection();
             //为了第二次计数total查询，先不写入查询返回内容
-            sql = " from _order,users where _order.sid = ? and _order.state = 0 or 1";
+            sql = " from _order,users where _order.sid = ? and (_order.state = '0' or _order.state = '1')";
             if(!search.equals("")){//搜索功能
                 sql += " and (";
                 sql += " _order.create_time LIKE binary '%"+search+"%'";
@@ -71,7 +71,7 @@ public class OrderDao {
             while (rs.next()) {
                 Order tempOrder = new Order();
                 tempOrder.setOid(rs.getString("oid"));
-                System.out.println("oid: " + tempOrder.getOid());
+                //System.out.println("oid: " + tempOrder.getOid());
                 tempOrder.setSid(rs.getString("sid"));
                 tempOrder.setUid(rs.getString("uid"));
                 tempOrder.setCreateTime(rs.getString("create_time"));
