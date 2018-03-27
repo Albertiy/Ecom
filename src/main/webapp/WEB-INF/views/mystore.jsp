@@ -27,12 +27,12 @@
     <c:forEach items="${pageBean.list}" var="pro">
 
         <div class="col-md-2" style="height: 250px; width: 300px;text-align: center;">
-            <a href="${pageContext.request.contextPath}/product_info?pid=${pro.pid}&cid=${pro.cid}">
+            <a href="${pageContext.request.contextPath}/myproduct_info?pid=${pro.pid}&cid=${pro.cid}">
                 <img src="${pageContext.request.contextPath}/${pro.pimage}"
                      width="170" height="170" style="display: inline-block;">
             </a>
             <p>
-                <a href="${pageContext.request.contextPath}/product_info?pid=${pro.pid}&cid=${pro.cid}"
+                <a href="${pageContext.request.contextPath}/myproduct_info?pid=${pro.pid}&cid=${pro.cid}"
                    style='color: green'>${pro.pname}</a>
             </p>
             <p>
@@ -60,7 +60,7 @@
 
         <c:if test="${pageBean.currentPage!=1}">
             <li>
-                <a href="${pageContext.request.contextPath}/product_list?sid=456&currentPage=${pageBean.currentPage-1}"
+                <a href="${pageContext.request.contextPath}/store_productlist?sid=456&currentPage=${pageBean.currentPage-1}"
                    aria-label="Previous">
                 <span
                         aria-hidden="true">&laquo;</span>
@@ -78,7 +78,7 @@
             </c:if>
             <c:if test="${page!=pageBean.currentPage}">
                 <li>
-                    <a href="${pageContext.request.contextPath}/product_list?sid=456&currentPage=${page}">${page}</a>
+                    <a href="${pageContext.request.contextPath}/store_productlist?sid=456&currentPage=${page}">${page}</a>
                 </li>
 
             </c:if>
@@ -96,7 +96,7 @@
 
         <c:if test="${pageBean.currentPage!=pageBean.totalPage}">
             <li>
-                <a href="${pageContext.request.contextPath}/product_list?sid=456&currentPage=${pageBean.currentPage+1}"
+                <a href="${pageContext.request.contextPath}/store_productlist?sid=456&currentPage=${pageBean.currentPage+1}"
                    aria-label="Next"> <span aria-hidden="true">&raquo;</span>
                 </a>
             </li>

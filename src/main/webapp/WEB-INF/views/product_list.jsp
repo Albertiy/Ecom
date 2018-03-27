@@ -32,7 +32,7 @@
 
 
 <!-- 引入header.jsp -->
-<jsp:include page="/header.jsp"></jsp:include>
+<jsp:include page="/header"></jsp:include>
 
 
 <div class="row" style="width: 1210px; margin: 0 auto;">
@@ -45,16 +45,16 @@
     <c:forEach items="${pageBean.list}" var="pro">
 
         <div class="col-md-2" style="height: 250px">
-            <a href="${pageContext.request.contextPath}/product?method=productInfo&pid=${pro.pid}&cid=${cid}&currentPage=${pageBean.currentPage}">
+            <a href="${pageContext.request.contextPath}/productInfo?pid=${pro.pid}&cid=${cid}&currentPage=${pageBean.currentPage}">
                 <img src="${pageContext.request.contextPath}/${pro.pimage}"
                      width="170" height="170" style="display: inline-block;">
             </a>
             <p>
-                <a href="${pageContext.request.contextPath}/product?method=productInfo&pid=${pro.pid}&cid=${cid}&currentPage=${pageBean.currentPage}"
+                <a href="${pageContext.request.contextPath}/productInfo?pid=${pro.pid}&cid=${cid}&currentPage=${pageBean.currentPage}"
                    style='color: green'>${pro.pname}</a>
             </p>
             <p>
-                <font color="#FF0000">商城价：${pro.shop_price}</font>
+                <font color="#FF0000">商城价：${pro.price}</font>
             </p>
         </div>
 
@@ -80,7 +80,7 @@
 
         <c:if test="${pageBean.currentPage!=1}">
             <li>
-                <a href="${pageContext.request.contextPath}/product?method=productList&cid=${cid}&currentPage=${pageBean.currentPage-1}"
+                <a href="${pageContext.request.contextPath}/productList?cid=${cid}&currentPage=${pageBean.currentPage-1}"
                    aria-label="Previous">
                 <span
                         aria-hidden="true">&laquo;</span>
@@ -98,7 +98,7 @@
             </c:if>
             <c:if test="${page!=pageBean.currentPage}">
                 <li>
-                    <a href="${pageContext.request.contextPath}/product?method=productList&cid=${cid}&currentPage=${page}">${page}</a>
+                    <a href="${pageContext.request.contextPath}/productList?cid=${cid}&currentPage=${page}">${page}</a>
                 </li>
 
             </c:if>
@@ -116,7 +116,7 @@
 
         <c:if test="${pageBean.currentPage!=pageBean.totalPage}">
             <li>
-                <a href="${pageContext.request.contextPath}/product?method=productList&cid=${cid}&currentPage=${pageBean.currentPage+1}"
+                <a href="${pageContext.request.contextPath}/productList?cid=${cid}&currentPage=${pageBean.currentPage+1}"
                    aria-label="Next"> <span aria-hidden="true">&raquo;</span>
                 </a>
             </li>
@@ -132,7 +132,7 @@
 
     <h4 style="width: 50%; float: left; font: 14px/30px 微软雅黑">浏览记录</h4>
     <div style="width: 50%; float: right; text-align: right;">
-        <a href="">more</a>
+        <%--<a href="">more</a>--%>
     </div>
     <div style="clear: both;"></div>
 
@@ -143,7 +143,7 @@
             <c:forEach items="${historyProductList}" var="historyPro">
                 <li
                         style="width: 150px; height: 216px; float: left; margin: 0 8px 0 0; padding: 0 18px 15px; text-align: center;">
-                    <a href="${pageContext.request.contextPath}/product?method=productInfo&pid=${historyPro.pid}&cid=${cid}&currentPage=${pageBean.currentPage}">
+                    <a href="${pageContext.request.contextPath}/productInfo?pid=${historyPro.pid}&cid=${cid}&currentPage=${pageBean.currentPage}">
 
                         <img src="${pageContext.request.contextPath}/${historyPro.pimage}" width="130px"
                              height="130px"/>
@@ -158,7 +158,7 @@
 
 
 <!-- 引入footer.jsp -->
-<jsp:include page="/footer.jsp"></jsp:include>
+<jsp:include page="/footer"></jsp:include>
 
 </body>
 
