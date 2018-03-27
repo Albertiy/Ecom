@@ -27,7 +27,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 public class ProductController {
 
     //    根据店铺号获得商品的目录
-    @RequestMapping("/product_list")
+    @RequestMapping("/store_productlist")
     public void productList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         //获得 SID
@@ -61,7 +61,7 @@ public class ProductController {
         request.getRequestDispatcher("/mystore").forward(request, response);
     }
 
-    @RequestMapping("/product_info")
+    @RequestMapping("/store_productinfo")
     public void productInfo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         Product product = new Product();

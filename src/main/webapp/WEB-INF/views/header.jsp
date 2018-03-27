@@ -18,10 +18,11 @@
                 <li><a href="register">注册</a></li>
             </c:if>
             <c:if test="${!empty user }">
-                <li style="color:red">欢迎您，${user.nickname }</li>
+                <li ><a href="user_info" style="color:red">欢迎您，${user.nickname }</a></li>
+                <li><a href="${pageContext.request.contextPath}/logout">退出</a></li>
             </c:if>
-            <li><a href="cart.jsp">购物车</a></li>
-            <li><a href="order_list.jsp">我的订单</a></li>
+            <li><a href="cart">购物车</a></li>
+            <li><a href="order_list">我的订单</a></li>
             <li><a href="${pageContext.request.contextPath}/product_list?sid=456">我的店铺</a></li>
         </ol>
     </div>
@@ -71,7 +72,7 @@
                         //    [{"cid":"xxx","cname":"xxx"},{},{}]
                         //    动态的创建li
                         for (var i = 0; i < data.length; i++) {
-                            content += "<li><a href='${pageContext.request.contextPath}/product?method=productList&cid="+data[i].cid+"'>" + data[i].cname + "</a></li>";
+                            content += "<li><a href='${pageContext.request.contextPath}/productList?cid="+data[i].cid+"'>" + data[i].cname + "</a></li>";
                         }
                     //    将拼接好的li放置到ul中
                         $("#categoryUL").html(content);
