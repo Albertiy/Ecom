@@ -2,10 +2,7 @@ package com.ecom.controller;
 
 import com.ecom.auth.AuthSeller;
 import com.ecom.auth.AuthUser;
-import com.ecom.pojo.Express;
-import com.ecom.pojo.Order;
-import com.ecom.pojo.OrderData;
-import com.ecom.pojo.OrderPageBean;
+import com.ecom.pojo.*;
 import com.ecom.service.ExpressService;
 import com.ecom.service.OrderService;
 import com.google.gson.*;
@@ -15,10 +12,28 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.*;
 
 @Controller
 public class AlbertController {
+
+    User user = null;
+    @ModelAttribute//这个注解的函数会在每个方法之前执行
+    public void getUserSession(HttpServletRequest request, HttpServletResponse response){
+        System.out.println("【getUserSession】");
+        user= (User) request.getSession().getAttribute("user");
+        if(user==null){
+            try {
+                response.sendRedirect(request.getContextPath()+"/login");
+            } catch (IOException e) {
+                System.out.println("重定向失败！");
+                e.printStackTrace();
+            }
+        }
+    }
 
     //获取Gson的Bean
     public static ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext1.xml");
@@ -72,7 +87,8 @@ public class AlbertController {
             @RequestParam(value = "other", defaultValue = "") String other   //other暂时用不到
     ) {
         OrderPageBean<Order> orderPageBean = new OrderPageBean<Order>(search, sort, order, offset, limit);
-        orderPageBean = orderService.findUnFilledOrdersBySid("1", orderPageBean);
+        //TODO 从Session中获取sid
+        orderPageBean = orderService.findUnFilledOrdersBySid(user.getSid(), orderPageBean);
         String orderJson = gson.toJson(orderPageBean.getList());
         JsonObject jsonObject = new JsonObject();
         jsonObject.add("total", new JsonPrimitive(orderPageBean.getTotal()));
@@ -82,7 +98,6 @@ public class AlbertController {
     }
 
     @RequestMapping("/getOrderDetails")
-    //@ResponseBody
     public String getOrderDetails(@RequestParam(value = "odata", defaultValue = "") String odata, Map<String, Object> map) {
         System.out.println("【getOrderDetails】");
         List<OrderData> orderDetails = new ArrayList<OrderData>();
@@ -120,7 +135,8 @@ public class AlbertController {
         System.out.println("【addExpress】");
         System.out.println("eid: " + eid);
 
-        String sid = "1";               //从session中获取
+
+        String sid = user.getSid();
         String saddress = "";   //发货地址（从store表获取）
         Express express = new Express();
         if(!eeid.equals(eid)){

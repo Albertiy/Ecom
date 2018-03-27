@@ -26,39 +26,42 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
         if(handler.getClass().isAssignableFrom(HandlerMethod.class)){
             AuthUser authUser = ((HandlerMethod) handler).getMethodAnnotation(AuthUser.class);
             AuthSeller authSeller = ((HandlerMethod) handler).getMethodAnnotation(AuthSeller.class);
-            System.out.println("AuthUser: "+authUser);
-            System.out.println("AuthSeller: "+authSeller);
+            /*System.out.println("AuthUser: "+authUser);
+            System.out.println("AuthSeller: "+authSeller);*/
             //如果没有声明需要权限,或者声明不验证权限
             if(authUser == null || authUser.validate() == false) {
-                return true;
+                return super.preHandle(request, response, handler);
             } else{   //在这里实现自己的权限验证逻辑
-                System.out.println("【验证登陆】");
+                System.out.print("【验证登陆】：");
                 if(!checkUser(request,response)){
+                    System.out.println("未登录！");
                     response.sendRedirect(request.getContextPath()+"/login");
                     return false;
                 }
+                System.out.println("已登录！");
             }
 
             if(authSeller == null || authSeller.validate() == false)
-                return true;
+                return super.preHandle(request, response, handler);
             else{//首先检查用户是否登陆，以防没有使用 @AuthUser 标签
-                System.out.println("【验证商铺】");
+                System.out.print("【验证商铺】：");
                 if(!checkUser(request,response)){
                     response.sendRedirect(request.getContextPath()+"/login");
                     return false;
                 }
-                if(checkSeller(request,response))//如果验证成功返回true（这里直接写false来模拟验证失败的处理）
-                    return true;
-                else//如果验证失败
-                {
-                    //返回到商户注册界面
-                    response.sendRedirect("/Ecom/login");
+                if(checkSeller(request,response)) {//如果验证成功返回true（这里直接写false来模拟验证失败的处理）
+                    System.out.println("已开通店铺！");
+                    return super.preHandle(request, response, handler);
+                } else{ //如果验证失败
+                        //返回到商户注册界面
+                    System.out.println("未开通店铺！");
+                    response.sendRedirect(request.getContextPath()+"/login");
                     return false;
                 }
             }
         }
         else
-            return true;
+            return super.preHandle(request, response, handler);
     }
 
     /**
@@ -109,7 +112,8 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
         User user = (User) request.getSession().getAttribute("user");
         if(user == null)
             return false;
-        else if(user.getSid() == null || user.getSid() == "0"){
+        System.out.println("店铺Sid："+user.getSid());
+        if(user.getSid() == null || user.getSid().equals("0")){
             return false;
         }
         return true;
