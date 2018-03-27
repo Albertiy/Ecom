@@ -1,15 +1,13 @@
 package com.ecom.controller;
 
-import com.ecom.pojo.Express;
-import com.ecom.pojo.Order;
-import com.ecom.pojo.OrderData;
-import com.ecom.pojo.OrderPageBean;
+import com.ecom.pojo.*;
 import com.ecom.service.ExpressService;
 import com.ecom.service.OrderService;
 import com.google.gson.*;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -25,6 +23,22 @@ import java.util.Map;
 
 @Controller
 public class GustPigController {
+
+    User user = null;
+    @ModelAttribute//这个注解的函数会在每个方法之前执行
+    public void getUserSession(HttpServletRequest request, HttpServletResponse response){
+        System.out.println("【getUserSession】");
+        user= (User) request.getSession().getAttribute("user");
+        if(user==null){
+            try {
+                response.sendRedirect(request.getContextPath()+"/login");
+            } catch (IOException e) {
+                System.out.println("重定向失败！");
+                e.printStackTrace();
+            }
+        }
+    }
+
     //获取Gson的Bean
     public static ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext1.xml");
     private Gson gson = (Gson)context.getBean("gson");
@@ -83,7 +97,7 @@ public class GustPigController {
             @RequestParam(value = "other",defaultValue = "") String other   //other暂时用不到
     ){
         OrderPageBean<Order> orderPageBean = new OrderPageBean<Order>(search,sort,order,offset,limit);
-        orderPageBean = orderService.findUnFilledOrdersBySid("1",orderPageBean);
+        orderPageBean = orderService.findUnFilledOrdersBySid2(user.getSid(),orderPageBean);
         String orderJson = gson.toJson(orderPageBean.getList());
         JsonObject jsonObject = new JsonObject();
         jsonObject.add("total",new JsonPrimitive(orderPageBean.getTotal()));
@@ -103,7 +117,7 @@ public class GustPigController {
             @RequestParam(value = "other",defaultValue = "") String other   //other暂时用不到
     ){
         OrderPageBean<Order> orderPageBean = new OrderPageBean<Order>(search,sort,order,offset,limit);
-        orderPageBean = orderService.findUnFilledOrdersBySid("1",orderPageBean);
+        orderPageBean = orderService.findUnFilledOrdersBySid3(user.getSid(),orderPageBean);
         String orderJson = gson.toJson(orderPageBean.getList());
         JsonObject jsonObject = new JsonObject();
         jsonObject.add("total",new JsonPrimitive(orderPageBean.getTotal()));
