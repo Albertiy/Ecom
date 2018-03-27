@@ -52,4 +52,42 @@ public class UserService {
         UserDao dao = new UserDao();
         return dao.login(username, password);
     }
+
+
+    //修改用户信息
+    public void changeUserInfo(User user) {
+        UserDao dao = new UserDao();
+        try {
+            dao.changeUserInfo(user);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //修改用户登录密码
+    public void changeUserL_pwd(User user) {
+        UserDao dao = new UserDao();
+        try {
+            dao.changeUserL_pwd(user);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //通过Uid获取用户的方法
+    public User getUserByUid(String uid) throws SQLException {
+        UserDao dao = new UserDao();
+        return dao.getUserByUid(uid);
+    }
+
+    public boolean checkL_Pwd(String old_pwd, String uid) {
+        UserDao dao = new UserDao();
+        Long isExists = 0L;
+        try {
+            isExists = dao.checkL_Pwd(old_pwd,uid);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return isExists > 0 ? true : false;
+    }
 }

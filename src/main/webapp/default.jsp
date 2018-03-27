@@ -12,7 +12,8 @@
 </head>
 <body>
     <%
-        response.sendRedirect(request.getContextPath()+"/product?method=index");
+        response.sendRedirect(request.getContextPath()+"/getIndex");
     %>
+<a>Nihao</a>
 </body>
 </html>

@@ -1,21 +1,15 @@
 package com.ecom.controller;
 
-import com.ecom.pojo.Category;
 import com.ecom.pojo.User;
-import com.ecom.service.ProductService;
 import com.ecom.service.UserService;
 import com.ecom.utils.CommonUtils;
-import com.ecom.utils.JedisPoolUtils;
 import com.ecom.utils.MailUtils;
 import com.ecom.utils.RememberMeUtils;
-import com.google.gson.Gson;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.beanutils.Converter;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import redis.clients.jedis.Jedis;
-import redis.clients.jedis.exceptions.JedisConnectionException;
 
 import javax.mail.MessagingException;
 import javax.servlet.ServletException;
@@ -29,51 +23,13 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 @Controller
-public class BearController {
-
-//   ----------------------------------product商品--------------------------------------
-
-    //    显示商品的类别功能
-    @RequestMapping("/categoryList")
-    public void categoryList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        ProductService service = new ProductService();
-//        先从缓存中查询categoryList，如果有直接使用，没有再从数据库中查询，存到缓存中
-//        1.获得jedis对象，链接redis数据库
-        Jedis jedis = null;
-        String categoryListJson = null;
-        boolean jedisflag = true;
-        try {
-            jedis = JedisPoolUtils.getJedis();
-            categoryListJson = jedis.get("categoryListJson");
-        } catch (JedisConnectionException e) {
-            jedisflag = false;
-            System.out.println("Jedis数据库打不开");
-        }
-//        2.判断categoryListJson是否为空，
-        if (categoryListJson == null || !jedisflag) {
-            System.out.println("缓存没有数据，查询数据库！");
-//            准备分类数据
-            List<Category> categoryList = service.findAllCategroy();
-            Gson gson = new Gson();
-            categoryListJson = gson.toJson(categoryList);
-            if (jedisflag) {
-                jedis.set("categoryListJson", categoryListJson);
-            }
-
-        }
+public class BearUserController {
 
 
-        response.setContentType("text/html;charset=UTF-8");
-        response.getWriter().write(categoryListJson);
-    }
-
-
-//   ----------------------------------user用户------------------------------------------
+    //   ----------------------------------user用户------------------------------------------
 
     //    检查手机号是否重复的功能
     @RequestMapping("/checkPhone")
@@ -239,4 +195,110 @@ public class BearController {
         }
     }
 
+
+    //用户注销
+    @RequestMapping("/logout")
+    public void logout(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+        HttpSession session = request.getSession();
+        session.removeAttribute("user");
+        Cookie cookie_username = new Cookie("cookie_username", "");
+        cookie_username.setMaxAge(0);
+        Cookie cookie_password = new Cookie("cookie_password", "");
+        cookie_password.setMaxAge(0);
+        response.addCookie(cookie_password);
+        response.addCookie(cookie_username);
+        response.sendRedirect(request.getContextPath() + "/login");
+
+    }
+
+
+    //获取用户信息
+    @RequestMapping("/changeUserInfo")
+    public void changeUserInfo(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+//        //1.修改信息
+        UserService service = new UserService();
+//        String uid = request.getParameter("uid");
+//        String nickname = request.getParameter("nickname");
+//        String uname = request.getParameter("uname");
+//        String gender = request.getParameter("gender");
+        Map<String, String[]> properties = request.getParameterMap();
+        User user = new User();
+        try {
+//            自己指定一个类型转换器（将String转成Date）
+            ConvertUtils.register(new Converter() {
+                @Override
+                public Object convert(Class aClass, Object o) {
+//                    将String转成Date
+                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                    Date parse = null;
+                    try {
+                        parse = format.parse(o.toString());
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    return parse;
+                }
+            }, Date.class);
+//            映射封装
+            BeanUtils.populate(user, properties);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+
+
+        service.changeUserInfo(user);
+
+        //2.修改完成之后，重新获取user对象，并保存到session中
+        try {
+            User user1 = service.getUserByUid(user.getUid());
+            request.getSession().setAttribute("user", user1);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        //3.返回到用户信息页面
+        response.sendRedirect(request.getContextPath() + "/user_info");
+
+
+    }
+
+    //修改用户密码
+    @RequestMapping("/changeUserL_pwd")
+    public void changeUserL_pwd(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        UserService service = new UserService();
+        String l_pwd = request.getParameter("l_pwd");
+        String uid = request.getParameter("uid");
+        User user = new User();
+        user.setUid(uid);
+        user.setL_pwd(l_pwd);
+        service.changeUserL_pwd(user);
+
+        try {
+            user = service.getUserByUid(uid);
+            request.getSession().setAttribute("user", user);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        response.sendRedirect(request.getContextPath() + "/user_info");
+
+    }
+
+
+
+    //    检查密码是否正确的功能
+    @RequestMapping("/checkL_Pwd")
+    public void checkL_Pwd(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // 获得电话号码
+        String old_pwd = request.getParameter("old_pwd");
+        String uid = request.getParameter("uid");
+        UserService service = new UserService();
+        boolean isExist = service.checkL_Pwd(old_pwd,uid);
+        String json = "{\"isExist\":" + isExist + "}";
+        response.getWriter().write(json);
+    }
 }

@@ -6,7 +6,9 @@ import com.ecom.pojo.Product;
 import com.ecom.utils.DataSourceUtils;
 import com.ecom.utils.JdbcUtils;
 import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
+import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
@@ -22,6 +24,29 @@ public class ProductDao {
     private	static PreparedStatement pstmt = null;
     String sql=null;
     public static ResultSet rs;
+
+    public int getCount2(String cid) throws SQLException {
+        QueryRunner runner = new QueryRunner(DataSourceUtils.getDataSource());
+        String sql = "select count(*) from product where cid = ?  ";
+        Long query = (Long) runner.query(sql, new ScalarHandler(),cid);
+        return query.intValue();
+    }
+
+    //   获得热门商品
+    public List<Product> findHotProductList() throws SQLException {
+        QueryRunner runner = new QueryRunner(DataSourceUtils.getDataSource());
+        String sql = "select * from product where is_hot = ? limit ?,?";
+        List<Product> query = runner.query(sql, new BeanListHandler<Product>(Product.class), 1, 0, 12);
+        return query;
+    }
+
+    //   获得热门商品
+    public List<Product> findNewProductList() throws SQLException {
+        QueryRunner runner = new QueryRunner(DataSourceUtils.getDataSource());
+        String sql = "select * from product  order by pdate desc limit ?,?";
+        List<Product> query = runner.query(sql, new BeanListHandler<Product>(Product.class), 0, 12);
+        return query;
+    }
 
     public List<Product> findProductByPage(String sid, int index, int currentCount) throws SQLException {
         ArrayList<Product> list = new ArrayList<Product>();
@@ -190,6 +215,20 @@ public class ProductDao {
         QueryRunner runner = new QueryRunner(DataSourceUtils.getDataSource());
         String sql = "select * from category";
         List<Category> query = runner.query(sql, new BeanListHandler<Category>(Category.class));
+        return query;
+    }
+
+    public List<Product> findProductByPage2(String cid, int index, int currentCount) throws SQLException {
+        QueryRunner runner = new QueryRunner(DataSourceUtils.getDataSource());
+        String sql = "select * from product where cid = ? limit ?,?";
+        List<Product> query = runner.query(sql, new BeanListHandler<Product>(Product.class), cid, index, currentCount);
+        return query;
+    }
+
+    public Product findProductByPid2(String pid) throws SQLException {
+        QueryRunner runner = new QueryRunner(DataSourceUtils.getDataSource());
+        String sql = "select * from product where pid = ? ";
+        Product query = runner.query(sql, new BeanHandler<Product>(Product.class), pid);
         return query;
     }
 }

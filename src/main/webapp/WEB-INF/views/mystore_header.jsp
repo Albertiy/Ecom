@@ -29,7 +29,7 @@
             </c:if>
             <li><a href="cart.jsp">购物车</a></li>
             <li><a href="order_list.jsp">我的订单</a></li>
-            <li><a href="${pageContext.request.contextPath}/product_list?sid=456">我的店铺</a></li>
+            <li><a href="${pageContext.request.contextPath}/store_productlist?sid=456">我的店铺</a></li>
         </ol>
     </div>
 </div>
@@ -56,11 +56,9 @@
                             <span class="caret"></span>
                         </a>
                         <ul id="menu1" class="dropdown-menu" aria-labelledby="myproduct">
-                            <li><a href="myproduct_info">移动通讯</a></li>
+                            <%--<li><a href="myproduct_info">移动通讯</a></li>
                             <li><a href="#">数码</a></li>
-                            <li><a href="#">家电</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="addProduct">添加商品</a></li>
+                            <li><a href="#">家电</a></li>--%>
                         </ul>
                     </li>
                     <li role="presentation" class="dropdown">
@@ -106,3 +104,27 @@
         </div>
     </nav>
 </div>
+<script type="text/javascript">
+    // hearder.jsp加载完成后，去服务器端获得所有的category数据
+    $(function () {
+        var content = "";
+        $.post(
+            "${pageContext.request.contextPath}/categoryList",
+            function (data) {
+                //    [{"cid":"xxx","cname":"xxx"},{},{}]
+                //    动态的创建li
+                for (var i = 0; i < data.length; i++) {
+                    content += "<li><a href='${pageContext.request.contextPath}/store_productlist?cid="+data[i].cid+"'>" + data[i].cname + "</a></li>";
+                }
+
+                //拼接添加商品li
+                content+="<li role=\"separator\" class=\"divider\"></li><li><a href=\"addProduct\">添加商品</a></li>"
+
+                //    将拼接好的li放置到ul中
+                $("#menu1").html(content);
+            },
+            "json"
+        );
+    });
+
+</script>
