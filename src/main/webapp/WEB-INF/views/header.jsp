@@ -6,7 +6,7 @@
 <!-- 登录 注册 购物车... -->
 <div class="container-fluid">
     <div class="col-md-4">
-        <img src="img/logo2.png"/>
+        <img src="img/logo3.png"/>
     </div>
     <div class="col-md-5">
         <img src="img/header.png"/>
@@ -18,7 +18,7 @@
                 <li><a href="register">注册</a></li>
             </c:if>
             <c:if test="${!empty user }">
-                <li style="color:red">欢迎您，${user.username }</li>
+                <li style="color:red">欢迎您，${user.nickname }</li>
             </c:if>
             <li><a href="cart.jsp">购物车</a></li>
             <li><a href="order_list.jsp">我的订单</a></li>
