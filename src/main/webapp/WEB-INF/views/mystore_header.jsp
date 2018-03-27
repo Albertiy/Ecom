@@ -70,8 +70,8 @@
                         </a>
                         <ul id="menu2" class="dropdown-menu" aria-labelledby="ordermanagement">
                             <li><a href="unfilledOrder">未发货</a></li>
-                            <li><a href="#">已发货</a></li>
-                            <li><a href="#">已完成</a></li>
+                            <li><a href="delivered_orders">已发货</a></li>
+                            <li><a href="orders_done">已完成</a></li>
                         </ul>
                     </li>
                     <li>
