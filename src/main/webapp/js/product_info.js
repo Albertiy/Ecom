@@ -8,6 +8,21 @@ function modifyinfo() {
     var a2 =document.getElementById("confirm");
     a2.style.display="block";
 };
+
+window.onload = function(){
+    var obj_lis = document.getElementById("categoryMenu").getElementsByTagName("li");
+    var dropButton = document.getElementById("drop_button");
+    for(i=0;i<obj_lis.length;i++){
+        obj_lis[i].onclick = function(){
+            console.log(this.id);
+            var stype = this.id;
+            dropButton.innerHTML=stype+" <span class='caret'></span>";
+            $("#category").val(stype);
+            var s = $("#category").val();
+        }
+    }
+}
+
 /*
 function clearNoNum(obj){
     //修复第一个字符是小数点 的情况.
@@ -26,16 +41,10 @@ function clearNoNum(obj){
     }
 };*/
 
-$(document).ready(function () {
-    /*     $("#search_type").click(function () {
-            var val=$(this).text();
-            $("#drop_button").val(val);
-            $('.footer').css("background-color", "#336699");
-        }); */
-
+/*$(document).ready(function () {
     //获取所有li的节点
     var items = document.querySelectorAll("li");
-    var dropButton=document.getElementById("drop_button");
+    var dropButton = document.getElementById("drop_button");
     // 可以使用Array.prototype.forEach.call进行遍历
     [].forEach.call(items, function (item) {
         //添加click事件
@@ -47,5 +56,6 @@ $(document).ready(function () {
             var s = $("#Category").val();
         });
     });
-});
+
+});*/
 

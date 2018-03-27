@@ -27,12 +27,12 @@
     <c:forEach items="${pageBean.list}" var="pro">
 
         <div class="col-md-2" style="height: 250px; width: 300px;text-align: center;">
-            <a href="${pageContext.request.contextPath}/myproduct_info?pid=${pro.pid}&cid=${pro.cid}">
+            <a href="${pageContext.request.contextPath}/store_productinfo?pid=${pro.pid}&cid=${pro.cid}">
                 <img src="${pageContext.request.contextPath}/${pro.pimage}"
                      width="170" height="170" style="display: inline-block;">
             </a>
             <p>
-                <a href="${pageContext.request.contextPath}/myproduct_info?pid=${pro.pid}&cid=${pro.cid}"
+                <a href="${pageContext.request.contextPath}/store_productinfo?pid=${pro.pid}&cid=${pro.cid}"
                    style='color: green'>${pro.pname}</a>
             </p>
             <p>

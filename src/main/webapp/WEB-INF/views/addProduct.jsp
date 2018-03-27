@@ -103,7 +103,7 @@
         <input type="file" name="file" id="form_file" accept="image/*"
                class="upfile" style="display: none">
         <img style="width:300px; height: 300px;" id="singleImg" class="img-thumbnail img-responsive book_thumb center-block"
-             src="${pageContext.request.contextPath}/${product.pimage}" alt="尚未选择图片或图片无效"/>
+             src="${pageContext.request.contextPath}/images/Files/default.jpg" alt="尚未选择图片或图片无效"/>
     </div>
 
     <div class="col-md-6" style="height:350px">
@@ -155,11 +155,8 @@
                     移动通讯
                     <span class="caret"></span>
                 </button>
-                <ul class="dropdown-menu">
-                    <li id="移动通讯"><a href="#">移动通讯</a></li>
-                    <li id="数码"><a href="#">数码</a></li>
-                    <li id="家电"><a href="#">家电</a></li>
-                    </li>
+                <ul id="categoryMenu" class="dropdown-menu">
+                    <%-- 动态加载 --%>
                 </ul>
             </dd>
 
@@ -172,7 +169,26 @@
     </form>
     </div>
 </div>
+<script type="text/javascript">
+    // hearder.jsp加载完成后，去服务器端获得所有的category数据
+    $(function () {
+        var content = "";
+        $.post(
+            "${pageContext.request.contextPath}/categoryList",
+            function (data) {
+                //    [{"cid":"xxx","cname":"xxx"},{},{}]
+                //    动态的创建li
+                for (var i = 0; i < data.length; i++) {
+                    content += "<li id='" + data[i].cname + "'><a href=\"#\">"+data[i].cname+"</a></li>";
+                }
 
+                //    将拼接好的li放置到ul中
+                $("#categoryMenu").html(content);
+            },
+            "json"
+        );
+    });
+</script>
 
 <!-- 引入footer.jsp -->
 <jsp:include page="footer.jsp" flush="true"></jsp:include>

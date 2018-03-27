@@ -118,7 +118,8 @@
                 }
 
                 //拼接添加商品li
-                content+="<li role=\"separator\" class=\"divider\"></li><li><a href=\"addProduct\">添加商品</a></li>"
+                content+="<li role=\"separator\" class=\"divider\"></li><li><a href='${pageContext.request.contextPath}/store_productlist?sid=456'>所有商品</a></li>";
+                content+="<li role=\"separator\" class=\"divider\"></li><li><a href=\"addProduct\">添加商品</a></li>";
 
                 //    将拼接好的li放置到ul中
                 $("#menu1").html(content);
