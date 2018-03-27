@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: 24540
-  Date: 2018/3/16
-  Time: 14:45
+  Date: 2018/3/27
+  Time: 15:12
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -64,7 +64,7 @@
                     })
 
                     $('#mytab').bootstrapTable({
-                        url: "getjson",//数据源
+                        url: "getOrderList3",//数据源, getjson是不连接数据库的测试页面，getOrderList是直接返回内容的方法
                         dataField: "rows",//服务端返回数据键值 就是说记录放的键值是rows，分页时使用总记录数的键值为total
                         height: tableHeight(),//高度调整
                         search: true,//是否搜索
@@ -97,24 +97,31 @@
                                 align: "center",//水平
                                 valign: "middle"//垂直
                             },*/
-                            {
+                            /*{
                                 title: "订单号",//标题
                                 field: "oid",//键名
                                 sortable: false,//是否可排序
                                 order: "desc",//默认排序方式
                                 titleTooltip: "订单号"
-                            },
+                            },*/
                             {
-                                title: "UID",
-                                field: "uid",
+                                title: "买家",
+                                field: "nickname",
                                 sortable: false,
-                                titleTooltip: "买家ID"
+                                titleTooltip: "昵称"
                             },
                             {
-                                field: "amount",
-                                title: "商品金额",
+                                field: "total",
+                                title: "总金额",
                                 sortable: true,
                                 titleTooltip: "实付款"
+                            },
+                            {
+                                field: "create_time",
+                                title: "下单时间",
+                                //formatter: 'infoFormatter',//对本列数据做格式化
+                                sortable: true,
+                                titleTooltip: "下单时间"
                             },
                             {
                                 field: "pay_time",
@@ -122,13 +129,6 @@
                                 //formatter: 'infoFormatter',//对本列数据做格式化
                                 sortable: true,
                                 titleTooltip: "付款时间"
-                            },
-                            {
-                                field: "delivery_time",
-                                title: "发货时间",
-                                //formatter: 'infoFormatter',//对本列数据做格式化
-                                sortable: true,
-                                titleTooltip: "发货时间"
                             },
                             {
                                 field: "consignee",
@@ -172,10 +172,29 @@
                         },//单击row事件
                         locale: "zh-CN", //中文支持
                         detailView: true, //是否显示详情折叠
-                        detailFormatter: function(index, row, element) {
+                        detailFormatter: function(index, row, element) {//自定义详情折叠页内容
                             var html = '';
-                            $.each(row, function(key, val){
+                            /*$.each(row, function(key, val){//$.each 是 JQuery 的 遍历函数
                                 html += "<p>" + key + ":" + val +  "</p>"
+                            });*/
+                            /*$.post("getOrderDetails",row,function(data) {//这个版本的post函数不存在
+                                html += data;
+                            });*/
+                            //console.log(row);//row有内容
+                            $.ajax({
+                                async: false,//重要且必须
+                                type: 'POST',
+                                url: "getOrderDetails",
+                                data: row,
+                                success: function(data){
+                                    console.log("getOrderDetails ajax success!");
+                                    console.log(data);
+                                    html += data;
+                                    //return 200;
+                                },error:function(){
+                                    console.log('getOrderDetails ajax error!');
+                                },
+                                dataType:'html'
                             });
                             return html;
                         }
