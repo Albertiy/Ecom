@@ -42,6 +42,11 @@ public class GustPigController {
         return "delivered_orders";
     }
 
+    @RequestMapping("/orders_done")
+    public String orders_done(){
+            return "orders_done";
+        }
+
     @RequestMapping("/expressmodal")
     public String expressmodal(){
         return  "expressmodal";
