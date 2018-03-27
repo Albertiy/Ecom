@@ -13,7 +13,7 @@
 <!-- 登录 注册 购物车... -->
 <div class="container-fluid">
     <div class="col-md-4">
-        <img src="img/logo2.png"/>
+        <a href="getIndex"><img src="img/logo3.png"/></a>
     </div>
     <div class="col-md-5">
         <img src="img/header.png"/>
@@ -21,15 +21,16 @@
     <div class="col-md-3" style="padding-top:20px">
         <ol class="list-inline">
             <c:if test="${empty user }">
-                <li><a href="login.jsp">登录</a></li>
-                <li><a href="register.jsp">注册</a></li>
+                <li><a href="login">登录</a></li>
+                <li><a href="register">注册</a></li>
             </c:if>
             <c:if test="${!empty user }">
-                <li style="color:red">欢迎您，${user.username }</li>
+                <li ><a href="user_info" style="color:red">欢迎您，${user.nickname }</a></li>
+                <li><a href="${pageContext.request.contextPath}/logout">退出</a></li>
             </c:if>
-            <li><a href="cart.jsp">购物车</a></li>
-            <li><a href="order_list.jsp">我的订单</a></li>
-            <li><a href="${pageContext.request.contextPath}/store_productlist?sid=456">我的店铺</a></li>
+            <li><a href="cart">购物车</a></li>
+            <li><a href="order_list">我的订单</a></li>
+            <li><a href="${pageContext.request.contextPath}/store_productlist?sid=${user.sid}">我的店铺</a></li>
         </ol>
     </div>
 </div>
@@ -114,11 +115,11 @@
                 //    [{"cid":"xxx","cname":"xxx"},{},{}]
                 //    动态的创建li
                 for (var i = 0; i < data.length; i++) {
-                    content += "<li><a href='${pageContext.request.contextPath}/store_productlist?cid="+data[i].cid+"'>" + data[i].cname + "</a></li>";
+                    content += "<li><a href='${pageContext.request.contextPath}/store_productlist?sid=${user.sid}&cid="+data[i].cid+"'>" + data[i].cname + "</a></li>";
                 }
 
                 //拼接添加商品li
-                content+="<li role=\"separator\" class=\"divider\"></li><li><a href='${pageContext.request.contextPath}/store_productlist?sid=456'>所有商品</a></li>";
+                content+="<li role=\"separator\" class=\"divider\"></li><li><a href='${pageContext.request.contextPath}/store_productlist?sid=${user.sid}'>所有商品</a></li>";
                 content+="<li role=\"separator\" class=\"divider\"></li><li><a href=\"addProduct\">添加商品</a></li>";
 
                 //    将拼接好的li放置到ul中

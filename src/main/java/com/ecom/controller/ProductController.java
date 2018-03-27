@@ -41,10 +41,10 @@ public class ProductController {
         int currentCount = 12;
 
         ProductService service = new ProductService();
-        //        获得cid
+        //获得cid
         String cid = request.getParameter("cid");
         if(cid!=null) {
-            PageBean pageBean = service.findProductListByCid(cid, currentPage, currentCount);
+            PageBean pageBean = service.findStoreProductListByCid(sid, cid, currentPage, currentCount);
 
             request.setAttribute("pageBean", pageBean);
             request.setAttribute("cid", cid);
@@ -305,7 +305,6 @@ public class ProductController {
         int pstorage = 0;
         String cid = null;
         ProductService service = new ProductService();
-        Product product = new Product();
 
         //传统方法无法获取到request的参数！
         if (request.getParameter("cpath") != null) {
@@ -469,13 +468,11 @@ public class ProductController {
         //request.getRequestDispatcher("/testInput.jsp"+redirect).forward(request, response);
         //用这个！
         if(inputSuccess) {
-            product = service.modifyProductImage(pid);
-            request.setAttribute("product", product);
+            service.addProduct(pid, pname, price, pstorage, cid);
             request.getRequestDispatcher("/myproduct_info").forward(request, response);
         }
         else{
-            product = service.findProductInfoByPid(pid);
-            request.setAttribute("product", product);
+            service.addProduct(pid, pname, price, pstorage, cid);
             request.getRequestDispatcher("/myproduct_info").forward(request, response);
         }
     }
