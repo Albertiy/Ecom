@@ -222,9 +222,9 @@
                 }
                 function addButton(value,row,index)
                 {
-                    var buttons='<button class="btn btn-success">订单详情</button>'
+                    var buttons=/*'<button class="btn btn-success">订单详情</button>'
                         + '&nbsp;&nbsp;'
-                        + '<a href="findExpress?sid='+row.sid+'&oid='+row.oid+'" class="btn btn-warning" data-toggle="modal" data-target="#addModal">物流信息</a>';
+                        + */'<a href="findExpress?sid='+row.sid+'&oid='+row.oid+'" class="btn btn-warning" data-toggle="modal" data-target="#addModal">物流信息</a>';
                     return buttons;
                 }
             </script>
