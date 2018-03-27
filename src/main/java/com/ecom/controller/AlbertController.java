@@ -1,6 +1,7 @@
 package com.ecom.controller;
 
 import com.ecom.auth.AuthSeller;
+import com.ecom.auth.AuthUser;
 import com.ecom.pojo.Express;
 import com.ecom.pojo.Order;
 import com.ecom.pojo.OrderData;
@@ -30,6 +31,7 @@ public class AlbertController {
     private ExpressService expressService;
 
     @RequestMapping("/unfilledOrder")
+    @AuthUser
     @AuthSeller
     public String testOrder() {
         System.out.println("【/unfilledOrder】");
