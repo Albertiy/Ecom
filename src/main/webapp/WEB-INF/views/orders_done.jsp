@@ -169,6 +169,7 @@
                             {
                                 field: "state",
                                 title: "订单状态",
+                                formatter: 'showState',
                                 titleTooltip: "状态"
                             },
                             {
@@ -240,6 +241,27 @@
                         + '&nbsp;&nbsp;'
                         +*/ '<a href="findExpress?sid='+row.sid+'&oid='+row.oid+'" class="btn btn-warning" data-toggle="modal" data-target="#addModal">物流信息</a>';
                     return buttons;
+                }
+                function showState(value,row,index) {
+                    var info='';
+                    switch (row.state){
+                        case '0':
+                            info+='未付款';
+                            break;
+                        case '1':
+                            info+='未发货';
+                            break;
+                        case '2':
+                            info+='已发货';
+                            break;
+                        case '3':
+                            info+='已完成';
+                            break;
+                        default:
+                            info+='未付款';
+                            break;
+                    }
+                    return info;
                 }
             </script>
 </body>
