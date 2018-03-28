@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 public class StoreService {
     //通过店铺id和订单id查询物流信息
-    public Store findExpressInfo(String uid){
+    public Store findStoreInfo(String uid){
         Store store = new Store();
         StoreDao dao = new StoreDao();
         try {
@@ -21,4 +21,17 @@ public class StoreService {
         return store;
     }
 
+    // 修改店铺信息 i=1,修改基本信息；i=2,修改店铺状态
+    public int StoreChange(Store store,String i){
+        StoreDao dao = new StoreDao();
+        System.out.println("进入StoreChange Service");
+        try {
+            dao.StoreChange(store,i);
+            return 200;
+        }catch(Exception e){
+            System.out.println("修改Store表失败");
+            e.printStackTrace();
+            return 1;
+        }
+    }
 }

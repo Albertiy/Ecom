@@ -18,9 +18,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 @Controller
 public class GustPigController {
@@ -82,6 +79,7 @@ public class GustPigController {
         return  "expressmodal";
     }
 
+    //加载物流信息
     @RequestMapping("/findExpress")
     public void fineExpress(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("进入Controller");
@@ -92,29 +90,74 @@ public class GustPigController {
         ExpressService service = new ExpressService();
         //调用service查询物流信息
         express = service.findExpressInfo(sid,oid);
-        System.out.println("Controller执行成功，准备向expressmodal.jsp传参");
+        System.out.println("Controller执行成功");
         request.setAttribute("express", express);
         request.getRequestDispatcher("/expressmodal").forward(request, response);
         System.out.println("传参成功");
     }
 
+    //加载店铺信息
     @RequestMapping("/findStore")
     public void findStore(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-        System.out.print("进入findSrore Controller");
+        System.out.print("进入findStore Controller");
         String uid = request.getParameter("uid");
         System.out.println(" uid="+uid);
         Store store = new Store();
         StoreService service = new StoreService();
         // 调用service查询店铺信息
-        store = service.findExpressInfo(uid);
-        System.out.println("Controller执行成功，准备向expressmodal.jsp传参");
+        store = service.findStoreInfo(uid);
+        System.out.println("Controller执行成功");
         request.setAttribute("store",store);
         request.getRequestDispatcher("/store_info").forward(request,response);
     }
-    /*
-     * 这个是真的
-     * SpringMVC 的 @ResponseBody 标注了该函数返回的内容直接作为Response，不再加载页面
-     * */
+
+    //加载修改店铺信息
+    @RequestMapping("/findStoreChange")
+    public void findStoreChange(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        System.out.print("进入findStoreChange Controller");
+        String uid = request.getParameter("uid");
+        System.out.println(" uid="+uid);
+        Store store = new Store();
+        StoreService service = new StoreService();
+        // 调用service查询店铺信息
+        store = service.findStoreInfo(uid);
+        System.out.println("Controller执行成功");
+        request.setAttribute("store",store);
+        request.getRequestDispatcher("/store_info_change").forward(request,response);
+    }
+
+    //修改店铺信息
+    @RequestMapping("/StoreChange")
+    public void StoreChange(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        System.out.println("进入StoreChange Controller");
+        String st = request.getParameter("st");
+        Store store = new Store();
+        store.setUid(request.getParameter("uid"));
+        if(st.equals("1")) {   //st=1,修改基本信息；st=2,修改店铺状态
+            System.out.println("st=1?");
+            store.setSname(request.getParameter("sname"));
+            store.setSaddress(request.getParameter("saddress"));
+            store.setIntroduce(request.getParameter("introduce"));
+        }
+        if(st.equals("2")){
+            System.out.println("st=2?");
+            store.setState(request.getParameter("state"));
+        }
+        StoreService service = new StoreService();
+        // 调用service查询店铺信息
+        // i==200,成功；i==1,失败
+        int i = service.StoreChange(store,st);
+        if(i==200) {
+            System.out.println("Controller执行成功");
+            //response.getWriter().print("<script>alert('修改成功');</script>");
+        }else{
+            System.out.println("Controller执行失败");
+        }
+        System.out.println("findStore?uid="+store.getUid());
+        request.getRequestDispatcher("/findStore").forward(request,response);
+    }
+
+    // SpringMVC 的 @ResponseBody 标注了该函数返回的内容直接作为Response，不再加载页面
     @RequestMapping("/getOrderList2")
     @ResponseBody
     public String getOrderList2(
