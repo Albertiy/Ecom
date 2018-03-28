@@ -136,7 +136,6 @@ public class BearProductController {
     }
 
 
-
     //    显示商品的详细信息
     @RequestMapping("/productInfo")
     public void productInfo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -202,70 +201,89 @@ public class BearProductController {
 
         HttpSession session = request.getSession();
         ProductService service = new ProductService();
-
-//        要放到购物车的商品的pid
         String pid = request.getParameter("pid");
-//        获得商品的购买数量
         int buyNum = Integer.parseInt(request.getParameter("buyNum"));
-
 //        获得product对象
         Product product = service.findProductByPid(pid);
+
+        //获得sid
+        String sid = product.getSid();
 //        计算小计
-        double subtotal = product.getPrice() * buyNum;
-//        封装CartItem
-        CartItem item = new CartItem();
+        float subtotal = product.getPrice() * buyNum;
+//        封装productItem
+        ProductItem item = new ProductItem();
         item.setProduct(product);
         item.setBuyNum(buyNum);
         item.setSubtotal(subtotal);
 
-//        获得购物车---判断是否在Session中已经存在购物车
+        //        获得购物车---判断是否在Session中已经存在购物车
         Cart cart = (Cart) session.getAttribute("cart");
         if (cart == null) {
             cart = new Cart();
         }
-
-//        将此次的购物项放到车中---key是pid
-//        先判断购物车是否已经包含此购物项--------判断key，是否已经存在
-//        如果购物车中已经存在该商品----将现在买的数量与原有的数量进行相加操作
-
         Map<String, CartItem> cartItems = cart.getCartItems();
-        double newsubtotal = 0.0d;
-        if (cartItems.containsKey(pid)) {
 
-//            取出原有的商品的数量
-            CartItem cartItem = cartItems.get(pid);
-//            修改商品数量
-            int oldBuyNum = cartItem.getBuyNum();
-            oldBuyNum += buyNum;
-            cartItem.setBuyNum(oldBuyNum);
-            cart.setCartItems(cartItems);
+        //首先需要判断这个商品是否属于某个店铺，
+        if (cartItems.containsKey(sid)) {
+            //如果属于这个店铺,判断这个店铺里面是否已经有了这个商品
+            CartItem cartItem = cartItems.get(sid);
+            float newcartitem_total = 0.0f;
 
-//            修改小计
-            double oldsubtotal = cartItem.getSubtotal();
-            newsubtotal = buyNum * product.getPrice();
-            cartItem.setSubtotal(newsubtotal + oldBuyNum);
+            Map<String, ProductItem> productItems = cartItem.getProductItems();
+            float newsubtotal = 0.0f;
+
+            if (productItems.containsKey(pid)) {
+
+                //如果已经有了这个商品，就修改对应的数量和总价
+                ProductItem productItem = productItems.get(pid);
+                //修改商品数量
+                int oldBuyNum = productItem.getBuyNum();
+                oldBuyNum += buyNum;
+                productItem.setBuyNum(oldBuyNum);
+                //cartItem.setProductItems(productItems);
+
+                //修改小计
+                float oldsubtotal1 = productItem.getSubtotal();
+                newsubtotal = buyNum * product.getPrice();
+                productItem.setSubtotal(newsubtotal + oldsubtotal1);
+
+            } else {
+                //如果没有这个商品，就将这个商品添加到其中
+                productItems.put(product.getPid(), item);
+                newsubtotal = buyNum * product.getPrice();
 
 
+            }
+            //修改店铺的总价
+            float oldcartitem_total = cartItem.getCartitem_total();
+            newcartitem_total = subtotal;
+            cartItem.setCartitem_total(oldcartitem_total + newcartitem_total);
         } else {
-//        若果车中没有该商品
-            cart.getCartItems().put(product.getPid(), item);
-            newsubtotal = buyNum * product.getPrice();
+            //如果不属于这个店铺，就创建一个新的CartItem，并且修改购物车的总价
+            Map<String, ProductItem> productItems = new HashMap<>();
+            productItems.put(product.getPid(), item);
 
+            CartItem cartItem = new CartItem();
+            cartItem.setProductItems(productItems);
+            cartItem.setCartitem_total(subtotal);
+
+            cartItems.put(product.getSid(), cartItem);
         }
 
-
-//            计算总计
-        double totoal = cart.getTotal() + newsubtotal;
-        cart.setTotal(totoal);
-//        将车再次放到session中
+        //计算总计
+        float total = cart.getTotal() + buyNum * product.getPrice();
+        cart.setTotal(total);
+        //将车再次放到session中
         session.setAttribute("cart", cart);
 
-//        直接跳转到购物车页面
+        //        直接跳转到购物车页面
 //        这边如果我们转发的话，到我们的购物车页面，如果我们刷新页面的话，会继续继续servelt方法，再执行一次，这样是不合理的。
 //        request.getRequestDispatcher("/cart.jsp").forward(request,response);
 
 //        因此我们使用重定向
         response.sendRedirect(request.getContextPath() + "/cart");
+
+
     }
 
 
@@ -277,7 +295,6 @@ public class BearProductController {
         response.sendRedirect(request.getContextPath() + "/cart");
 
 
-
     }
 
 
@@ -285,16 +302,29 @@ public class BearProductController {
     @RequestMapping("/delProFromCart")
     public void delProFromCart(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-//        获得要删除的item的pid
+        //获得要删除的item的pid
         String pid = request.getParameter("pid");
-//        删除session中的购物车的购物项集合中的item
+        //        获得要删除的item的pid
+        String sid = request.getParameter("sid");
+        //删除session中的购物车的购物项集合中的item
         HttpSession session = request.getSession();
         Cart cart = (Cart) session.getAttribute("cart");
         if (cart != null) {
             Map<String, CartItem> cartItems = cart.getCartItems();
-//            需要修改总价
-            cart.setTotal(cart.getTotal() - cartItems.get(pid).getSubtotal());
-            cartItems.remove(pid);
+            CartItem cartItem = cartItems.get(sid);
+            Map<String, ProductItem> productItems = cartItem.getProductItems();
+
+            ProductItem productItem = productItems.get(pid);
+            float subtotal = productItem.getSubtotal();
+
+            cartItem.setCartitem_total(cartItem.getCartitem_total()-subtotal);
+            cart.setTotal(cart.getTotal()-subtotal);
+
+            productItems.remove(pid);
+            cartItem.setProductItems(productItems);
+            if(productItems.isEmpty()){
+                cartItems.remove(sid);
+            }
             cart.setCartItems(cartItems);
 
         }
