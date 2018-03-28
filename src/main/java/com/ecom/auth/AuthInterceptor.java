@@ -55,7 +55,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
                 } else{ //如果验证失败
                         //返回到商户注册界面
                     System.out.println("未开通店铺！");
-                    response.sendRedirect(request.getContextPath()+"/login");
+                    response.sendRedirect(request.getContextPath()+"/openStore");
                     return false;
                 }
             }

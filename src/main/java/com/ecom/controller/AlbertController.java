@@ -72,6 +72,10 @@ public class AlbertController {
         return "getjson";
     }
 
+    @RequestMapping("/openStore")
+    public String openStore(){
+        return "open_store";
+    }
     /*
      * 这个是真的
      * SpringMVC 的 @ResponseBody 标注了该函数返回的内容直接作为Response，不再加载页面
