@@ -51,6 +51,21 @@ public class GustPigController {
         return "test_GustPig";
     }
 
+    @RequestMapping("/store_info")
+    public String store_info(){
+        return "store_info";
+    }
+
+    @RequestMapping("/store_info_change")
+    public String store_info_change(){
+        return "store_info_change";
+    }
+
+    @RequestMapping("/store_income")
+    public String store_income(){
+        return "store_income";
+    }
+
     @RequestMapping("/delivered_orders")
     public String delivered_orders(){
         return "delivered_orders";
