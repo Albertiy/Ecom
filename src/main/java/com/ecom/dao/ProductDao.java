@@ -15,6 +15,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +30,39 @@ public class ProductDao {
         QueryRunner runner = new QueryRunner(DataSourceUtils.getDataSource());
         String sql = "select count(*) from product where cid = ?  ";
         Long query = (Long) runner.query(sql, new ScalarHandler(),cid);
+        return query.intValue();
+    }
+
+    //某店铺查询所有商品总数
+    public int getCount(String sid) throws SQLException {
+        int count = 0;
+        try {
+            List<Product> list = null;
+            conn = JdbcUtils.getConnection();
+            sql = "select count(*) from product where sid = ? ";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1,sid);
+            rs = pstmt.executeQuery();
+            if(rs.next())
+            {
+                count = rs.getInt(1);
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        /*QueryRunner runner = new QueryRunner(DataSourceUtils.getDataSource());
+        String sql = "select count(*) from product where sid = ? and pflag = 1 ";
+        Long query = (Long) runner.query(sql, new ScalarHandler(),sid);
+        return query.intValue();*/
+        return count;
+    }
+
+    //获取某一店铺中某一种类商品总数
+    public int getStoreCount(String sid, String cid) throws SQLException {
+        QueryRunner runner = new QueryRunner(DataSourceUtils.getDataSource());
+        String sql = "select count(*) from product where cid = ?  and sid = ?";
+        Long query = (Long) runner.query(sql, new ScalarHandler(),cid,sid);
         return query.intValue();
     }
 
@@ -48,6 +82,7 @@ public class ProductDao {
         return query;
     }
 
+    //获得某店铺所有商品
     public List<Product> findProductByPage(String sid, int index, int currentCount) throws SQLException {
         ArrayList<Product> list = new ArrayList<Product>();
         try {
@@ -58,7 +93,6 @@ public class ProductDao {
             pstmt.setInt(2,index);
             pstmt.setInt(3,currentCount);
             rs = pstmt.executeQuery();
-            System.out.println("通过sid查询product成功");
             while(rs.next()){
                 Product product = new Product();
                 product.setPid(rs.getString("pid"));
@@ -88,30 +122,45 @@ public class ProductDao {
         return query;*/
     }
 
-    //查询商品总数
-    public int getCount(String sid) throws SQLException {
-        int count = 0;
+    //获得某店铺某一种商品
+    public List<Product> findCidProductByPage(String sid, String cid, int index, int currentCount) throws SQLException {
+        ArrayList<Product> list = new ArrayList<Product>();
         try {
-            List<Product> list = null;
             conn = JdbcUtils.getConnection();
-            sql = "select count(*) from product where sid = ? ";
+            sql = "select * from product where sid = ? and cid = ? limit ?,?";
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1,sid);
+            pstmt.setString(2,cid);
+            pstmt.setInt(3,index);
+            pstmt.setInt(4,currentCount);
             rs = pstmt.executeQuery();
-            System.out.println("通过sid查询product成功");
-            if(rs.next())
-            {
-                count = rs.getInt(1);
+            while(rs.next()){
+                Product product = new Product();
+                product.setPid(rs.getString("pid"));
+                product.setSid(rs.getString("sid"));
+                product.setPname(rs.getString("pname"));
+                product.setCid(rs.getString("cid"));
+                product.setPrice(rs.getFloat("price"));
+                product.setPdesc(rs.getString("pdesc"));
+                product.setPdate(rs.getString("pdate"));
+                product.setPstorage(rs.getInt("pstorage"));
+                product.setPsold(rs.getInt("psold"));
+                product.setUnpturnover(rs.getFloat("unpturnover"));
+                product.setPturnover(rs.getFloat("pturnover"));
+                product.setPimage(rs.getString("pimage"));
+                product.setState(rs.getString("state"));
+                product.setIs_hot(rs.getInt("is_hot"));
+                list.add(product);
             }
-        }
-            catch (SQLException e) {
+
+        } catch (SQLException e) {
             e.printStackTrace();
         }
+        return list;
         /*QueryRunner runner = new QueryRunner(DataSourceUtils.getDataSource());
-        String sql = "select count(*) from product where sid = ? and pflag = 1 ";
-        Long query = (Long) runner.query(sql, new ScalarHandler(),sid);
-        return query.intValue();*/
-        return count;
+        String sql = "select * from product where sid = ? limit ?,?";
+        List<Product> query = runner.query(sql, new BeanListHandler<Product>(Product.class), sid, index, currentCount);
+        return query;*/
     }
 
     //通过pid访问数据库查询商品
@@ -124,7 +173,6 @@ public class ProductDao {
             pstmt.setString(1,pid);
             rs = pstmt.executeQuery();
             if(rs.next()) {
-                System.out.println("通过pid查询product成功");
                 product.setPid(rs.getString("pid"));
                 product.setSid(rs.getString("sid"));
                 product.setPname(rs.getString("pname"));
@@ -180,11 +228,11 @@ public class ProductDao {
     }
 
     //更改商品信息
-    public Product modifyProduct(String pid, String pname, Float price, int pstrorage) throws SQLException {
+    public Product modifyProduct(String pid, String pname, Float price, int pstrorage, String pdesc) throws SQLException {
         Product product = new Product();
         try {
             conn = JdbcUtils.getConnection();
-            sql = "UPDATE product SET pname ='"+pname+"', price ="+price+", pstorage = "+pstrorage+" WHERE pid = "+pid;
+            sql = "UPDATE product SET pname ='"+pname+"', price ="+price+", pstorage = "+pstrorage+", pdesc = '"+pdesc+"' WHERE pid = '"+pid+"'";
             pstmt = conn.prepareStatement(sql);
             pstmt.executeUpdate();
             //重新获取此pid的内容
@@ -200,7 +248,7 @@ public class ProductDao {
         Product product = new Product();
         try {
             conn = JdbcUtils.getConnection();
-            sql = "UPDATE product SET pimage = 'images/Files/" +pid+".jpg'WHERE pid = "+pid;
+            sql = "UPDATE product SET pimage = 'images/Files/" +pid+".jpg'WHERE pid = '"+pid+"'";
             pstmt = conn.prepareStatement(sql);
             pstmt.executeUpdate();
             //重新获取此pid的内容
@@ -230,5 +278,34 @@ public class ProductDao {
         String sql = "select * from product where pid = ? ";
         Product query = runner.query(sql, new BeanHandler<Product>(Product.class), pid);
         return query;
+    }
+
+    //添加商品
+    public void addProduct(String sid, String pid, String pname, Float price, int pstorage, String cid, String pimage, String pdesc)throws SQLException{
+
+        SimpleDateFormat fmt=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //规范时间
+        try {
+            conn = JdbcUtils.getConnection();
+            String sql = null;
+            sql = "insert into product values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1,pid);
+            pstmt.setString(2,sid);
+            pstmt.setString(3,pname);
+            pstmt.setString(4,cid);
+            pstmt.setFloat(5,price);
+            pstmt.setString(6,pdesc);
+            pstmt.setString(7,fmt.format(System.currentTimeMillis()));
+            pstmt.setInt(8,pstorage);
+            pstmt.setInt(9,0);
+            pstmt.setFloat(10,0);
+            pstmt.setFloat(11,0);
+            pstmt.setString(12,pimage);
+            pstmt.setString(13,"0");
+            pstmt.setInt(14,1);
+            int s = pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

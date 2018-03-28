@@ -53,7 +53,7 @@ public class ProductService {
         return categoryList;
     }
 
-
+    //主页通过cid查找product
     public PageBean findProductListByCid(String cid, int currentPage, int currentCount) {
 
         ProductDao dao = new ProductDao();
@@ -91,6 +91,43 @@ public class ProductService {
         return pageBean;
     }
 
+    //mystore通过cid查找product
+    public PageBean findStoreProductListByCid(String sid, String cid, int currentPage, int currentCount) {
+
+        ProductDao dao = new ProductDao();
+
+
+//        封装一个PageBean返回给web层
+        PageBean<Product> pageBean = new PageBean<Product>();
+
+
+//        1.封装当前页
+        pageBean.setCurrentPage(currentPage);
+//        2.封装每页显示的条数
+        pageBean.setCurrentCount(currentCount);
+//        3.封装总条数
+        int totalCount = 0;
+        try {
+            totalCount = dao.getStoreCount(sid, cid);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        pageBean.setTotalCount(totalCount);
+//        4.封装总页数
+        int totalPage = (int) Math.ceil(1.0 * totalCount / currentCount);
+        pageBean.setTotalPage(totalPage);
+//        5.当前页显示的数据
+//        当前页与起始索引index的关系
+        int index = (currentPage - 1) * currentCount;
+        List<Product> list = null;
+        try {
+            list = dao.findCidProductByPage(sid, cid, index, currentCount);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        pageBean.setList(list);
+        return pageBean;
+    }
 
     //通过sid查找product
     public PageBean findProductListBySid(String sid, int currentPage, int currentCount) {
@@ -167,12 +204,12 @@ public class ProductService {
     }
 
     //更改商品信息
-    public Product modifyProduct(String pid, String pname, Float price, int pstrorage) {
+    public Product modifyProduct(String pid, String pname, Float price, int pstrorage, String pdesc) {
         Product product = new Product();
         ProductDao dao = new ProductDao();
         //调用dao下架
         try {
-            product = dao.modifyProduct(pid, pname, price, pstrorage);
+            product = dao.modifyProduct(pid, pname, price, pstrorage, pdesc);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -201,5 +238,15 @@ public class ProductService {
             e.printStackTrace();
         }
         return product;
+    }
+
+    //添加商品
+    public void addProduct(String sid, String pid, String pname, Float price, int pstorage, String cid, String pimage,String pdesc){
+        ProductDao dao = new ProductDao();
+        try {
+            dao.addProduct(sid, pid, pname, price, pstorage, cid, pimage, pdesc);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

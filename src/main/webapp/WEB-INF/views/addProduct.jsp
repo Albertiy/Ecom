@@ -97,82 +97,109 @@
 
 <div class="container" style="margin: 0 auto;">
     <div class="row">
-    <form id="fm" role="form" action="modifyproduct" method="post">
-    <div class="col-md-6">
-        <label for="form_file" class="btn btn-primary">选择图片</label>
-        <input type="file" name="file" id="form_file" accept="image/*"
-               class="upfile" style="display: none">
-        <img style="width:300px; height: 300px;" id="singleImg" class="img-thumbnail img-responsive book_thumb center-block"
-             src="${pageContext.request.contextPath}/${product.pimage}" alt="尚未选择图片或图片无效"/>
-    </div>
+    <form id="fm" role="form" enctype="multipart/form-data"  accept-charset="UTF-8" action="addproduct" method="post">
+        <input type="text" style="display: none" name="sid" id="sid" value="${user.sid}">
+        <div class="col-md-6">
+            <label for="form_file" class="btn btn-primary">选择图片</label>
+            <input type="file" name="file" id="form_file" accept="image/*"
+                   class="upfile" style="display: none">
+            <img style="width:300px; height: 300px;" id="singleImg" class="img-thumbnail img-responsive book_thumb center-block"
+                 src="${pageContext.request.contextPath}/images/Files/default.jpg" alt="尚未选择图片或图片无效"/>
+        </div>
 
-    <div class="col-md-6" style="height:350px">
-        <dl class="form-group">
+    <div class="col-md-6">
+        <dl class="form-group" style="width: 350px; margin: 20px 0 10px 0;">
             <dt class="input-label">
                 <label class="form-label f5">名称</label>
             </dt>
             <dd>
-                <input type="text" id="pname" name="pname" class="form-control form-control-lg" required="required">
+                <input class="form-control" type="text" id="pname" name="pname"
+                       required="required" pattern="([A-Za-z0-9\u4e00-\u9fa5]){1,50}"
+                       oninvalid="setCustomValidity('最多输入50个汉字、字母或数字')"
+                       oninput="setCustomValidity('')"
+                       placeholder="请输入商品名">
             </dd>
         </dl>
 
-        <dl class="form-group">
+        <dl class="form-group" style="width: 350px; margin: 20px 0 10px 0;">
             <dt class="input-label">
                 <label class="form-label f5">单价</label>
             </dt>
             <dd>
-                <input type="text" id="unit_price" name="unit_price" class="form-control form-control-lg">
+                <input class="form-control" type="text" id="price" name="price"
+                       required="required" pattern="^(([1-9]\d{0,9})|0)(\.\d{1,2})?$"
+                       placeholder="请输入单价"
+                       oninvalid="setCustomValidity('保留两位小数')"
+                       oninput="setCustomValidity('')">
             </dd>
         </dl>
 
-        <dl class="form-group">
+        <dl class="form-group" style="width: 350px; margin: 20px 0 10px 0;">
             <dt class="input-label">
                 <label class="form-label f5">库存</label>
             </dt>
             <dd>
-                <input type="number" id="pstorage" name="pstorage" min="1" max="9999" class="form-control form-control-lg">
+                <input class="form-control"  type="number" id="pstorage" name="pstorage"
+                       required="required" min="1" max="9999"
+                       placeholder="请输入库存数量">
             </dd>
         </dl>
 
-        <dl class="form-group">
+        <dl class="form-group" style="width: 350px; margin: 20px 0 10px 0;">
             <dt class="input-label">
                 <label class="form-label f5">分类</label>
             </dt>
-            <dd>
-                <select class="btn btn-default  dropdown-toggle" id="bindZ" onChange="getKcbh()" style="width:100px; margin-left: 0px"></select>
-
-                <select class="btn btn-default  dropdown-toggle" id="bindK"  onChange="getZsd()" style="width:100px;margin-left: 68.5px; margin-right: 68.5px">
-                    <option  value="-1">--</option>
-                </select>
-                <select class="btn btn-default  dropdown-toggle" id="bindZsd" style="width:100px; margin-right: 0px">
-                    <option  value="-1">--</option>
-                </select>
-
-                <%--<button type="button" class="btn btn-default btn-block dropdown-toggle sbutton"
+            <dd class="btn-group">
+                <button type="button" class="btn btn-default btn-block dropdown-toggle sbutton"
                         data-toggle="dropdown" aria-haspopup="true"
                         aria-expanded="false" id="drop_button">
-                    Science
+                    移动通讯
                     <span class="caret"></span>
                 </button>
-                <ul class="dropdown-menu">
-                    <li id="Science"><a href="#">Science</a></li>
-                    <li id="Math"><a href="#">Math</a></li>
-                    <li id="Art"><a href="#">Art</a></li>
-                    <li id="Ohters"><a href="#">Others</a></li>
-                </ul>--%>
-
+                <ul id="categoryMenu" class="dropdown-menu">
+                    <%-- 动态加载 --%>
+                </ul>
             </dd>
-
-            <input type="text" name="Category" id="Category" value="Science" hidden>
+            <input type="text" name="category" id="category" value="移动通讯" hidden>
         </dl>
 
-        <a id="down" style="background-color: #d3d3d3; width: 100px; float:right" class="btn btn-default" role="button" onclick=document.getElementById("fm").submit()><strong>确定</strong></a>
+        <dl class="form-group" style="width: 350px; margin: 20px 0 10px 0;">
+            <dt class="input-label">
+                <label class="form-label f5">商品简介</label>
+            </dt>
+            <dd>
+                <input class="form-control" type="text" id="pdesc" name="pdesc"
+                       required="required"
+                       placeholder="请输入商品简介">
+            </dd>
+        </dl>
+
+        <button type="submit" id="confirm" class="btn btn-success" style="float:right;"><strong>确定</strong></button>
 
     </div>
     </form>
     </div>
 </div>
+<script type="text/javascript">
+    // hearder.jsp加载完成后，去服务器端获得所有的category数据
+    $(function () {
+        var content = "";
+        $.post(
+            "${pageContext.request.contextPath}/categoryList",
+            function (data) {
+                //    [{"cid":"xxx","cname":"xxx"},{},{}]
+                //    动态的创建li
+                for (var i = 0; i < data.length; i++) {
+                    content += "<li id='" + data[i].cname + "'><a href=\"#\">"+data[i].cname+"</a></li>";
+                }
 
+                //    将拼接好的li放置到ul中
+                $("#categoryMenu").html(content);
+            },
+            "json"
+        );
+    });
+</script>
 
 <!-- 引入footer.jsp -->
 <jsp:include page="footer.jsp" flush="true"></jsp:include>

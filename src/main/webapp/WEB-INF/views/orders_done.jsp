@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: 24540
-  Date: 2018/3/16
-  Time: 14:45
+  Date: 2018/3/27
+  Time: 15:12
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -64,7 +64,7 @@
                     })
 
                     $('#mytab').bootstrapTable({
-                        url: "getOrderList2",//数据源, getjson是不连接数据库的测试页面，getOrderList是直接返回内容的方法
+                        url: "getOrderList3",//数据源, getjson是不连接数据库的测试页面，getOrderList是直接返回内容的方法
                         dataField: "rows",//服务端返回数据键值 就是说记录放的键值是rows，分页时使用总记录数的键值为total
                         height: tableHeight(),//高度调整
                         search: true,//是否搜索
@@ -224,7 +224,7 @@
                 {
                     var buttons=/*'<button class="btn btn-success">订单详情</button>'
                         + '&nbsp;&nbsp;'
-                        + */'<a href="findExpress?sid='+row.sid+'&oid='+row.oid+'" class="btn btn-warning" data-toggle="modal" data-target="#addModal">物流信息</a>';
+                        +*/ '<a href="findExpress?sid='+row.sid+'&oid='+row.oid+'" class="btn btn-warning" data-toggle="modal" data-target="#addModal">物流信息</a>';
                     return buttons;
                 }
             </script>

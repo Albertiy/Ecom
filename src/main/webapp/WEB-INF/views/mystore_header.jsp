@@ -13,7 +13,7 @@
 <!-- 登录 注册 购物车... -->
 <div class="container-fluid">
     <div class="col-md-4">
-        <img src="img/logo2.png"/>
+        <a href="getIndex"><img src="img/logo3.png"/></a>
     </div>
     <div class="col-md-5">
         <img src="img/header.png"/>
@@ -21,15 +21,17 @@
     <div class="col-md-3" style="padding-top:20px">
         <ol class="list-inline">
             <c:if test="${empty user }">
-                <li><a href="login.jsp">登录</a></li>
-                <li><a href="register.jsp">注册</a></li>
+                <li><a href="login">登录</a></li>
+                <li><a href="register">注册</a></li>
+                <li><a href="cart">购物车</a></li>
             </c:if>
             <c:if test="${!empty user }">
-                <li style="color:red">欢迎您，${user.username }</li>
+                <li ><a href="user_info" style="color:red">欢迎您，${user.nickname }</a></li>
+                <li><a href="${pageContext.request.contextPath}/logout">退出</a></li>
+                <li><a href="cart">购物车</a></li>
+                <li><a href="order_list">我的订单</a></li>
+                <li><a href="${pageContext.request.contextPath}/store_productlist?sid=${user.sid}">我的店铺</a></li>
             </c:if>
-            <li><a href="cart.jsp">购物车</a></li>
-            <li><a href="order_list.jsp">我的订单</a></li>
-            <li><a href="${pageContext.request.contextPath}/product_list?sid=456">我的店铺</a></li>
         </ol>
     </div>
 </div>
@@ -56,11 +58,9 @@
                             <span class="caret"></span>
                         </a>
                         <ul id="menu1" class="dropdown-menu" aria-labelledby="myproduct">
-                            <li><a href="myproduct_info">移动通讯</a></li>
+                            <%--<li><a href="myproduct_info">移动通讯</a></li>
                             <li><a href="#">数码</a></li>
-                            <li><a href="#">家电</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="addProduct">添加商品</a></li>
+                            <li><a href="#">家电</a></li>--%>
                         </ul>
                     </li>
                     <li role="presentation" class="dropdown">
@@ -69,9 +69,9 @@
                             <span class="caret"></span>
                         </a>
                         <ul id="menu2" class="dropdown-menu" aria-labelledby="ordermanagement">
-                            <li><a href="#">未发货</a></li>
-                            <li><a href="#">已发货</a></li>
-                            <li><a href="#">已完成</a></li>
+                            <li><a href="unfilledOrder">未发货</a></li>
+                            <li><a href="delivered_orders">已发货</a></li>
+                            <li><a href="orders_done">已完成</a></li>
                         </ul>
                     </li>
                     <li>
@@ -80,7 +80,7 @@
                         </a>
                     </li>
                     <li>
-                        <a class="navbar-brand" id="storeinfo" href="#">
+                        <a class="navbar-brand" id="" href="#">
                             我的收益
                         </a>
                     </li>
@@ -106,3 +106,28 @@
         </div>
     </nav>
 </div>
+<script type="text/javascript">
+    // hearder.jsp加载完成后，去服务器端获得所有的category数据
+    $(function () {
+        var content = "";
+        $.post(
+            "${pageContext.request.contextPath}/categoryList",
+            function (data) {
+                //    [{"cid":"xxx","cname":"xxx"},{},{}]
+                content+="<li><a href='${pageContext.request.contextPath}/store_productlist?sid=${user.sid}'>所有商品</a></li><li role=\"separator\" class=\"divider\"></li>";
+                //    动态的创建li
+                for (var i = 0; i < data.length; i++) {
+                    content += "<li><a href='${pageContext.request.contextPath}/store_productlist?sid=${user.sid}&cid="+data[i].cid+"'>" + data[i].cname + "</a></li>";
+                }
+
+                //拼接添加商品li
+                content+="<li role=\"separator\" class=\"divider\"></li><li><a href='${pageContext.request.contextPath}/addProduct'>添加商品</a></li>";
+
+                //    将拼接好的li放置到ul中
+                $("#menu1").html(content);
+            },
+            "json"
+        );
+    });
+
+</script>

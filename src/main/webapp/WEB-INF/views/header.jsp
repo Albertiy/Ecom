@@ -23,7 +23,7 @@
             </c:if>
             <li><a href="cart">购物车</a></li>
             <li><a href="order_list">我的订单</a></li>
-            <li><a href="${pageContext.request.contextPath}/product_list?sid=456">我的店铺</a></li>
+            <li><a href="${pageContext.request.contextPath}/store_productlist?sid=${user.sid}">我的店铺</a></li>
         </ol>
     </div>
 </div>

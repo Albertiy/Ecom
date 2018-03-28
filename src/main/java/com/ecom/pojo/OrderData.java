@@ -10,20 +10,30 @@ import org.springframework.stereotype.Component;
 @Component
 public class OrderData {
     private String pid;
-    private int pcount;  //数量
+    private String pname;//为了使读取时更方便的显示商品名称，并不在表中
+    private int pcount;
     @SerializedName("shop_price")
     private float shopPrice;
     @SerializedName("sub_total")
     private float subTotal;
-    private boolean returned;  //是否申请售后
-    private boolean judged;  //是否已评论
+    private boolean returned;
+    private boolean judged;
 
     public OrderData() {
+        pname = "";
         pcount = 1;
         shopPrice = 1.00f;
         subTotal = 1.00f;
         returned = false;
         judged = false;
+    }
+
+    public String getPname() {
+        return pname;
+    }
+
+    public void setPname(String pname) {
+        this.pname = pname;
     }
 
     public String getPid() {
@@ -72,5 +82,18 @@ public class OrderData {
 
     public void setJudged(boolean judged) {
         this.judged = judged;
+    }
+
+    @Override
+    public String toString() {
+        return "OrderData{" +
+                "pid='" + pid + '\'' +
+                ", pname='" + pname + '\'' +
+                ", pcount=" + pcount +
+                ", shopPrice=" + shopPrice +
+                ", subTotal=" + subTotal +
+                ", returned=" + returned +
+                ", judged=" + judged +
+                '}';
     }
 }
