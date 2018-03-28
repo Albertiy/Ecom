@@ -4,12 +4,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Cart {
-    //    该购物车中存储的N多购物项
+    //    该购物车中存储的所有店铺
     private Map<String, CartItem> cartItems = new HashMap<>();
 
 
     //    商品总计
-    private double total;
+    private float total;
+    public Cart(){
+        total = 0.0f;
+    }
 
     public Map<String, CartItem> getCartItems() {
         return cartItems;
@@ -19,11 +22,11 @@ public class Cart {
         this.cartItems = cartItems;
     }
 
-    public double getTotal() {
+    public float getTotal() {
         return total;
     }
 
-    public void setTotal(double total) {
+    public void setTotal(float total) {
         this.total = total;
     }
 }

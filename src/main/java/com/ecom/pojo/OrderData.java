@@ -10,13 +10,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class OrderData {
     private String pid;
-    private int pcount;
+    private int pcount;  //数量
     @SerializedName("shop_price")
     private float shopPrice;
     @SerializedName("sub_total")
     private float subTotal;
-    private boolean returned;
-    private boolean judged;
+    private boolean returned;  //是否申请售后
+    private boolean judged;  //是否已评论
 
     public OrderData() {
         pcount = 1;
