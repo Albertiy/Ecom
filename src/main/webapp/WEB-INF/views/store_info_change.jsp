@@ -106,7 +106,7 @@
 <body>
 
 <!-- 引入header.jsp -->
-<jsp:include page="/mystore_heade"></jsp:include>
+<jsp:include page="/mystore_header"></jsp:include>
 
 <div class="container"
      style="width: 100%; background: url('image/regist_bg.jpg');">
@@ -148,40 +148,13 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="sex1" class="col-sm-2 control-label">性别</label>
-                    <div class="col-sm-6">
-                        <c:if test="${user.gender eq 'male'}">
-                            <label class="radio-inline">
-
-                                <input type="radio" name="gender" id="sex1" value="male" checked>男
-                            </label>
-                            <label class="radio-inline">
-                                <input type="radio" name="gender" id="sex2" value="female">女
-                            </label>
-                        </c:if>
-
-                        <c:if test="${user.gender eq 'female'}">
-                            <label class="radio-inline">
-
-                                <input type="radio" name="gender" id="sex1" value="male">男
-                            </label>
-                            <label class="radio-inline">
-                                <input type="radio" name="gender" id="sex2" value="female" checked>女
-                            </label>
-                        </c:if>
-
-                        <label class="error" for="sex1" style="display:none ">您没有第三种选择</label>
-                    </div>
-                </div>
-
-                <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-2">
 
                         <input type="submit" width="100" value="确认修改" name="submit"
                                style="background: url('./images/register.gif') no-repeat scroll 0 0 rgba(0, 0, 0, 0); height: 35px; width: 100px; color: white;">
                     </div>
                     <div class=" col-sm-2">
-                        <a width="100"  href="user_info" class="btn btn-danger">
+                        <a width="100"  href="store_info" class="btn btn-danger">
                             取消
                         </a>
                     </div>

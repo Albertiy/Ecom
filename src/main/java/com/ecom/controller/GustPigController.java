@@ -3,6 +3,7 @@ package com.ecom.controller;
 import com.ecom.pojo.*;
 import com.ecom.service.ExpressService;
 import com.ecom.service.OrderService;
+import com.ecom.service.StoreService;
 import com.google.gson.*;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -97,6 +98,19 @@ public class GustPigController {
         System.out.println("传参成功");
     }
 
+    @RequestMapping("/findStore")
+    public void findStore(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        System.out.print("进入findSrore Controller");
+        String uid = request.getParameter("uid");
+        System.out.println(" uid="+uid);
+        Store store = new Store();
+        StoreService service = new StoreService();
+        // 调用service查询店铺信息
+        store = service.findExpressInfo(uid);
+        System.out.println("Controller执行成功，准备向expressmodal.jsp传参");
+        request.setAttribute("store",store);
+        request.getRequestDispatcher("/store_info").forward(request,response);
+    }
     /*
      * 这个是真的
      * SpringMVC 的 @ResponseBody 标注了该函数返回的内容直接作为Response，不再加载页面

@@ -75,7 +75,7 @@
                         </ul>
                     </li>
                     <li>
-                        <a class="navbar-brand" id="storeinfo" href="store_info">
+                        <a class="navbar-brand" id="storeinfo" href="findStore?uid=${user.uid}">
                             店铺信息
                         </a>
                     </li>
