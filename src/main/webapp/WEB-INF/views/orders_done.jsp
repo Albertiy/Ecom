@@ -131,6 +131,20 @@
                                 titleTooltip: "付款时间"
                             },
                             {
+                                field: "delivery_time",
+                                title: "发货时间",
+                                //formatter: 'infoFormatter',//对本列数据做格式化
+                                sortable: true,
+                                titleTooltip: "发货时间"
+                            },
+                            {
+                                field: "finish_time",
+                                title: "完成时间",
+                                //formatter: 'infoFormatter',//对本列数据做格式化
+                                sortable: true,
+                                titleTooltip: "完成时间"
+                            },
+                            {
                                 field: "consignee",
                                 title: "收货人",
                                 sortable: false,
