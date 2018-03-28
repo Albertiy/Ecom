@@ -75,12 +75,12 @@
                         </ul>
                     </li>
                     <li>
-                        <a class="navbar-brand" id="storeinfo" href="#">
+                        <a class="navbar-brand" id="storeinfo" href="store_info">
                             店铺信息
                         </a>
                     </li>
                     <li>
-                        <a class="navbar-brand" id="" href="#">
+                        <a class="navbar-brand" id="storeincome" href="store_income">
                             我的收益
                         </a>
                     </li>
