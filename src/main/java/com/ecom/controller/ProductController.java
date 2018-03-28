@@ -1,5 +1,7 @@
 package com.ecom.controller;
 
+import com.ecom.auth.AuthSeller;
+import com.ecom.auth.AuthUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -29,6 +31,8 @@ public class ProductController {
 
     //根据店铺号获得商品的目录
     @RequestMapping("/store_productlist")
+    @AuthUser
+    @AuthSeller
     public void productList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         //获得 SID
