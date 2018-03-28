@@ -8,6 +8,7 @@ import java.util.Date;
 
 /**
  * 订单对象：_order表
+ *
  * 注意：由于JS与JSON默认对象名为下划线格式，而Java习惯驼峰命名法，因此
  * 使用gson的@SerializedName标注属性名
  *
@@ -27,6 +28,8 @@ import java.util.Date;
  * odata json -- 订单详情
  *
  * nickname varchar(12) not null,	-- 昵称：来自users表
+ *
+ *
  */
 @Component
 public class Order {
@@ -41,11 +44,11 @@ public class Order {
     private String deliveryTime;//发货时间
     @SerializedName("finish_time")
     private String finishTime;  //完成时间
-    private float total;        //总金额
+    private float total;        //每家店铺的总金额
     private String consignee;   //收件人姓名：16位
     private String phone;       //收件人手机号：11位
     private String address;     //收件人地址：255位
-    private String state;       //订单状态：1位，默认"0"
+    private String state;       //订单状态：1位，默认"0" 未付款，1是未发货，2是已发货，3是已完成
     private String ps;          //备注：20位
     private String odata;       //订单内容：JSON格式
     @SerializedName("nickname")

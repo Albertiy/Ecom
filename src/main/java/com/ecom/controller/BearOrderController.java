@@ -1,6 +1,8 @@
 //package com.ecom.controller;
 //
+//import com.ecom.pojo.Order;
 //import com.ecom.pojo.User;
+//import com.ecom.utils.CommonUtils;
 //import org.springframework.stereotype.Controller;
 //import org.springframework.web.bind.annotation.RequestMapping;
 //
@@ -33,10 +35,21 @@
 //
 //        Order order = new Order();
 //
-////        1. private String oid;//该订单的订单号
-//
+//        //1.订单号
 //        String oid = CommonUtils.getUUID();
 //        order.setOid(oid);
+//
+//        //2.店铺sid
+////        店铺id先不设置
+//
+//        //3.用户uid
+//        order.setUid(user.getUid());
+//
+//        //4.
+//
+//
+//
+//
 ////        2. private Date ordertime;//下单时间
 //        order.setOrdertime(new Date());
 ////        3. private double total;//该订单的总金额

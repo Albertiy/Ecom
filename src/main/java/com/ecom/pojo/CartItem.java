@@ -1,31 +1,29 @@
 package com.ecom.pojo;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class CartItem {
-    private Product product;
-    private int buyNum;
-    private double subtotal;
+    //    该购物车中一个店铺的所有商品
+    private Map<String, ProductItem> productItems = new HashMap<>();
 
-    public Product getProduct() {
-        return product;
+
+    //    一个店铺的商品总计
+    private float cartitem_total;
+
+    public Map<String, ProductItem> getProductItems() {
+        return productItems;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setProductItems(Map<String, ProductItem> productItems) {
+        this.productItems = productItems;
     }
 
-    public int getBuyNum() {
-        return buyNum;
+    public float getCartitem_total() {
+        return cartitem_total;
     }
 
-    public void setBuyNum(int buyNum) {
-        this.buyNum = buyNum;
-    }
-
-    public double getSubtotal() {
-        return subtotal;
-    }
-
-    public void setSubtotal(double subtotal) {
-        this.subtotal = subtotal;
+    public void setCartitem_total(float cartitem_total) {
+        this.cartitem_total = cartitem_total;
     }
 }
