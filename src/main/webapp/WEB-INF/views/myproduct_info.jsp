@@ -123,7 +123,7 @@
                             <div style="width: 350px; margin: 20px 0 10px 0;">
                                     <label class="form-label">名称:</label>
                                     <input class="form-control" type="text" id="pname" name="pname"
-                                           required="required" pattern="([A-Za-z0-9\u4e00-\u9fa5]){1,50}"
+                                           required="required" pattern="([ A-Za-z0-9\u4e00-\u9fa5]){1,50}"
                                            oninvalid="setCustomValidity('最多输入50个汉字、字母或数字')"
                                            oninput="setCustomValidity('')"
                                            placeholder="请输入商品名"
