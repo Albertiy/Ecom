@@ -22,8 +22,8 @@ public class OrderData {
     public OrderData() {
         pname = "";
         pcount = 1;
-        shopPrice = 1.00f;
-        subTotal = 1.00f;
+        shopPrice = 0.00f;
+        subTotal = 0.00f;
         returned = false;
         judged = false;
     }

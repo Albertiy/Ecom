@@ -308,4 +308,10 @@ public class ProductDao {
             e.printStackTrace();
         }
     }
+
+    public void delNumByPid(String pid, int buyNum) throws SQLException {
+        QueryRunner runner = new QueryRunner(DataSourceUtils.getDataSource());
+        String sql = "update product set pstorage=pstorage- ?  where pid = ?";
+        runner.update(sql,buyNum,pid);
+    }
 }

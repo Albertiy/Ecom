@@ -70,4 +70,9 @@ public class BearViewController {
     public String user_pwd_change() {
         return "user_pwd_change";
     }
+
+    @RequestMapping("/order_info")
+    public String order_info() {
+        return "order_info";
+    }
 }
