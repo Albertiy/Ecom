@@ -74,7 +74,7 @@ public class AlbertController {
 
     @RequestMapping("/openStore")
     public String openStore(){
-        return "open_store";
+        return "open_store"; 
     }
     /*
      * 这个是真的
