@@ -26,4 +26,9 @@ public class MyStoreController {
         return "addProduct";
     }
 
+    @RequestMapping("/shop")
+    public String shop(){
+        return "shop";
+    }
+
 }
