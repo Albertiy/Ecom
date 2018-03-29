@@ -267,7 +267,7 @@ public class ProductDao {
 
     public List<Product> findProductByPage2(String cid, int index, int currentCount) throws SQLException {
         QueryRunner runner = new QueryRunner(DataSourceUtils.getDataSource());
-        String sql = "select * from product where cid = ? limit ?,?";
+        String sql = "select * from product where cid = ? and pflag=1 limit ?,? ";
         List<Product> query = runner.query(sql, new BeanListHandler<Product>(Product.class), cid, index, currentCount);
         return query;
     }
