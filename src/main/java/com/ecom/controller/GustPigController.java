@@ -1,5 +1,7 @@
 package com.ecom.controller;
 
+import com.ecom.auth.AuthSeller;
+import com.ecom.auth.AuthUser;
 import com.ecom.pojo.*;
 import com.ecom.service.ExpressService;
 import com.ecom.service.OrderService;
@@ -50,37 +52,51 @@ public class GustPigController {
     }
 
     @RequestMapping("/store_info")
+    @AuthUser
+    @AuthSeller
     public String store_info(){
         return "store_info";
     }
 
     @RequestMapping("/store_info_change")
+    @AuthUser
+    @AuthSeller
     public String store_info_change(){
         return "store_info_change";
     }
 
     @RequestMapping("/store_income")
+    @AuthUser
+    @AuthSeller
     public String store_income(){
         return "store_income";
     }
 
     @RequestMapping("/delivered_orders")
+    @AuthUser
+    @AuthSeller
     public String delivered_orders(){
         return "delivered_orders";
     }
 
     @RequestMapping("/orders_done")
+    @AuthUser
+    @AuthSeller
     public String orders_done(){
             return "orders_done";
         }
 
     @RequestMapping("/expressmodal")
+    @AuthUser
+    @AuthSeller
     public String expressmodal(){
         return  "expressmodal";
     }
 
     //加载物流信息
     @RequestMapping("/findExpress")
+    @AuthUser
+    @AuthSeller
     public void fineExpress(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("进入Controller");
         String sid = request.getParameter("sid");
@@ -98,6 +114,8 @@ public class GustPigController {
 
     //加载店铺信息
     @RequestMapping("/findStore")
+    @AuthUser
+    @AuthSeller
     public void findStore(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         System.out.print("进入findStore Controller");
         String uid = request.getParameter("uid");
@@ -113,6 +131,8 @@ public class GustPigController {
 
     //加载修改店铺信息
     @RequestMapping("/findStoreChange")
+    @AuthUser
+    @AuthSeller
     public void findStoreChange(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         System.out.print("进入findStoreChange Controller");
         String uid = request.getParameter("uid");
@@ -128,6 +148,8 @@ public class GustPigController {
 
     //修改店铺信息
     @RequestMapping("/StoreChange")
+    @AuthUser
+    @AuthSeller
     public void StoreChange(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         System.out.println("进入StoreChange Controller");
         String st = request.getParameter("st");
@@ -159,6 +181,8 @@ public class GustPigController {
 
     // SpringMVC 的 @ResponseBody 标注了该函数返回的内容直接作为Response，不再加载页面
     @RequestMapping("/getOrderList2")
+    @AuthUser
+    @AuthSeller
     @ResponseBody
     public String getOrderList2(
             @RequestParam(value = "search",defaultValue = "") String search,
@@ -179,6 +203,8 @@ public class GustPigController {
     }
 
     @RequestMapping("/getOrderList3")
+    @AuthUser
+    @AuthSeller
     @ResponseBody
     public String getOrderList3(
             @RequestParam(value = "search",defaultValue = "") String search,

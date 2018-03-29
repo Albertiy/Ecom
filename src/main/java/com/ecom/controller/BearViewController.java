@@ -1,5 +1,6 @@
 package com.ecom.controller;
 
+import com.ecom.auth.AuthUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -56,22 +57,26 @@ public class BearViewController {
     }
 
     @RequestMapping("/user_info")
+    @AuthUser
     public String user_info() {
         return "user_info";
     }
 
 
     @RequestMapping("/user_info_change")
+    @AuthUser
     public String user_info_change() {
         return "user_info_change";
     }
 
     @RequestMapping("/user_pwd_change")
+    @AuthUser
     public String user_pwd_change() {
         return "user_pwd_change";
     }
 
     @RequestMapping("/order_info")
+    @AuthUser
     public String order_info() {
         return "order_info";
     }

@@ -6,7 +6,7 @@
 <!-- 登录 注册 购物车... -->
 <div class="container-fluid">
     <div class="col-md-3">
-        <img src="img/logo3.png"/>
+        <a href="getIndex"><img src="img/logo3.png"/></a>
     </div>
     <div class="col-md-5" align="center">
         <img src="img/header.png"/>
@@ -44,7 +44,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">首页</a>
+                <a class="navbar-brand" href="getIndex">首页</a>
             </div>
 
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">

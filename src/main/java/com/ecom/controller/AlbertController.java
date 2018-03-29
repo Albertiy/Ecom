@@ -73,6 +73,7 @@ public class AlbertController {
     }
 
     @RequestMapping("/openStore")
+    @AuthUser
     public String openStore(){
         return "open_store";
     }
@@ -81,6 +82,8 @@ public class AlbertController {
      * SpringMVC 的 @ResponseBody 标注了该函数返回的内容直接作为Response，不再加载页面
      * */
     @RequestMapping("/getOrderList")
+    @AuthUser
+    @AuthSeller
     @ResponseBody
     public String getOrderList(
             @RequestParam(value = "search", defaultValue = "") String search,
@@ -102,6 +105,8 @@ public class AlbertController {
     }
 
     @RequestMapping("/getOrderDetails")
+    @AuthUser
+    @AuthSeller
     public String getOrderDetails(@RequestParam(value = "odata", defaultValue = "") String odata, Map<String, Object> map) {
         System.out.println("【getOrderDetails】");
         List<OrderData> orderDetails = new ArrayList<OrderData>();
@@ -140,6 +145,8 @@ public class AlbertController {
      * ecompany varchar(255) not null	-- 快递公司
      */
     @RequestMapping(value = "/addExpress/{eeid}")
+    @AuthUser
+    @AuthSeller
     @ResponseBody
     public int addExpress(@PathVariable String eeid,
                           @RequestParam(value = "eid", defaultValue = "") String eid,
