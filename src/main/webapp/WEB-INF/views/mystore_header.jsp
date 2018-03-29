@@ -12,14 +12,14 @@
 <!DOCTYPE html>
 <!-- 登录 注册 购物车... -->
 <div class="container-fluid">
-    <div class="col-md-4">
+    <div class="col-md-3">
         <a href="getIndex"><img src="img/logo3.png"/></a>
     </div>
-    <div class="col-md-5">
+    <div class="col-md-5" align="center">
         <img src="img/header.png"/>
     </div>
-    <div class="col-md-3" style="padding-top:20px">
-        <ol class="list-inline">
+    <div class="col-md-4" style="padding-top:20px">
+        <ol class="list-inline" style="float: right">
             <c:if test="${empty user }">
                 <li><a href="login">登录</a></li>
                 <li><a href="register">注册</a></li>
@@ -75,12 +75,12 @@
                         </ul>
                     </li>
                     <li>
-                        <a class="navbar-brand" id="storeinfo" href="#">
+                        <a class="navbar-brand" id="storeinfo" href="findStore?uid=${user.uid}">
                             店铺信息
                         </a>
                     </li>
                     <li>
-                        <a class="navbar-brand" id="" href="#">
+                        <a class="navbar-brand" id="storeincome" href="store_income">
                             我的收益
                         </a>
                     </li>

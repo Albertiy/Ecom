@@ -1,5 +1,7 @@
 package com.ecom.controller;
 
+import com.ecom.auth.AuthSeller;
+import com.ecom.auth.AuthUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -29,6 +31,8 @@ public class ProductController {
 
     //根据店铺号获得商品的目录
     @RequestMapping("/store_productlist")
+    @AuthUser
+    @AuthSeller
     public void productList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         //获得 SID
@@ -56,6 +60,7 @@ public class ProductController {
         request.getRequestDispatcher("/mystore").forward(request, response);
     }
 
+    //mystore进入商品详情
     @RequestMapping("/store_productinfo")
     public void productInfo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -69,8 +74,9 @@ public class ProductController {
         request.getRequestDispatcher("/myproduct_info").forward(request, response);
     }
 
+    //下架商品
     @RequestMapping("/downproduct")
-    public void downProduct(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public String downProduct(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Product product = new Product();
         String pid = request.getParameter("pid");
         ProductService service = new ProductService();
@@ -78,11 +84,13 @@ public class ProductController {
         product = service.downProduct(pid);
 
         request.setAttribute("product", product);
-        request.getRequestDispatcher("/myproduct_info").forward(request, response);
+        return "redirect:/store_productinfo?pid="+pid;
+        //request.getRequestDispatcher("/myproduct_info").forward(request, response);
     }
 
+    //上架商品
     @RequestMapping("/upproduct")
-    public void upProduct(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public String upProduct(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Product product = new Product();
         String pid = request.getParameter("pid");
         ProductService service = new ProductService();
@@ -90,12 +98,13 @@ public class ProductController {
         product = service.upProduct(pid);
 
         request.setAttribute("product", product);
-        request.getRequestDispatcher("/myproduct_info").forward(request, response);
+        return "redirect:/store_productinfo?pid="+pid;
+        //request.getRequestDispatcher("/myproduct_info").forward(request, response);
     }
 
     //修改商品信息
     @RequestMapping("/modifyproduct")
-    public void modifyProduct(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public String modifyProduct(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Product product = new Product();
         String pid = request.getParameter("pid");
         System.out.println(pid);
@@ -110,12 +119,14 @@ public class ProductController {
         product = service.modifyProduct(pid, pname, price, pstorage,pdesc);
 
         request.setAttribute("product", product);
-        request.getRequestDispatcher("/myproduct_info").forward(request, response);
+        //重定向
+        //request.getRequestDispatcher("/myproduct_info").forward(request, response);
+        return "redirect:/store_productinfo?pid="+pid;
     }
 
     //上传图片
     @RequestMapping("/uploadimage")
-    public void uploadImage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public String uploadImage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PrintWriter pwout = response.getWriter();
         String savePath = null;
         String tempPath = request.getServletContext().getRealPath("/Temp");
@@ -170,7 +181,7 @@ public class ProductController {
                 //按照传统方式获取数据
                 System.out.println("============== request 无效 ================");
                 pwout.print("无效的上传请求<br>");
-                return;
+                return "redirect:/getIndex";
             }
             //设置上传单个文件的大小的最大值，目前是设置为128*1024*1024字节，也就是128MB
             upload.setFileSizeMax(128 * 1024 * 1024);
@@ -274,24 +285,25 @@ public class ProductController {
         }
         System.out.println("--------------上传结果--------------\n" + message);
 
-        //这个跳转不改变URl，导致刷新后Servlet会再次执行
-        //request.getRequestDispatcher("/testInput.jsp"+redirect).forward(request, response);
-        //用这个！
         if(inputSuccess) {
             product = service.modifyProductImage(pid);
             request.setAttribute("product", product);
-            request.getRequestDispatcher("/myproduct_info").forward(request, response);
+            System.out.println("1");
+            return "redirect:/store_productinfo?pid="+pid;
+            //request.getRequestDispatcher("/getIndex").forward(request, response);
+
         }
         else{
             product = service.findProductInfoByPid(pid);
             request.setAttribute("product", product);
-            request.getRequestDispatcher("/myproduct_info").forward(request, response);
+            return "redirect:/getIndex";
+            //request.getRequestDispatcher("/store_productinfo").forward(request, response);
         }
     }
 
     //添加商品
     @RequestMapping("/addproduct")
-    public void addProduct(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public String addProduct(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PrintWriter pwout = response.getWriter();
         String savePath = null;
         String tempPath = request.getServletContext().getRealPath("/Temp");
@@ -352,7 +364,7 @@ public class ProductController {
                 //按照传统方式获取数据
                 System.out.println("============== request 无效 ================");
                 pwout.print("无效的上传请求<br>");
-                return;
+                return "redirect:/getIndex";
             }
             //设置上传单个文件的大小的最大值，目前是设置为128*1024*1024字节，也就是128MB
             upload.setFileSizeMax(128 * 1024 * 1024);
@@ -473,16 +485,15 @@ public class ProductController {
         }
         System.out.println("--------------上传结果--------------\n" + message);
 
-        //这个跳转不改变URl，导致刷新后Servlet会再次执行
-        //request.getRequestDispatcher("/testInput.jsp"+redirect).forward(request, response);
-        //用这个！
         if(inputSuccess) {
             System.out.println("数据库写入数据！");
             service.addProduct(sid, pid, pname, price, pstorage, cid, pimage, pdesc);
-            request.getRequestDispatcher("/store_productlist?sid="+sid+"&cid="+cid).forward(request, response);
+            return "redirect:/store_productinfo?pid="+pid;
+            //request.getRequestDispatcher("/store_productlist?sid="+sid+"&cid="+cid).forward(request, response);
         }
         else{
-            request.getRequestDispatcher("/mystore").forward(request, response);
+            return "redirect:/addproduct";
+            //request.getRequestDispatcher("/mystore").forward(request, response);
         }
     }
 }

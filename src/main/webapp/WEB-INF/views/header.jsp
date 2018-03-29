@@ -5,25 +5,26 @@
 <!DOCTYPE html>
 <!-- 登录 注册 购物车... -->
 <div class="container-fluid">
-    <div class="col-md-4">
+    <div class="col-md-3">
         <img src="img/logo3.png"/>
     </div>
-    <div class="col-md-5">
+    <div class="col-md-5" align="center">
         <img src="img/header.png"/>
     </div>
-    <div class="col-md-3" style="padding-top:20px">
-        <ol class="list-inline">
+    <div class="col-md-4" style="padding-top:20px">
+        <ol class="list-inline" style="float: right">
             <c:if test="${empty user }">
                 <li><a href="login">登录</a></li>
                 <li><a href="register">注册</a></li>
+                <li><a href="cart">购物车</a></li>
             </c:if>
             <c:if test="${!empty user }">
                 <li ><a href="user_info" style="color:red">欢迎您，${user.nickname }</a></li>
                 <li><a href="${pageContext.request.contextPath}/logout">退出</a></li>
+                <li><a href="cart">购物车</a></li>
+                <li><a href="order_list">我的订单</a></li>
+                <li><a href="${pageContext.request.contextPath}/store_productlist?sid=${user.sid}">我的店铺</a></li>
             </c:if>
-            <li><a href="cart">购物车</a></li>
-            <li><a href="order_list">我的订单</a></li>
-            <li><a href="${pageContext.request.contextPath}/store_productlist?sid=${user.sid}">我的店铺</a></li>
         </ol>
     </div>
 </div>

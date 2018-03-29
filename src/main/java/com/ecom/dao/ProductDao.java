@@ -37,7 +37,6 @@ public class ProductDao {
     public int getCount(String sid) throws SQLException {
         int count = 0;
         try {
-            List<Product> list = null;
             conn = JdbcUtils.getConnection();
             sql = "select count(*) from product where sid = ? ";
             pstmt = conn.prepareStatement(sql);
@@ -200,7 +199,7 @@ public class ProductDao {
         Product product = new Product();
         try {
             conn = JdbcUtils.getConnection();
-            sql = "UPDATE product SET state = 0 WHERE pid = "+pid;
+            sql = "UPDATE product SET state = 0 WHERE pid = '"+pid+"'";
             pstmt = conn.prepareStatement(sql);
             pstmt.executeUpdate();
             //重新获取此pid的内容
@@ -216,7 +215,7 @@ public class ProductDao {
         Product product = new Product();
         try {
             conn = JdbcUtils.getConnection();
-            sql = "UPDATE product SET state = 1 WHERE pid = "+pid;
+            sql = "UPDATE product SET state = 1 WHERE pid = '"+pid+"'";
             pstmt = conn.prepareStatement(sql);
             pstmt.executeUpdate();
             //重新获取此pid的内容

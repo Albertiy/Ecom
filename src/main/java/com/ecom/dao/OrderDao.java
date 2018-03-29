@@ -160,7 +160,7 @@ public class OrderDao {
                 tempOrder.setUid(rs.getString("uid"));
                 tempOrder.setCreateTime(rs.getString("create_time"));
                 tempOrder.setPayTime(rs.getString("pay_time"));
-                //既然是未发货订单，就不写入发货与完成时间了吧
+                tempOrder.setDeliveryTime(rs.getString("delivery_time"));
                 tempOrder.setTotal(rs.getInt("total"));
                 tempOrder.setConsignee(rs.getString("consignee"));
                 tempOrder.setPhone(rs.getString("phone"));
@@ -242,7 +242,8 @@ public class OrderDao {
                 tempOrder.setUid(rs.getString("uid"));
                 tempOrder.setCreateTime(rs.getString("create_time"));
                 tempOrder.setPayTime(rs.getString("pay_time"));
-                //既然是未发货订单，就不写入发货与完成时间了吧
+                tempOrder.setDeliveryTime(rs.getString("delivery_time"));
+                tempOrder.setFinishTime(rs.getString("finish_time"));
                 tempOrder.setTotal(rs.getInt("total"));
                 tempOrder.setConsignee(rs.getString("consignee"));
                 tempOrder.setPhone(rs.getString("phone"));
