@@ -249,4 +249,13 @@ public class ProductService {
             e.printStackTrace();
         }
     }
+
+    public void delNumByPid(String pid, int buyNum) {
+        ProductDao dao = new ProductDao();
+        try {
+            dao.delNumByPid(pid,buyNum);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

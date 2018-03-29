@@ -2,7 +2,9 @@ package com.ecom.dao;
 
 import com.ecom.pojo.Order;
 import com.ecom.pojo.OrderPageBean;
+import com.ecom.utils.DataSourceUtils;
 import com.ecom.utils.JdbcUtils;
+import org.apache.commons.dbutils.QueryRunner;
 import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
@@ -282,5 +284,15 @@ public class OrderDao {
             pname = rs.getString("pname");
         }
         return pname;
+    }
+
+    public void addOrders(Order order) throws SQLException {
+        QueryRunner runner = new QueryRunner();
+        String sql = "insert into _order values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        Connection conn = DataSourceUtils.getConnection();
+        runner.update(conn,sql, order.getOid(),order.getSid(),order.getUid(),order.getCreateTime(),
+                null,null,null,order.getTotal(),
+                order.getConsignee(),order.getPhone(),order.getAddress(),order.getState(),
+                order.getPs(),order.getOdata());
     }
 }
