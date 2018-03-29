@@ -19,7 +19,8 @@
 			<li><a>广告声明</a></li>
 		</ul>
 	</div>
+
 	<div style="text-align: center;margin-top: 5px;margin-bottom:20px;">
-		Copyright &copy; 2005-2016 传智商城 版权所有
+		Copyright &copy; 2018 E-COM商城 版权所有
 	</div>
 </div>

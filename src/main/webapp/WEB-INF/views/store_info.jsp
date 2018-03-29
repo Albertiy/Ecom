@@ -96,18 +96,18 @@
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-2">
-                        <a width="100" name="change_info" href="store_info_change" class="btn btn-danger">
+                        <a width="100" name="change_info" href="findStoreChange?uid=${store.uid}" class="btn btn-danger">
                             修改信息
                         </a>
                     </div>
                     <div class=" col-sm-2">
                         <c:if test="${store.state eq '1'}">
-                            <a width="100" name="change_info" href="store_info_change" class="btn btn-danger">
+                            <a width="100" onclick="return confirm('关闭成功')" name="change_info" href="StoreChange?state=1&st=2&uid=${store.uid}" class="btn btn-danger">
                                关闭店铺
                             </a>
                         </c:if>
                         <c:if test="${store.state eq '0'}">
-                            <a width="100" name="change_info" href="store_info_change" class="btn btn-danger">
+                            <a width="100" onclick="return confirm('开业大吉')" name="change_info" href="StoreChange?state=0&st=2&uid=${store.uid}" class="btn btn-danger">
                                 开启店铺
                             </a>
                         </c:if>

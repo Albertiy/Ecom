@@ -131,6 +131,13 @@
                                 titleTooltip: "付款时间"
                             },
                             {
+                                field: "delivery_time",
+                                title: "发货时间",
+                                //formatter: 'infoFormatter',//对本列数据做格式化
+                                sortable: true,
+                                titleTooltip: "发货时间"
+                            },
+                            {
                                 field: "consignee",
                                 title: "收货人",
                                 sortable: false,
@@ -155,6 +162,7 @@
                             {
                                 field: "state",
                                 title: "订单状态",
+                                formatter: 'showState',
                                 titleTooltip: "状态"
                             },
                             {
@@ -226,6 +234,27 @@
                         + '&nbsp;&nbsp;'
                         + */'<a href="findExpress?sid='+row.sid+'&oid='+row.oid+'" class="btn btn-warning" data-toggle="modal" data-target="#addModal">物流信息</a>';
                     return buttons;
+                }
+                function showState(value,row,index) {
+                    var info='';
+                    switch (row.state){
+                        case '0':
+                            info+='未付款';
+                            break;
+                        case '1':
+                            info+='未发货';
+                            break;
+                        case '2':
+                            info+='已发货';
+                            break;
+                        case '3':
+                            info+='已完成';
+                            break;
+                        default:
+                            info+='未付款';
+                            break;
+                    }
+                    return info;
                 }
             </script>
 </body>

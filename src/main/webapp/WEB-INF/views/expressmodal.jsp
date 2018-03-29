@@ -27,8 +27,8 @@
             <h6>快递单号：<%= re.getEid()%></h6>
             <h6>物流公司：<%= re.geteCompany()%></h6>
             <h6>发货时间：<%= re.geteTime()%></h6>
-            <h6>发货地址：<%= re.geteAddress()%></h6>
-            <h6>收获地址：<%= re.getsAddress()%></h6>
+            <h6>发货地址：<%= re.getsAddress()%></h6>
+            <h6>收获地址：<%= re.geteAddress()%></h6>
         </div>
     </div>
     <div class="modal-footer">

@@ -52,39 +52,33 @@
             $("#myform").validate({
 
                 rules: {
-
-                    "nickname": {
+                    "sname": {
                         "required": true,
-                        "rangelength": [1, 12]
-
+                        "rangelength": [1, 16]
                     },
-                    "uname": {
-                        "required": true
-
+                    "saddress": {
+                        "required": true,
+                        "rangelength": [1, 255]
                     },
-                    "gender": {
-                        "required": true
-                    },
-                    "birthday": {
-                        "required": true
-                    },
-
-
+                    "introduce": {
+                        "required": true,
+                        "rangelength": [1, 255]
+                    }
                 },
                 messages: {
 
-                    "nickname": {
+                    "sname": {
                         "required": "昵称不能为空",
                         "rangelength": "昵称长度不能超过12位"
 
                     },
-                    "uname": {
-                        "required": "真实姓名不能为空"
-
+                    "saddress": {
+                        "required": "真实姓名不能为空",
+                        "rangelength": "昵称长度不能超过255位"
                     },
-                    "birthday": {
-                        "required": "出生日期不能为空"
-
+                    "introduce": {
+                        "required": "出生日期不能为空",
+                        "rangelength": "昵称长度不能超过255位"
                     }
 
                 },
@@ -97,7 +91,6 @@
                 invalidHandler: function (form, validator) {
                     return false;
                 }
-
             });
         });
 
@@ -106,7 +99,7 @@
 <body>
 
 <!-- 引入header.jsp -->
-<jsp:include page="/mystore_heade"></jsp:include>
+<jsp:include page="/mystore_header"></jsp:include>
 
 <div class="container"
      style="width: 100%; background: url('image/regist_bg.jpg');">
@@ -115,7 +108,7 @@
         <div class="col-md-8"
              style="background: #fff; padding: 40px 80px; margin: 30px; border: 7px solid #ccc;">
             <font>修改资料</font>INFORMATION CHANGE
-            <form id="myform" class="form-horizontal" action="${pageContext.request.contextPath }/changeUserInfo"
+            <form id="myform" class="form-horizontal" action="${pageContext.request.contextPath }/StoreChange?st=1&uid=${store.uid}"
                   method="post" style="margin-top: 5px;">
 
                 <input type="hidden" name="sid" value="${store.sid}">
@@ -148,40 +141,13 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="sex1" class="col-sm-2 control-label">性别</label>
-                    <div class="col-sm-6">
-                        <c:if test="${user.gender eq 'male'}">
-                            <label class="radio-inline">
-
-                                <input type="radio" name="gender" id="sex1" value="male" checked>男
-                            </label>
-                            <label class="radio-inline">
-                                <input type="radio" name="gender" id="sex2" value="female">女
-                            </label>
-                        </c:if>
-
-                        <c:if test="${user.gender eq 'female'}">
-                            <label class="radio-inline">
-
-                                <input type="radio" name="gender" id="sex1" value="male">男
-                            </label>
-                            <label class="radio-inline">
-                                <input type="radio" name="gender" id="sex2" value="female" checked>女
-                            </label>
-                        </c:if>
-
-                        <label class="error" for="sex1" style="display:none ">您没有第三种选择</label>
-                    </div>
-                </div>
-
-                <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-2">
 
                         <input type="submit" width="100" value="确认修改" name="submit"
                                style="background: url('./images/register.gif') no-repeat scroll 0 0 rgba(0, 0, 0, 0); height: 35px; width: 100px; color: white;">
                     </div>
                     <div class=" col-sm-2">
-                        <a width="100"  href="user_info" class="btn btn-danger">
+                        <a width="100"  href="findStore?uid=${store.uid}" class="btn btn-danger">
                             取消
                         </a>
                     </div>

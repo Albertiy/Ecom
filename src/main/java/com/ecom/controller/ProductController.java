@@ -1,5 +1,7 @@
 package com.ecom.controller;
 
+import com.ecom.auth.AuthSeller;
+import com.ecom.auth.AuthUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -29,6 +31,8 @@ public class ProductController {
 
     //根据店铺号获得商品的目录
     @RequestMapping("/store_productlist")
+    @AuthUser
+    @AuthSeller
     public void productList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         //获得 SID
@@ -58,6 +62,8 @@ public class ProductController {
 
     //mystore进入商品详情
     @RequestMapping("/store_productinfo")
+    @AuthUser
+    @AuthSeller
     public void productInfo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         Product product = new Product();
@@ -72,6 +78,8 @@ public class ProductController {
 
     //下架商品
     @RequestMapping("/downproduct")
+    @AuthUser
+    @AuthSeller
     public String downProduct(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Product product = new Product();
         String pid = request.getParameter("pid");
@@ -86,6 +94,8 @@ public class ProductController {
 
     //上架商品
     @RequestMapping("/upproduct")
+    @AuthUser
+    @AuthSeller
     public String upProduct(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Product product = new Product();
         String pid = request.getParameter("pid");
@@ -100,6 +110,8 @@ public class ProductController {
 
     //修改商品信息
     @RequestMapping("/modifyproduct")
+    @AuthUser
+    @AuthSeller
     public String modifyProduct(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Product product = new Product();
         String pid = request.getParameter("pid");
@@ -122,6 +134,8 @@ public class ProductController {
 
     //上传图片
     @RequestMapping("/uploadimage")
+    @AuthUser
+    @AuthSeller
     public String uploadImage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PrintWriter pwout = response.getWriter();
         String savePath = null;
@@ -299,6 +313,8 @@ public class ProductController {
 
     //添加商品
     @RequestMapping("/addproduct")
+    @AuthUser
+    @AuthSeller
     public String addProduct(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PrintWriter pwout = response.getWriter();
         String savePath = null;

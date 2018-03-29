@@ -2,7 +2,9 @@ package com.ecom.dao;
 
 import com.ecom.pojo.Order;
 import com.ecom.pojo.OrderPageBean;
+import com.ecom.utils.DataSourceUtils;
 import com.ecom.utils.JdbcUtils;
+import org.apache.commons.dbutils.QueryRunner;
 import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
@@ -158,7 +160,7 @@ public class OrderDao {
                 tempOrder.setUid(rs.getString("uid"));
                 tempOrder.setCreateTime(rs.getString("create_time"));
                 tempOrder.setPayTime(rs.getString("pay_time"));
-                //既然是未发货订单，就不写入发货与完成时间了吧
+                tempOrder.setDeliveryTime(rs.getString("delivery_time"));
                 tempOrder.setTotal(rs.getInt("total"));
                 tempOrder.setConsignee(rs.getString("consignee"));
                 tempOrder.setPhone(rs.getString("phone"));
@@ -240,7 +242,8 @@ public class OrderDao {
                 tempOrder.setUid(rs.getString("uid"));
                 tempOrder.setCreateTime(rs.getString("create_time"));
                 tempOrder.setPayTime(rs.getString("pay_time"));
-                //既然是未发货订单，就不写入发货与完成时间了吧
+                tempOrder.setDeliveryTime(rs.getString("delivery_time"));
+                tempOrder.setFinishTime(rs.getString("finish_time"));
                 tempOrder.setTotal(rs.getInt("total"));
                 tempOrder.setConsignee(rs.getString("consignee"));
                 tempOrder.setPhone(rs.getString("phone"));
@@ -281,5 +284,15 @@ public class OrderDao {
             pname = rs.getString("pname");
         }
         return pname;
+    }
+
+    public void addOrders(Order order) throws SQLException {
+        QueryRunner runner = new QueryRunner();
+        String sql = "insert into _order values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        Connection conn = DataSourceUtils.getConnection();
+        runner.update(conn,sql, order.getOid(),order.getSid(),order.getUid(),order.getCreateTime(),
+                null,null,null,order.getTotal(),
+                order.getConsignee(),order.getPhone(),order.getAddress(),order.getState(),
+                order.getPs(),order.getOdata());
     }
 }
