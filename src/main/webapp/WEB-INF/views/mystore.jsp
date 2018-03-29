@@ -60,7 +60,7 @@
 
         <c:if test="${pageBean.currentPage!=1}">
             <li>
-                <a href="${pageContext.request.contextPath}/store_productlist?sid=456&currentPage=${pageBean.currentPage-1}"
+                <a href="${pageContext.request.contextPath}/store_productlist?sid=${user.sid}&currentPage=${pageBean.currentPage-1}"
                    aria-label="Previous">
                 <span
                         aria-hidden="true">&laquo;</span>
@@ -78,7 +78,7 @@
             </c:if>
             <c:if test="${page!=pageBean.currentPage}">
                 <li>
-                    <a href="${pageContext.request.contextPath}/store_productlist?sid=456&currentPage=${page}">${page}</a>
+                    <a href="${pageContext.request.contextPath}/store_productlist?sid=${user.sid}&currentPage=${page}">${page}</a>
                 </li>
 
             </c:if>
@@ -96,7 +96,7 @@
 
         <c:if test="${pageBean.currentPage!=pageBean.totalPage}">
             <li>
-                <a href="${pageContext.request.contextPath}/store_productlist?sid=456&currentPage=${pageBean.currentPage+1}"
+                <a href="${pageContext.request.contextPath}/store_productlist?sid=${user.sid}&currentPage=${pageBean.currentPage+1}"
                    aria-label="Next"> <span aria-hidden="true">&raquo;</span>
                 </a>
             </li>

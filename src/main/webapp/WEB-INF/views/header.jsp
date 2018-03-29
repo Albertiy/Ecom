@@ -6,7 +6,7 @@
 <!-- 登录 注册 购物车... -->
 <div class="container-fluid">
     <div class="col-md-3">
-        <img src="img/logo3.png"/>
+        <a href="getIndex"><img src="img/logo3.png"/></a>
     </div>
     <div class="col-md-5" align="center">
         <img src="img/header.png"/>

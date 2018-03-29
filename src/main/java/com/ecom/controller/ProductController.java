@@ -62,6 +62,8 @@ public class ProductController {
 
     //mystore进入商品详情
     @RequestMapping("/store_productinfo")
+    @AuthUser
+    @AuthSeller
     public void productInfo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         Product product = new Product();
@@ -76,6 +78,8 @@ public class ProductController {
 
     //下架商品
     @RequestMapping("/downproduct")
+    @AuthUser
+    @AuthSeller
     public String downProduct(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Product product = new Product();
         String pid = request.getParameter("pid");
@@ -90,6 +94,8 @@ public class ProductController {
 
     //上架商品
     @RequestMapping("/upproduct")
+    @AuthUser
+    @AuthSeller
     public String upProduct(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Product product = new Product();
         String pid = request.getParameter("pid");
@@ -104,6 +110,8 @@ public class ProductController {
 
     //修改商品信息
     @RequestMapping("/modifyproduct")
+    @AuthUser
+    @AuthSeller
     public String modifyProduct(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Product product = new Product();
         String pid = request.getParameter("pid");
@@ -126,6 +134,8 @@ public class ProductController {
 
     //上传图片
     @RequestMapping("/uploadimage")
+    @AuthUser
+    @AuthSeller
     public String uploadImage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PrintWriter pwout = response.getWriter();
         String savePath = null;
@@ -303,6 +313,8 @@ public class ProductController {
 
     //添加商品
     @RequestMapping("/addproduct")
+    @AuthUser
+    @AuthSeller
     public String addProduct(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PrintWriter pwout = response.getWriter();
         String savePath = null;
