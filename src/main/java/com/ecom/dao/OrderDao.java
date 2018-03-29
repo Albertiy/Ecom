@@ -288,10 +288,10 @@ public class OrderDao {
 
     public void addOrders(Order order) throws SQLException {
         QueryRunner runner = new QueryRunner();
-        String sql = "insert into orders values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        String sql = "insert into _order values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         Connection conn = DataSourceUtils.getConnection();
         runner.update(conn,sql, order.getOid(),order.getSid(),order.getUid(),order.getCreateTime(),
-                order.getPayTime(),order.getDeliveryTime(),order.getFinishTime(),order.getTotal(),
+                null,null,null,order.getTotal(),
                 order.getConsignee(),order.getPhone(),order.getAddress(),order.getState(),
                 order.getPs(),order.getOdata());
     }
